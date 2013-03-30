@@ -1,0 +1,150 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>关于NSURL的解析和编码 - OneV's Den</title>
+	<meta name="author" content="onevcat">
+
+	
+	<meta name="description" content="关于NSURL的解析和编码 NSURL毫无疑问是常用类，有时候我们需要对一个url进行分析整理，当然是可以按照RFC 1808的定义去自己分析，但是万能的Apple大大已经在SDK里扔了不少方法来帮助解析一个url了&#8230;方便又快捷呐～比如下面的输入： NSURL *url = [ &hellip;">
+	
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="OneV's Den" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://blog.onevcat.com/2011/11/nsurl/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		document.write("<img src='http://www.gravatar.com/avatar/" + MD5("onev@onevcat.com") + "?s=160' alt='Profile Picture' style='width: 160px;'");
+	</script>
+</div>
+<h1><a href="/">OneV's Den</a></h1>
+<p class="subtitle">thinking and recording</p>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+<hgroup>
+  <h1><a href="/">OneV's Den</a></h1>
+  
+    <h2>thinking and recording</h2>
+  
+</hgroup>
+
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<h1 class="title" itemprop="name">关于NSURL的解析和编码</h1>
+	<div class="entry-content" itemprop="articleBody"><p><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2011/11/nsurl.png"><img class="aligncenter size-full wp-image-328" title="nsurl" src="http://www.onevcat.com/wp-content/uploads/2011/11/nsurl.png" alt="" width="715" height="133" /></a>NSURL毫无疑问是常用类，有时候我们需要对一个url进行分析整理，当然是可以按照RFC 1808的定义去自己分析，但是万能的Apple大大已经在SDK里扔了不少方法来帮助解析一个url了&#8230;方便又快捷呐～比如下面的输入：</p>
+<p style="text-align: justify;"><!--more--></p></p>
+
+<p><blockquote>
+<pre class="objc" style="font-family: monospace;"><span style="color: #400080;">NSURL</span> <span style="color: #002200;">*</span>url <span style="color: #002200;">=</span> <span style="color: #002200;">[</span><span style="color: #400080;">NSURL</span> URLWithString<span style="color: #002200;">:</span>
+ <span style="color: #bf1d1a;">@</span><span style="color: #bf1d1a;">"http://www.onevcat.com/2011/11/debug/;param?p=307#more-307"</span><span style="color: #002200;">]</span>;</pre></blockquote></p>
+
+<p>NSLog<span style="color: #002200;">(</span><span style="color: #bf1d1a;">@</span><span style="color: #bf1d1a;">&#8220;Scheme: %@&#8221;</span>, <span style="color: #002200;">[</span>url scheme<span style="color: #002200;">]</span><span style="color: #002200;">)</span>;<br />
+NSLog<span style="color: #002200;">(</span><span style="color: #bf1d1a;">@</span><span style="color: #bf1d1a;">&#8220;Host: %@&#8221;</span>, <span style="color: #002200;">[</span>url host<span style="color: #002200;">]</span><span style="color: #002200;">)</span>;<br />
+NSLog<span style="color: #002200;">(</span><span style="color: #bf1d1a;">@</span><span style="color: #bf1d1a;">&#8220;Port: %@&#8221;</span>, <span style="color: #002200;">[</span>url port<span style="color: #002200;">]</span><span style="color: #002200;">)</span>;<br />
+NSLog<span style="color: #002200;">(</span><span style="color: #bf1d1a;">@</span><span style="color: #bf1d1a;">&#8220;Path: %@&#8221;</span>, <span style="color: #002200;">[</span>url path<span style="color: #002200;">]</span><span style="color: #002200;">)</span>;<br />
+NSLog<span style="color: #002200;">(</span><span style="color: #bf1d1a;">@</span><span style="color: #bf1d1a;">&#8220;Relative path: %@&#8221;</span>, <span style="color: #002200;">[</span>url relativePath<span style="color: #002200;">]</span><span style="color: #002200;">)</span>;<br />
+NSLog<span style="color: #002200;">(</span><span style="color: #bf1d1a;">@</span><span style="color: #bf1d1a;">&#8220;Path components as array: %@&#8221;</span>, <span style="color: #002200;">[</span>url pathComponents<span style="color: #002200;">]</span><span style="color: #002200;">)</span>;<br />
+NSLog<span style="color: #002200;">(</span><span style="color: #bf1d1a;">@</span><span style="color: #bf1d1a;">&#8220;Parameter string: %@&#8221;</span>, <span style="color: #002200;">[</span>url parameterString<span style="color: #002200;">]</span><span style="color: #002200;">)</span>;<br />
+NSLog<span style="color: #002200;">(</span><span style="color: #bf1d1a;">@</span><span style="color: #bf1d1a;">&#8220;Query: %@&#8221;</span>, <span style="color: #002200;">[</span>url query<span style="color: #002200;">]</span><span style="color: #002200;">)</span>;<br />
+NSLog<span style="color: #002200;">(</span><span style="color: #bf1d1a;">@</span><span style="color: #bf1d1a;">&#8220;Fragment: %@&#8221;</span>, <span style="color: #002200;">[</span>url fragment<span style="color: #002200;">]</span><span style="color: #002200;">)</span>;
+
+<p style="text-align: justify;">将得到以下输出：</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2011/11/url_result.png"><img class="aligncenter size-full wp-image-325" title="url_result.png" src="http://www.onevcat.com/wp-content/uploads/2011/11/url_result.png" alt="" width="441" height="212" /></a></p>
+<p style="text-align: left;">没什么值得多说的～相当方便就能得到所要结果的方法～<br />
+另外，在由NSString生成NSURL对象时，有可能会出现NSString中包含百分号各类括号冒号等对于url来说的非法字符如果直接进行转换的话将得到nil。在对于复杂url进行转换前，可以先试试对待转换的NSString发送</p>
+<p style="text-align: justify;">stringByAddingPercentEscapesUsingEncoding:</p>
+<p style="text-align: justify;">将其转换为合法的url字符串（其实目的就是保证非法字符用UTF8编码..） 比如这样：</p>
+<p style="text-align: left;">[crayon]<br />
+NSString *fixedStr = [reqStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];<br />
+[/crayon]</p></p>
+</div>
+
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2013 - onevcat -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+
+		</div>
+	</div>
+</body>
+</html>

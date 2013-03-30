@@ -1,0 +1,127 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>凑热闹，谈密码，Challenge-Response密码验证 - OneV's Den</title>
+	<meta name="author" content="onevcat">
+
+	
+	<meta name="description" content="凑热闹，谈密码，Challenge-Response密码验证 CSDN的密码事件闹得沸沸扬扬，600万用户数据的泄露应该是中国互联网历史上最严重的帐号信息泄露事件。让人不可思议的是，2009年4月之前的用户密码居然是以明文存储。使用明文存储密码本身就是一件相当扯淡的事情， &hellip;">
+	
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="OneV's Den" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://blog.onevcat.com/2011/12/password/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		document.write("<img src='http://www.gravatar.com/avatar/" + MD5("onev@onevcat.com") + "?s=160' alt='Profile Picture' style='width: 160px;'");
+	</script>
+</div>
+<h1><a href="/">OneV's Den</a></h1>
+<p class="subtitle">thinking and recording</p>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+<hgroup>
+  <h1><a href="/">OneV's Den</a></h1>
+  
+    <h2>thinking and recording</h2>
+  
+</hgroup>
+
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<h1 class="title" itemprop="name">凑热闹，谈密码，Challenge-Response密码验证</h1>
+	<div class="entry-content" itemprop="articleBody"><p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2011/12/6593637_190517116457_2.jpg"><img class="aligncenter size-full wp-image-434" title="6593637_190517116457_2" src="http://www.onevcat.com/wp-content/uploads/2011/12/6593637_190517116457_2-e1324556385859.jpg" alt="" width="1024" height="256" /></a><a href="http://news.csdn.net/a/20111221/309505.html">CSDN的密码事件</a>闹得沸沸扬扬，600万用户数据的泄露应该是中国互联网历史上最严重的帐号信息泄露事件。让人不可思议的是，2009年4月之前的用户密码居然是以明文存储。使用明文存储密码本身就是一件相当扯淡的事情，而当这种事情发生在以程序员为主要客户的大型网站上，真是让人哭笑不得。</p>
+<p style="text-align: justify;"><!--:--><!--more--><!--:zh-->之后又陆续爆出人人、多玩以及各种知名网站的账户信息泄露的消息，虽然还未确知真伪，但也很是让人揪心。而“不能明文保存密码”这一个初级中的初级的错误之所以会在中国这篇神奇的土地上一次又一次的出现，我认为是与中国的网络审查制度和相关法制不全造成的（其实就算法令全了我估计在特权之下也只是一纸空文）。负责网络审查的大大们往往一个电话过来指明要XXX的密码，而在天朝这样的地方如果你拿不出这个密码的话，基本就被扣上了政治不合作和给领导难看的大帽子，很多时候程序员被逼无奈只能明文存储。而像这次CSDN这样的由于系统升级而遗留下的历史问题，可以相信溯其根源也或多或少会与这样的特权有关吧&#8230;</p>
+<p style="text-align: justify;">扯远了扯远了&#8230;作为有良知的程序员，绝不能用明文存储密码，而作为简单的密码存放验证解决方案，MD5的Challenge-Response验证方法可以满足绝大部分非机密级别的应用了。使用MD5存储密码在验证中是很常见的做法，虽然<a href="http://baike.baidu.com/view/350813.htm#2">王小云</a>教授提出了有效的MD5强无碰撞算法，但是作为民用级别的网站认证，简单的散列MD5的方便快速简单易用的特性还是相当吸引人。为了防止截取MD5伪造身份完成认证，再加入一个Challenge-Response机制，客户端请求验证时，由服务器随机一个串给客户端进行挑战，客户端使用密码的散列值与从服务器取得的串组合得到新的散列值，将此散列值提交给服务器生成的散列值进行应答验证，若两个散列一致则通过，否则失效。如果希望能够得到更加安全的散列算法，可以选择SHA-256，SHA-384或者SHA-512等还未被攻破的散列（仅限民用..我猜政府军事部门不太可能用散列这种悲剧又简单的摘要算法）。对于iPhone SDK来说，常用的散列算法都在&lt;CommonCrypto/CommonDigest.h&gt;头文件中均有说明。而libcommonCrypto.dylib和Security.framework中也都提供了相当多的安全方法，涉及网络应用的app开发的话，不论是作为自身修养的提升还是对自己的代码负责，都应当对安全问题有基本的认识和思索&#8230;</p><!--:--></p>
+</div>
+
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2013 - onevcat -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+
+		</div>
+	</div>
+</body>
+</html>
