@@ -1,0 +1,417 @@
+---
+layout: page
+title: VVBorderTimer
+categories: []
+tags: []
+published: true
+comments: true
+---
+<p><!--:zh--><img class="alignleft" title="vvbordertimerlogo" src="http://www.onevcat.com/wp-content/uploads/2011/12/borderlogo.png" alt="" width="256" height="256" />
+<h2 style="text-align: justify;">GitHub 链接: <a href="https://github.com/onevcat/VVBorderTimer">https://github.com/onevcat/VVBorderTimerView</a></h2>
+<h2 style="text-align: justify;">是什么</h2>
+<ul style="text-align: justify;">
+	<li><strong>VVBorderTimer</strong>是UIView的子类</li>
+	<li>它为UIView提供使用边界进行倒计时的效果</li>
+	<li>边框角落的半径和线宽在运行时可调</li>
+	<li>倒计时是有颜色渐变效果</li>
+</ul>
+<h2 style="text-align: justify;">怎么用</h2>
+<ol style="text-align: justify;">
+	<li>将VVBorderTimerView.h和VVBorderTimerView.m导入您的工程。请根据您的情况选择使用ARC版本或非ARC版本</li>
+	<li>分配并初始化一个VVBorderTimerView. 设置其背景颜色</li></ol>
+[crayon]<br />
+VVBorderTimerView *btv = [[VVBorderTimerView alloc] initWithFrame:CGRectMake(20, 20, 280, 280)];<br />
+//为计时器设置背景颜色<br />
+btv.backgroundColor = [UIColor clearColor];[/crayon]<br />
+	配置计时器属性，如: 颜色(可选), 总时间和delegate.<br />
+[crayon]<br />
+//上边界为绿色<br />
+UIColor *color0 = [UIColor greenColor];<br />
+//右边黄色<br />
+UIColor *color1 = [UIColor yellowColor];<br />
+//下边橙色<br />
+UIColor *color2 = [UIColor colorWithRed:1.0 green:140.0/255.0 blue:16.0/255.0 alpha:1.0];<br />
+//左边红色<br />
+UIColor *color3 = [UIColor redColor];<br />
+//为计时器指定颜色. 不同颜色将在转角处发生渐变.<br />
+//如果您<strong>没有</strong>指定颜色，或者指定其为nil(btv.colors = nil)，所有边将默认使用黑色<br />
+btv.colors = [NSArray arrayWithObjects:color0,color1,color2,color3,nil];</p>
+
+<p>//为计时器设定总时间<br />
+btv.totalTime = 10;</p>
+
+<p>//为计时器设定delegate<br />
+btv.delegate = self;<br />
+[/crayon]
+<ul>
+	<li>实现计时器的delegate</li>
+</ul>
+[crayon]<br />
+//转角半径(0 代表矩形)<br />
+-(float) cornerRadius:(VVBorderTimerView *)requestor<br />
+{
+return 30;<br />
+}</p>
+
+<p>//计时器线宽<br />
+-(float) lineWidth:(VVBorderTimerView *)requestor<br />
+{
+return 10;<br />
+}</p>
+
+<p>//当计时器停止时，该方法被调用<br />
+-(void) timerViewDidFinishedTiming:(VVBorderTimerView *)aTimerView<br />
+{
+//do something<br />
+}[/crayon]
+<ul>
+	<li>将计时器加入您的viewController的view，并使用 -(void)start 开始计时</li>
+[crayon]</ul><br />
+[self.view addSubview:btv];<br />
+[btv start];<br />
+[/crayon]<br />
+	<li>如果您使用的是非ARC，请<strong>不要忘记</strong>在将计时器加入view结构后释放它。可能您需要保留一个指向该计时器的指针，以便在即使结束后将其移除</li>
+
+&nbsp;</p>
+
+<p>在GitHub网站的<a href="https://github.com/onevcat/VVBorderTimer">这个页面</a>上有一个简单的demo供您参考，如果您感兴趣，可以关注或者分支该项目。祝您好运～
+<h2>Lisence</h2>
+VVBorderTimer is Copyright © 2011 Wei Wang(onevcat), All Rights Reserved, All Wrongs Revenged. Released under the <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD Licence</a>.
+<p style="text-align: justify;">* https://github.com/onevcat/VVBorderTimerView/</p>
+<p style="text-align: justify;">BSD license follows (http://www.opensource.org/licenses/bsd-license.php)<br />
+Copyright (c) 2011 Wei Wang(onevcat) All Rights Reserved.</p>
+<p style="text-align: justify;">Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p></p>
+
+<p><ul>
+	<li style="text-align: justify;">Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+	<li style="text-align: justify;">Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
+</ul>
+<p style="text-align: justify;">THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBU -TORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p><!--:--><!--:en-->&nbsp;
+<h2 style="text-align: justify;">GitHub 链接: <a href="https://github.com/onevcat/VVBorderTimer">https://github.com/onevcat/VVBorderTimerView</a></h2>
+<h2 style="text-align: justify;">是什么</h2>
+<ul style="text-align: justify;">
+	<li><strong>VVBorderTimer</strong>是UIView的子类</li>
+	<li>它为UIView提供使用边界进行倒计时的效果</li>
+	<li>边框角落的半径和线宽在运行时可调</li>
+	<li>倒计时是有颜色渐变效果</li>
+</ul>
+<h2 style="text-align: justify;">怎么用</h2>
+<ol style="text-align: justify;">
+	<li>将VVBorderTimerView.h和VVBorderTimerView.m导入您的工程。请根据您的情况选择使用ARC版本或非ARC版本</li>
+	<li>分配并初始化一个VVBorderTimerView. 设置其背景颜色<br />
+[crayon]<br />
+VVBorderTimerView *btv = [[VVBorderTimerView alloc] initWithFrame:CGRectMake(20, 20, 280, 280)];<br />
+//为计时器设置背景颜色<br />
+btv.backgroundColor = [UIColor clearColor];[/crayon]</li>
+	<li>配置计时器属性，如: 颜色(可选), 总时间和delegate.<br />
+[crayon]<br />
+//上边界为绿色<br />
+UIColor *color0 = [UIColor greenColor];<br />
+//右边黄色<br />
+UIColor *color1 = [UIColor yellowColor];<br />
+//下边橙色<br />
+UIColor *color2 = [UIColor colorWithRed:1.0 green:140.0/255.0 blue:16.0/255.0 alpha:1.0];<br />
+//左边红色<br />
+UIColor *color3 = [UIColor redColor];</li>
+</ol>
+//为计时器指定颜色. 不同颜色将在转角处发生渐变.<br />
+//如果您<strong>没有</strong>指定颜色，或者指定其为nil(btv.colors = nil)，所有边将默认使用黑色<br />
+btv.colors = [NSArray arrayWithObjects:color0,color1,color2,color3,nil];</p>
+
+<p>//为计时器设定总时间<br />
+btv.totalTime = 10;</p>
+
+<p>//为计时器设定delegate<br />
+btv.delegate = self;<br />
+[/crayon]
+<ul>
+	<li>实现计时器的delegate<br />
+[crayon]<br />
+//转角半径(0 代表矩形)<br />
+-(float) cornerRadius:(VVBorderTimerView *)requestor<br />
+{
+return 30;<br />
+}</li>
+</ul>
+&nbsp;</p>
+
+<p>//计时器线宽<br />
+-(float) lineWidth:(VVBorderTimerView *)requestor<br />
+{
+return 10;<br />
+}</p>
+
+<p>//当计时器停止时，该方法被调用<br />
+-(void) timerViewDidFinishedTiming:(VVBorderTimerView *)aTimerView<br />
+{
+//do something<br />
+}[/crayon]
+<ul>
+	<li>将计时器加入您的viewController的view，并使用 -(void)start 开始计时<br />
+[crayon]<br />
+[self.view addSubview:btv];<br />
+[btv start];<br />
+[/crayon]</li>
+	<li>如果您使用的是非ARC，请<strong>不要忘记</strong>在将计时器加入view结构后释放它。可能您需要保留一个指向该计时器的指针，以便在即使结束后将其移除</li>
+</ul>
+&nbsp;</p>
+
+<p>在GitHub网站的<a href="https://github.com/onevcat/VVBorderTimer">这个页面</a>上有一个简单的demo供您参考，如果您感兴趣，可以关注或者分支该项目。祝您好运～
+<h2>Lisence</h2>
+VVBorderTimer is Copyright © 2011 Wei Wang(onevcat), All Rights Reserved, All Wrongs Revenged. Released under the <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD Licence</a>.
+<p style="text-align: justify;">* https://github.com/onevcat/VVBorderTimerView/</p>
+<p style="text-align: justify;">BSD license follows (http://www.opensource.org/licenses/bsd-license.php)<br />
+Copyright (c) 2011 Wei Wang(onevcat) All Rights Reserved.</p>
+<p style="text-align: justify;">Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p></p>
+
+<p><ul>
+	<li style="text-align: justify;">Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+	<li style="text-align: justify;">Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
+</ul>
+<p style="text-align: justify;">THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBU -TORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+&nbsp;
+<h2 style="text-align: justify;">GitHub link: <a href="https://github.com/onevcat/VVBorderTimer">https://github.com/onevcat/VVBorderTimerView</a></h2>
+<h2 style="text-align: justify;">What's this</h2>
+<ul style="text-align: justify;">
+	<li><strong>VVBorderTimer</strong> is a subclass of UIView.</li>
+	<li>It provides an counting down effect using the view's border.</li>
+	<li>The radius of round corners and line width are configurable in runtime.</li>
+	<li>There is also a color transition effect during the counting.</li>
+</ul>
+<h2 style="text-align: justify;">How to use</h2>
+<ol style="text-align: justify;">
+	<li>Import VVBorderTimerView.h and VVBorderTimerView.m to your project. Select either ARC version or non-ARC version for your situation.</li>
+	<li>Alloc and init a VVBorderTimerView. Set its background color.<br />
+[crayon]<br />
+VVBorderTimerView *btv = [[VVBorderTimerView alloc] initWithFrame:CGRectMake(20, 20, 280, 280)];<br />
+//Specify a background color for the timer<br />
+btv.backgroundColor = [UIColor clearColor];[/crayon]</li>
+	<li>Set the properties for the timer: colors(optional), totalTime and delegate.<br />
+[crayon]<br />
+//Top border will be green<br />
+UIColor *color0 = [UIColor greenColor];<br />
+//Right border yellow<br />
+UIColor *color1 = [UIColor yellowColor];<br />
+//Buttom border orange<br />
+UIColor *color2 = [UIColor colorWithRed:1.0 green:140.0/255.0 blue:16.0/255.0 alpha:1.0];<br />
+//Left border red<br />
+UIColor *color3 = [UIColor redColor];</li>
+</ol>
+//Set the colors for the timer. Color transition will be occured in the corner.<br />
+//If your DID NOT specify the colors or specify it to nil(btv.colors = nil), default black color for all edge will be used.<br />
+btv.colors = [NSArray arrayWithObjects:color0,color1,color2,color3,nil];//Set the total time the timer should count in second<br />
+btv.totalTime = 10;</p>
+
+<p>//Set the delegate for the timer<br />
+btv.delegate = self;<br />
+[/crayon]
+<ul>
+	<li>Implement the timer's delegate<br />
+[crayon]<br />
+//Corner radius for a timer(0 means rectangle)<br />
+-(float) cornerRadius:(VVBorderTimerView *)requestor<br />
+{
+return 30;<br />
+}</li>
+</ul>
+&nbsp;</p>
+
+<p>//Line width for a timer<br />
+-(float) lineWidth:(VVBorderTimerView *)requestor<br />
+{
+return 10;<br />
+}</p>
+
+<p>//When the timer stopped, this method will be called<br />
+-(void) timerViewDidFinishedTiming:(VVBorderTimerView *)aTimerView<br />
+{
+//do something<br />
+}
+[/crayon]
+<ul>
+	<li>Add it to your viewController's view and then start the timer using -(void)start<br />
+[crayon]<br />
+[self.view addSubview:btv];<br />
+[btv start];<br />
+[/crayon]</li>
+	<li>DO NOT forget to release the timer after it is added to the view's hierarchy if you use non-ARC. You may want to keey a pointer to the timer, so you can remove it from superview when it stops.</li>
+</ul>
+&nbsp;</p>
+
+<p>You can also find a demo in the github page <a href="https://github.com/onevcat/VVBorderTimer">here</a>. You can watch and fork it if you are intrested in it. Enjoy!
+<h2>Lisence</h2>
+VVBorderTimer is Copyright © 2011 Wei Wang(onevcat), All Rights Reserved, All Wrongs Revenged. Released under the <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD Licence</a>.
+<p style="text-align: justify;">* https://github.com/onevcat/VVBorderTimerView/</p>
+<p style="text-align: justify;">BSD license follows (http://www.opensource.org/licenses/bsd-license.php)<br />
+Copyright (c) 2011 Wei Wang(onevcat) All Rights Reserved.</p>
+<p style="text-align: justify;">Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p></p>
+
+<p><ul>
+	<li style="text-align: justify;">Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+	<li style="text-align: justify;">Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
+</ul>
+<p style="text-align: justify;">THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBU -TORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p><!--:--><!--:ja-->&nbsp;
+<h2 style="text-align: justify;">GitHub 链接: <a href="https://github.com/onevcat/VVBorderTimer">https://github.com/onevcat/VVBorderTimerView</a></h2>
+<h2 style="text-align: justify;">是什么</h2>
+<ul style="text-align: justify;">
+	<li><strong>VVBorderTimer</strong>是UIView的子类</li>
+	<li>它为UIView提供使用边界进行倒计时的效果</li>
+	<li>边框角落的半径和线宽在运行时可调</li>
+	<li>倒计时是有颜色渐变效果</li>
+</ul>
+<h2 style="text-align: justify;">怎么用</h2>
+<ol style="text-align: justify;">
+	<li>将VVBorderTimerView.h和VVBorderTimerView.m导入您的工程。请根据您的情况选择使用ARC版本或非ARC版本</li>
+	<li>分配并初始化一个VVBorderTimerView. 设置其背景颜色<br />
+[crayon]<br />
+VVBorderTimerView *btv = [[VVBorderTimerView alloc] initWithFrame:CGRectMake(20, 20, 280, 280)];<br />
+//为计时器设置背景颜色<br />
+btv.backgroundColor = [UIColor clearColor];[/crayon]</li>
+	<li>配置计时器属性，如: 颜色(可选), 总时间和delegate.<br />
+[crayon]<br />
+//上边界为绿色<br />
+UIColor *color0 = [UIColor greenColor];<br />
+//右边黄色<br />
+UIColor *color1 = [UIColor yellowColor];<br />
+//下边橙色<br />
+UIColor *color2 = [UIColor colorWithRed:1.0 green:140.0/255.0 blue:16.0/255.0 alpha:1.0];<br />
+//左边红色<br />
+UIColor *color3 = [UIColor redColor];</li>
+</ol>
+//为计时器指定颜色. 不同颜色将在转角处发生渐变.<br />
+//如果您<strong>没有</strong>指定颜色，或者指定其为nil(btv.colors = nil)，所有边将默认使用黑色<br />
+btv.colors = [NSArray arrayWithObjects:color0,color1,color2,color3,nil];</p>
+
+<p>//为计时器设定总时间<br />
+btv.totalTime = 10;</p>
+
+<p>//为计时器设定delegate<br />
+btv.delegate = self;<br />
+[/crayon]
+<ul>
+	<li>实现计时器的delegate<br />
+[crayon]<br />
+//转角半径(0 代表矩形)<br />
+-(float) cornerRadius:(VVBorderTimerView *)requestor<br />
+{
+return 30;<br />
+}</li>
+</ul>
+&nbsp;</p>
+
+<p>//计时器线宽<br />
+-(float) lineWidth:(VVBorderTimerView *)requestor<br />
+{
+return 10;<br />
+}</p>
+
+<p>//当计时器停止时，该方法被调用<br />
+-(void) timerViewDidFinishedTiming:(VVBorderTimerView *)aTimerView<br />
+{
+//do something<br />
+}[/crayon]
+<ul>
+	<li>将计时器加入您的viewController的view，并使用 -(void)start 开始计时<br />
+[crayon]<br />
+[self.view addSubview:btv];<br />
+[btv start];<br />
+[/crayon]</li>
+	<li>如果您使用的是非ARC，请<strong>不要忘记</strong>在将计时器加入view结构后释放它。可能您需要保留一个指向该计时器的指针，以便在即使结束后将其移除</li>
+</ul>
+&nbsp;</p>
+
+<p>在GitHub网站的<a href="https://github.com/onevcat/VVBorderTimer">这个页面</a>上有一个简单的demo供您参考，如果您感兴趣，可以关注或者分支该项目。祝您好运～
+<h2>Lisence</h2>
+VVBorderTimer is Copyright © 2011 Wei Wang(onevcat), All Rights Reserved, All Wrongs Revenged. Released under the <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD Licence</a>.
+<p style="text-align: justify;">* https://github.com/onevcat/VVBorderTimerView/</p>
+<p style="text-align: justify;">BSD license follows (http://www.opensource.org/licenses/bsd-license.php)<br />
+Copyright (c) 2011 Wei Wang(onevcat) All Rights Reserved.</p>
+<p style="text-align: justify;">Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p></p>
+
+<p><ul>
+	<li style="text-align: justify;">Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+	<li style="text-align: justify;">Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
+</ul>
+<p style="text-align: justify;">THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBU -TORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+&nbsp;
+<h2 style="text-align: justify;">GitHub link: <a href="https://github.com/onevcat/VVBorderTimer">https://github.com/onevcat/VVBorderTimerView</a></h2>
+<h2 style="text-align: justify;">What's this</h2>
+<ul style="text-align: justify;">
+	<li><strong>VVBorderTimer</strong> is a subclass of UIView.</li>
+	<li>It provides an counting down effect using the view's border.</li>
+	<li>The radius of round corners and line width are configurable in runtime.</li>
+	<li>There is also a color transition effect during the counting.</li>
+</ul>
+<h2 style="text-align: justify;">How to use</h2>
+<ol style="text-align: justify;">
+	<li>Import VVBorderTimerView.h and VVBorderTimerView.m to your project. Select either ARC version or non-ARC version for your situation.</li>
+	<li>Alloc and init a VVBorderTimerView. Set its background color.<br />
+[crayon]<br />
+VVBorderTimerView *btv = [[VVBorderTimerView alloc] initWithFrame:CGRectMake(20, 20, 280, 280)];<br />
+//Specify a background color for the timer<br />
+btv.backgroundColor = [UIColor clearColor];[/crayon]</li>
+	<li>Set the properties for the timer: colors(optional), totalTime and delegate.<br />
+[crayon]<br />
+//Top border will be green<br />
+UIColor *color0 = [UIColor greenColor];<br />
+//Right border yellow<br />
+UIColor *color1 = [UIColor yellowColor];<br />
+//Buttom border orange<br />
+UIColor *color2 = [UIColor colorWithRed:1.0 green:140.0/255.0 blue:16.0/255.0 alpha:1.0];<br />
+//Left border red<br />
+UIColor *color3 = [UIColor redColor];</li>
+</ol>
+//Set the colors for the timer. Color transition will be occured in the corner.<br />
+//If your DID NOT specify the colors or specify it to nil(btv.colors = nil), default black color for all edge will be used.<br />
+btv.colors = [NSArray arrayWithObjects:color0,color1,color2,color3,nil];//Set the total time the timer should count in second<br />
+btv.totalTime = 10;</p>
+
+<p>//Set the delegate for the timer<br />
+btv.delegate = self;<br />
+[/crayon]
+<ul>
+	<li>Implement the timer's delegate<br />
+[crayon]<br />
+//Corner radius for a timer(0 means rectangle)<br />
+-(float) cornerRadius:(VVBorderTimerView *)requestor<br />
+{
+return 30;<br />
+}</li>
+</ul>
+&nbsp;</p>
+
+<p>//Line width for a timer<br />
+-(float) lineWidth:(VVBorderTimerView *)requestor<br />
+{
+return 10;<br />
+}</p>
+
+<p>//When the timer stopped, this method will be called<br />
+-(void) timerViewDidFinishedTiming:(VVBorderTimerView *)aTimerView<br />
+{
+//do something<br />
+}
+[/crayon]
+<ul>
+	<li>Add it to your viewController's view and then start the timer using -(void)start<br />
+[crayon]<br />
+[self.view addSubview:btv];<br />
+[btv start];<br />
+[/crayon]</li>
+	<li>DO NOT forget to release the timer after it is added to the view's hierarchy if you use non-ARC. You may want to keey a pointer to the timer, so you can remove it from superview when it stops.</li>
+</ul>
+&nbsp;</p>
+
+<p>You can also find a demo in the github page <a href="https://github.com/onevcat/VVBorderTimer">here</a>. You can watch and fork it if you are intrested in it. Enjoy!
+<h2>Lisence</h2>
+VVBorderTimer is Copyright © 2011 Wei Wang(onevcat), All Rights Reserved, All Wrongs Revenged. Released under the <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD Licence</a>.
+<p style="text-align: justify;">* https://github.com/onevcat/VVBorderTimerView/</p>
+<p style="text-align: justify;">BSD license follows (http://www.opensource.org/licenses/bsd-license.php)<br />
+Copyright (c) 2011 Wei Wang(onevcat) All Rights Reserved.</p>
+<p style="text-align: justify;">Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p></p>
+
+<p><ul>
+	<li style="text-align: justify;">Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+	<li style="text-align: justify;">Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
+</ul>
+<p style="text-align: justify;">THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBU -TORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p><!--:--></p>

@@ -1,0 +1,343 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>带边框的UIImage缩放 - OneV's Den</title>
+  <meta name="author" content="onevcat">
+
+  
+  <meta name="description" content="一个带边框的UIImage如果使用常规的缩放，边框部分将被按照缩放比例拉伸或压缩，有些时候这并不是我们所期望的..比如这个边框是根据图片大小变化的外框。比如下面的类似按钮的不明物体图片：主体为渐变蓝色，边框为外圈白色，灰色底板为背景。Origin post can be found here. I &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.onevcat.com/blog/2011/12/21/uiimage">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="OneV's Den" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">OneV's Den</a></h1>
+  
+    <h2>thinking and recording</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.onevcat.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">带边框的UIImage缩放</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-21T00:00:00+09:00" pubdate data-updated="true">Dec 21<span>st</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2011/12/3063712_114121013911_2.jpg"><img class="aligncenter size-full wp-image-429" title="3063712_114121013911_2" src="http://www.onevcat.com/wp-content/uploads/2011/12/3063712_114121013911_2-e1324476057897.jpg" alt="" width="1024" height="256" /></a>一个带边框的UIImage如果使用常规的缩放，边框部分将被按照缩放比例拉伸或压缩，有些时候这并不是我们所期望的..比如这个边框是根据图片大小变化的外框。比如下面的类似按钮的不明物体图片：主体为渐变蓝色，边框为外圈白色，灰色底板为背景。<!--:--><!--:en--><a href="http://www.onevcat.com/wp-content/uploads/2011/12/3063712_114121013911_2-e1324476057897.jpg"><img class="aligncenter size-full wp-image-429" title="3063712_114121013911_2" src="http://www.onevcat.com/wp-content/uploads/2011/12/3063712_114121013911_2-e1324476057897.jpg" alt="" width="1024" height="256" /></a>Origin post can be found <a href="http://iphonedevelopertips.com/user-interface/ios-5-uiimage-and-resizableimagewithcapinsets.html">here</a>.</p>
+
+<p>I recently began writing a short example to learn more about the iOS 5 Appearance API and customizing <strong>UINavigationBar</strong> objects. The goal was to add a custom background, title and text to the navbar. Once I had this working, to keep a consist look across my application, I began tweaking the buttons on the navbar using the same Appearance API.<!--:--><!--more--><!--:zh--></p>
+
+<p><img class="alignnone size-full wp-image-10771" title="blueButton" src="http://iphonedevelopertips.com/wp-content/uploads/2011/12/blueButton.gif" alt="" width="121" height="60" /></p>
+
+<p>常见的按钮添加和背景设置如下：</p>
+
+<p>[crayon]<br />
+UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(80, 130, 160, 44)];<br />
+[button setTitle:@&#8221;Test Button&#8221; forState:UIControlStateNormal];</p>
+
+<p>// Image with without cap insets<br />
+UIImage *buttonImage = [UIImage imageNamed:@&#8221;blueButton&#8221;];</p>
+
+<p>[button addTarget:self action:@selector(buttonPressed:) forControlEvents: UIControlEventTouchUpInside];<br />
+[button setBackgroundImage:buttonImage forState:UIControlStateNormal];<br />
+[[self view] addSubview:button];<br />
+[/crayon]</p>
+
+<p>所得到的按钮会相当悲剧&#8230;</p>
+
+<p><img class="alignnone size-full wp-image-10767" title="button0" src="http://iphonedevelopertips.com/wp-content/uploads/2011/12/button0.gif" alt="" width="238" height="76" /></p>
+
+<p>边框，特别是左右边框由于按钮frame过大被惨烈拉伸&#8230;</p>
+
+<p>iOS5中提供了一个新的UIImage方法，<a href="http://developer.apple.com/library/IOs/#documentation/UIKit/Reference/UIImage_Class/Reference/Reference.html">resizableImageWithCapInsets:</a>，可以将图片转换为以某一偏移值为偏移的可伸缩图像（偏移值内的图像将不被拉伸或压缩）。</p>
+
+<p>用法引述如下：
+<blockquote>
+<h3 id="jumpTo_32">resizableImageWithCapInsets:</h3>
+Creates and returns a new image object with the specified cap insets.
+<div>- (UIImage *)resizableImageWithCapInsets:(UIEdgeInsets)<em>capInsets</em></div>
+<div>
+<h5>Parameters</h5>
+<dl><dt><em>capInsets</em></dt><dd>The values to use for the cap insets.</dd></dl></div></blockquote></p>
+
+<p>
+<div>
+<h5>Return Value</h5>
+A new image object with the specified cap insets.</div></p>
+
+<p>
+<div>
+<h5>Discussion</h5>
+You use this method to add cap insets to an image or to change the existing cap insets of an image. In both cases, you get back a new image and the original image remains untouched.</div></p>
+
+<p>During scaling or resizing of the image, areas covered by a cap are not scaled or resized. Instead, the pixel area not covered by the cap in each direction is tiled, left-to-right and top-to-bottom, to resize the image. This technique is often used to create variable-width buttons, which retain the same rounded corners but whose center region grows or shrinks as needed. For best performance, use a tiled area that is a <code>1x1</code> pixel area in size.</p>
+
+<p>
+<div /></p>
+
+<p>输入参数为一个capInsets结构体：
+<blockquote>Defines inset distances for views.</blockquote></p>
+
+<p>typedef struct {<br />
+CGFloat top, left, bottom, right;<br />
+} UIEdgeInsets;
+分别表示上左下右四个方向的偏移量。于是把上面按钮的UIImage改为如下形式：<br />
+[crayon]<br />
+// Image with cap insets<br />
+UIImage *buttonImage = [[UIImage imageNamed:@&#8221;blueButton&#8221;]<br />
+resizableImageWithCapInsets:UIEdgeInsetsMake(0, 16, 0, 16)];<br />
+[/crayon]<br />
+可以得到如下按钮：</p>
+
+<p><img class="alignnone size-full wp-image-10768" title="button1" src="http://iphonedevelopertips.com/wp-content/uploads/2011/12/button1.gif" alt="" width="239" height="76" /></p>
+
+<p>问题得到解决。</p>
+
+<p>但是值得注意的是该方法需要至少iOS5的运行环境，因此对于需要开发支持iOS5之前的App来说是不可行的。替代方案是<a href="http://developer.apple.com/library/IOs/#documentation/UIKit/Reference/UIImage_Class/DeprecationAppendix/AppendixADeprecatedAPI.html#//apple_ref/occ/instm/UIImage/stretchableImageWithLeftCapWidth:topCapHeight:">stretchableImageWithLeftCapWidth:topCapHeight:</a>，但是在iOS5中，这已经是被Deprecated的方法了，而且该方法只能以1px作为重复铺满拉伸区域，无法做到类似渐变等图片效果，是存在一定局限的。</p>
+
+<p><!--:--><!--:en--></p>
+
+<p>As I got further into the customization of the buttons, I ran into a method within <strong>UIImage</strong> that was introduced in iOS 5, <strong>resizableImageWithCapInsets</strong>. I found myself getting side-tracked from the original idea of navbar look and feel, to understanding how cap insets work. This post delves into what I learned.
+<h5>Cap Insets with UIButton</h5>
+As the documentation describes, you use <strong>resizableImageWithCapInsets</strong> to add cap insets to an image, when the image is resized or scaled, cap areas are not affected. The best way to understand this is through an example.</p>
+
+<p>Let’s assume I want all the buttons on my UI to have a similar look, a gradient with a white border. Below is the image used for the examples in this post (the button is shown on a gray backdrop so you can see the white border):</p>
+
+<p><img title="blueButton" src="http://iphonedevelopertips.com/wp-content/uploads/2011/12/blueButton.gif" alt="" width="121" height="60" /></p>
+
+<p>Depending on the context of where the button appears, its size may vary. The code to create a button with the image and the corresponding output follow:
+<div>
+<div>[crayon]<br />
+UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(80, 130, 160, 44)];<br />
+[button setTitle:@&#8221;Test Button&#8221; forState:UIControlStateNormal];// Image with without cap insets<br />
+UIImage *buttonImage = [UIImage imageNamed:@&#8221;blueButton&#8221;];[button addTarget:self action:@selector(buttonPressed:) forControlEvents: UIControlEventTouchUpInside];<br />
+[button setBackgroundImage:buttonImage forState:UIControlStateNormal];<br />
+[[self view] addSubview:button];<br />
+[/crayon]</div>
+</div>
+<img title="button0" src="http://iphonedevelopertips.com/wp-content/uploads/2011/12/button0.gif" alt="" width="238" height="76" /></p>
+
+<p>As you can see, the button is stretched in all directions. Let’s change the code to include cap insets, however, before we do that, let’s look at the signature of the cap insets method:</p>
+
+<p>- (UIImage *)resizableImageWithCapInsets:(UIEdgeInsets)capInsets</p>
+
+<p>Looking on step further, <strong>UIEdgeInserts</strong> is defined as:
+<div>
+<div>
+<pre>typedef struct {
+   CGFloat top, left, bottom, right;
+} UIEdgeInsets;</pre>
+</div>
+</div>
+<strong>UIEdgeInsets</strong> is structure that specifies float values for each cap inset: top, left, bottom and right areas of an image. To apply this to the image for the button, here is all we need to do:
+<div>
+<div>[crayon]<br />
+// Image with cap insets<br />
+UIImage *buttonImage = [[UIImage imageNamed:@&#8221;blueButton&#8221;]<br />
+resizableImageWithCapInsets:UIEdgeInsetsMake(0, 16, 0, 16)];<br />
+[/crayon]</div>
+</div>
+This requests that the left and right 16 pixels of the original image are not scaled or resized when stretching the image to accomodate the button size frame defined above. The end results is as shown below:</p>
+
+<p><img title="button1" src="http://iphonedevelopertips.com/wp-content/uploads/2011/12/button1.gif" alt="" width="239" height="76" />
+<h5>Cap Insets with UIBarButtonItem</h5>
+We can use the same image for a button on a navbar (I’ll show the specifics in the next post on customizing the navbar). Without specifying the cap insets, the button looks as follows:</p>
+
+<p><img title="backButton0" src="http://iphonedevelopertips.com/wp-content/uploads/2011/12/backButton0.gif" alt="" width="340" height="80" /></p>
+
+<p>The code below specifies an image where 12 pixels on the top, left, bottom and right be preserved when stretching/resizing the button:
+<div>
+<div>[crayon]UIImage *backButton = [[UIImage imageNamed:@&#8221;blueButton&#8221;]<br />
+resizableImageWithCapInsets:UIEdgeInsetsMake(12, 12, 12, 12)];<br />
+[/crayon]</div>
+</div>
+The output nows looks as follows:</p>
+
+<p><img title="backButton1" src="http://iphonedevelopertips.com/wp-content/uploads/2011/12/backButton1.gif" alt="" width="340" height="80" /><!--:--></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">onevcat</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-21T00:00:00+09:00" pubdate data-updated="true">Dec 21<span>st</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.onevcat.com/blog/2011/12/21/uiimage/" data-via="" data-counturl="http://blog.onevcat.com/blog/2011/12/21/uiimage/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/12/20/%E5%AE%9E%E4%BA%86%E4%B8%AA%E9%AA%8C/" title="Previous Post: 实了个验...">&laquo; 实了个验...</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/12/22/password/" title="Next Post: 凑热闹，谈密码，Challenge-Response密码验证">凑热闹，谈密码，Challenge-Response密码验证 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/03/30/zombie-ninjas-attack-a-survivors-retrospective/">Zombie Ninjas Attack: A survivor's retrospective</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/24/mgtwitterengine%E4%B8%ADtwitter-api-1-1%E7%9A%84%E4%BD%BF%E7%94%A8/">MGTwitterEngine中Twitter API 1.1的使用</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/xcode-plugin/">Xcode 4 插件制作入门</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/26/do_not_pause_me/">Unity3D中暂停时的动画及粒子效果实现</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/18/xuporter/">Unity编译至Xcode工程后自动添加文件和库的方法</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - onevcat -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

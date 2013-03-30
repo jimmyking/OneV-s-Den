@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Unity编译至Xcode工程后自动添加文件和库的方法 - OneV's Den</title>
+  <meta name="author" content="onevcat">
+
+  
+  <meta name="description" content="废话之前
+XUPorter项目Github链接
+Unity打包文件下载 为什么想要自动添加
+由于Unity是全平台的游戏开发环境，在开发中针对特定平台的特定功能时，很难避免根据对象平台的不同而引入不同的依赖。包括源码，需要的库和框架等。在使用各种插件后这种情况愈发严重：比如想加入内购功能， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.onevcat.com/blog/2012/12/18/xuporter">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="OneV's Den" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">OneV's Den</a></h1>
+  
+    <h2>thinking and recording</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.onevcat.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Unity编译至Xcode工程后自动添加文件和库的方法</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-18T00:00:00+09:00" pubdate data-updated="true">Dec 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/12/1.png"><img class="aligncenter size-full wp-image-1072" title="XUPorter" src="http://www.onevcat.com/wp-content/uploads/2012/12/1.png" alt="" width="763" height="256" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">废话之前</p>
+<p style="text-align: justify;"><a href="https://github.com/onevcat/XUPorter">XUPorter项目Github链接</a>
+<a href="http://www.onevcat.com/wp-content/uploads/2012/12/XUPorter.unitypackage.zip">Unity打包文件下载</a></p></p>
+
+<p><h3 style="text-align: justify;">为什么想要自动添加</h3>
+<p style="text-align: justify;">由于Unity是全平台的游戏开发环境，在开发中针对特定平台的特定功能时，很难避免根据对象平台的不同而引入不同的依赖。包括源码，需要的库和框架等。在使用各种插件后这种情况愈发严重：比如想加入内购功能，StroreKit.framework必不可少，而且也需要相应的处理代码。按照一般的Unity插件开发流程，在完成.cs的接口声明和Unity侧的调用实现后，最重要的当然是在iOS native侧完成实现。而在以前，包括依赖库和所有源码文件，都只有在Unity生成Xcode工程之后，再手动添加。如果工程小依赖少的话花不了太多时间，但是如果项目很大，很可能折腾一次就要十来分钟，严重影响了工作效率，必须加以解决。</p></p>
+
+<p><h3 style="text-align: justify;">怎么办</h3>
+<p style="text-align: justify;">Unity开发团队也意识到了这个问题，在Unity编译的最后加入了一个脚本调用的命令，会自动搜索Editor文件夹下的PostprocessBuildPlayer，并进行调用，在该文件中可以自己加入脚本来向Xcode中添加库和文件。关于PostprocessBuildPlayer的详细信息，可以参看<a href="http://docs.unity3d.com/Documentation/Manual/BuildPlayerPipeline.html">官方文档</a>，关于向Xcode中添加文件或库，gonzoua的<a href="https://github.com/gonzoua/xcs">xcs</a>也许是不错的选择。但是似乎xcs只能针对Xcode3来添加，在Xcode4中，主工程文件的结构发生了改变，导致xcs失效，而这个项目也迟迟没有更新（也许有时间我会考虑接手继续这个项目，但肯定不是现在&#8230;）。因此不得不打其他主意。</p>
+<p style="text-align: justify;"><!--:--><!--more--><!--:zh--></p>
+<p style="text-align: justify;">在Unity3.5中，加入了一个很棒的标签——<a href="http://docs.unity3d.com/Documentation/ScriptReference/PostProcessBuildAttribute.html">[PostProcessBuild]</a>，被该标签标注的函数将自动在build player后被调用，这为大家提供了一个不需要用脚本和命令行就能添加或修改编译得到的工程的绝好的入口。darktable用python实现了一个Xcode4工程文件读写的接口<a href="https://bitbucket.org/darktable/mod-pbxproj/overview">Mod PBXProj</a>，但是对于Unity来说，更需要的是C#的实现。Cariola完成了<a href="https://github.com/dcariola/XCodeEditor-for-Unity">一部分实现</a>，但是存在一些错误和不太好用的地方，代码也很乱。我在其基础上进行了一些改进和整理。但是因为变动的还是比较大，很难merge回去，所以决定自己开一个项目来继续推进这个项目。</p></p>
+
+<p><h3 style="text-align: justify;">XUPorter</h3>
+<p style="text-align: justify;">我把它叫做XUPorter，a dependency porter from Unity to Xcode。XUPorter可以读取Xcode工程文件并进行解析（再次感谢darktable的工作），之后在Unity工程的Assets目录下寻找所有的.projmods文件，并根据文件内容向工程中添加文件或库。</p></p>
+
+<p><h4 style="text-align: justify;">使用方法</h4>
+<p style="text-align: justify;">将Github项目中的所有文件copy到Unity工程文件夹下的/Assets/Editor目录中，XUPorter使用一个<a href="https://github.com/prime31/UIToolkit/blob/master/Assets/Plugins/MiniJSON.cs">改良版的MiniJSON</a>来进行。如果你的项目中已经在使用这个MiniJSON了的话，可以直接将XUPorter文件夹下的MiniJSON文件夹删掉；如果不一样的话，你可以选择其中一个重构一下或者加上命名空间来解决类名冲突。接下来，Mods文件夹下是示例文件以及需要导入Xcode的文件。在看完以后你需要把Mods文件夹下的所有.projmods文件以及Mods/iOS文件夹下的内容删除或者替换为你所需要的内容。</p>
+<p style="text-align: justify;">在<a href="http://d.pr/f/HAzc">这里</a>提供了.unitypackege格式文件的下载，你也可以选择下载打包好的文件并导入你的工程，之后的步骤和上面一样。</p>
+<p style="text-align: justify;">.projmods文件是一个JSON格式的配置patch文件，定义了要如何设置Xcode工程。举个基本的例子，比如KKKeychain.projmods：</p>
+<p style="text-align: justify;">各参数定义如下： * group：所有由该projmods添加的文件和文件夹所属的Xcode中的group名称 * libs：在Xcode Build Phases中需要添加的动态链接库的名称，比如libz.dylib * frameworks：在Xcode Build Phases中需要添加的框架的名称，比如Security.framework * headerpaths：Xcode中编译设置中的Header Search Paths路径 * files：加入工程的文件名 * folders：加入工程的文件夹，其中所有的文件和文件夹都将被加入工程中 * excludes：忽略的文件的正则表达式，匹配的文件将不会被加入工程中 更多的例子可以参看Mods文件夹中的其他projmods文件。所有的定义路径都是基于当前projmods文件位置的相对路径。 最后，在完成projmods后，Unity会在编译完成后，调用XCodePostProcess的OnPostProcessBuild来对编译得到的Xcode工程进行修改：</p><!--:--><!--:en-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">onevcat</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-18T00:00:00+09:00" pubdate data-updated="true">Dec 18<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.onevcat.com/blog/2012/12/18/xuporter/" data-via="" data-counturl="http://blog.onevcat.com/blog/2012/12/18/xuporter/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/11/16/memory-in-unity3d/" title="Previous Post: Unity 3D中的内存管理">&laquo; Unity 3D中的内存管理</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/01/26/do_not_pause_me/" title="Next Post: Unity3D中暂停时的动画及粒子效果实现">Unity3D中暂停时的动画及粒子效果实现 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/03/30/zombie-ninjas-attack-a-survivors-retrospective/">Zombie Ninjas Attack: A survivor's retrospective</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/24/mgtwitterengine%E4%B8%ADtwitter-api-1-1%E7%9A%84%E4%BD%BF%E7%94%A8/">MGTwitterEngine中Twitter API 1.1的使用</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/xcode-plugin/">Xcode 4 插件制作入门</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/26/do_not_pause_me/">Unity3D中暂停时的动画及粒子效果实现</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/18/xuporter/">Unity编译至Xcode工程后自动添加文件和库的方法</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - onevcat -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

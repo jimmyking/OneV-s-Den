@@ -1,0 +1,2176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[OneV's Den]]></title>
+  <link href="http://blog.onevcat.com/atom.xml" rel="self"/>
+  <link href="http://blog.onevcat.com/"/>
+  <updated>2013-03-31T00:51:18+09:00</updated>
+  <id>http://blog.onevcat.com/</id>
+  <author>
+    <name><![CDATA[onevcat]]></name>
+    <email><![CDATA[onev@onevcat.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Zombie Ninjas Attack: A survivor's retrospective]]></title>
+    <link href="http://blog.onevcat.com/blog/2013/03/30/zombie-ninjas-attack-a-survivors-retrospective/"/>
+    <updated>2013-03-30T23:26:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2013/03/30/zombie-ninjas-attack-a-survivors-retrospective</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MGTwitterEngine中Twitter API 1.1的使用]]></title>
+    <link href="http://blog.onevcat.com/blog/2013/03/24/mgtwitterengine%E4%B8%ADtwitter-api-1-1%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <updated>2013-03-24T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2013/03/24/mgtwitterengine中twitter-api-1-1的使用</id>
+    <content type="html"><![CDATA[<p><!--:zh--><h2><span style="font-size: 13px; font-weight: normal;">在iOS5中使用Twitter framework或者在iOS6中使用Social framework来完成Twitter的集成是非常简单和轻松的，但是如果应用要针对iOS5之前的系统版本，那么就不能使用iOS提供的框架了。一个比较常见也是使用最广泛的选择是</span><a style="font-size: 13px; font-weight: normal;" href="https://github.com/mattgemmell/MGTwitterEngine">MGTwitterEngine</a><span style="font-size: 13px; font-weight: normal;">，比如</span><a style="font-size: 13px; font-weight: normal;" href="http://www.onevcat.com/showcase/pomodoro_do/">PomodoroDo</a><span style="font-size: 13px; font-weight: normal;">选择使用的就是该框架。</span></h2>
+但是今天在对PomodoroDo作更新的时候，发现Twitter的分享无法使用了，在查阅Twitter文档说明之后，发现这是Twitter采用了新版API的原因。默认状况下MGTwitterEngine采用的是v1版的API，并且使用XML的版本进行请求，而在1.1中，将<a href="https://dev.twitter.com/docs/api/1.1/overview#JSON_support_only">只有JSON方式的API可以使用</a>。v1.0版本的API已经于2013年3月5日被完全废弃，因此想要继续使用MGTwitterEngine来适配iOS5之前的Twitter集成需求，就需要将MGTwitterEngine的请求改为JSON方式。MGTwitterEngine也考虑到了这一点，但是因为时间比较古老了，MGTwitterEngine使用了YAJL来作为JSON的Wrapper，因此还需要将YAJL集成进来。下午的时候尝试了一会儿，成功地让MGTwitterEngine用上了1.1的Twitter API，为了以防之后别人或是自己可能遇到同样的问题，将更新的方法在此留底备忘。
+<ol>
+	<li>导入YAJL Framework
+<ul>
+	<li>YAJL的OC实现，从如下地址下载该框架: <a href="https://github.com/gabriel/yajl-objc/download">https://github.com/gabriel/yajl-objc/download</a>s (2013年3月24日的最新版本为YAJL 0.3.1 for iOS)</li>
+	<li>解压下载得到的zip，将解压后的YAJLiOS.framework加入项目工程</li>
+	<li>在Xcode的Build Setting里在Other Linker Flags中添加-ObjC和-all_load标记</li>
+</ul>
+</li>
+	<li>加入MGTwitterEngine的JSON相关代码
+<ul>
+	<li>从MGTwitterEngine的页面down下该项目: <a href="https://github.com/mattgemmell/MGTwitterEngine">https://github.com/mattgemmell/MGTwitterEngine</a>。当然如果有新版或者有别的branch可以用的话更省事儿，但是鉴于MGTwitterEngine现在的活跃度来说估计可能性不大，所以还是乖乖自己更新吧。</li>
+	<li>解开下载的zip，用Xcode打开MGTwitterEngine.xcodeproj工程文件，将其中Twitter YAJL Parsers组下的所有文件copy到自己的项目中。</li>
+</ul>
+</li>
+	<li>YAJL头文件集成
+<ul>
+	<li>接下来是C和OC接口头文件的导入，从下面下载YAJL库：<a href="https://github.com/thinglabs/yajl-objc">https://github.com/thinglabs/yajl-objc</a></li>
+	<li>在下载得到的文件夹中，寻找并将以下h文件拷贝到自己的工程中：
+<ul>
+	<li>yajl_common.h</li>
+	<li>yajl_gen.h</li>
+	<li>yajl_parse.h</li>
+	<li>NSObject+YAJL.h</li>
+	<li>YAJL.h</li>
+	<li>YAJLDocument.h</li>
+	<li>YAJLGen.h</li>
+	<li>YAJLParser.h</li>
+</ul>
+</li>
+</ul>
+</li>
+	<li>最后是在MGTwitterEngine设定为使用v1.1 API以及JSON方式请求
+<ul>
+	<li>在MGTwitterEngine.m中，将对应代码修改为以下：
+<pre>#define USE_LIBXML 0</pre>
+<pre>#define TWITTER_DOMAIN @"api.twitter.com/1.1"</pre>
+</li>
+	<li>在MGTwitterEngineGlobalHeader.h，启用YAJL
+<pre>#define YAJL_AVAILABLE 1</pre>
+</li>
+</ul>
+</li>
+</ol>
+本文参考：</p>
+
+<p><a href="https://github.com/mattgemmell/MGTwitterEngine/issues/107">https://github.com/mattgemmell/MGTwitterEngine/issues/107</a></p>
+
+<p><a href="http://damienh.org/2009/06/20/setting-up-mgtwitterengine-with-yajl-106-for-iphone-development/">http://damienh.org/2009/06/20/setting-up-mgtwitterengine-with-yajl-106-for-iphone-development/</a><!--:--><!--:en-->&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Xcode 4 插件制作入门]]></title>
+    <link href="http://blog.onevcat.com/blog/2013/02/02/xcode-plugin/"/>
+    <updated>2013-02-02T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2013/02/02/xcode-plugin</id>
+    <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2013/02/QQ20130202-15.png"><img class="aligncenter size-full wp-image-1095" title="QQ20130202-15" src="http://www.onevcat.com/wp-content/uploads/2013/02/QQ20130202-15.png" alt="" width="663" height="200" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">本文欢迎转载，但烦请保留此行出处信息：<a href="http://www.onevcat.com/2013/02/xcode-plugin/">http://www.onevcat.com/2013/02/xcode-plugin/</a></p>
+<p style="text-align: justify;">本文将介绍创建一个Xcode4插件所需要的基本步骤以及一些常用的方法。请注意为Xcode创建插件并没有任何的官方支持，因此本文所描述的方法和提供的信息可能会随Apple在Xcode上做的变化而失效。另外，由于创建插件会使用到私有API，因此Xcode插件也不可能被提交到Mac App Store上进行出售。</p>
+<p style="text-align: justify;">本文内容是基于Xcode 4.6（4H127）完成的，但是应该可以适用于任意的Xcode 4.X版本。VVPlugInDemo的工程文件我放到了github上，有需要的话您可以从<a href="https://github.com/onevcat/VVPluginDemo">这里下载</a>并作为参考和起始来使用。</p></p>
+
+<p><h2 style="text-align: justify;">综述</h2>
+<p style="text-align: justify;">Xcode本身作为一个IDE来说已经可以算上优秀，但是依然会有很多缺失的功能，另外在开发中针对自己的开发需求，创建一些便利的IDE插件，必定将大为加快开发速度。由于苹果官方并不对Xcode插件提供任何技术和文档支持，因此对于大部分开发者来说可能难于上手。虽然没有官方支持，但是在Xcode中开发并使用插件是可能的，并且也是被默许的。在Xcode启动的时候，Xcode将会寻找位于~/Library/Application Support/Developer/Shared/Xcode/Plug-ins文件夹中的后缀名为.xcplugin的bundle作为插件进行加载（运行其中的可执行文件），这就可以令我们光明正大合法合理地将我们的代码注入（虽然这个词有点不好听）Xcode，并得到运行。因此，想要创建Xcode插件，<strong>我们需要创建Bundle工程并将编译的bundle放到上面所说的插件目录中去</strong>，这就是Xcode插件的原理。</p>
+<p style="text-align: justify;">需要特别说明的是，因为Xcode会在启动时加载你的插件，这样就相当于你的代码有机会注入Xcode。只要你的插件加载成功，那么它将和Xcode共用一个进程，也就是说当你的代码crash的时候，Xcode也会随之crash。同样的情况也可能在Xcode版本更新的时候，由于兼容性问题而出现（因为插件可能使用私有API，Apple没有义务去维护这些API的可用性）。在出现这种情况的时候，可以直接删除插件目录下的导致问题的xcplugin文件即可。</p>
+<p style="text-align: justify;"><!--:--><!--more--><!--:zh--></p></p>
+
+<p><h2 style="text-align: justify;">你的第一个插件</h2>
+<p style="text-align: justify;">我将通过制作一个简单的demo插件来说明一般Xcode插件的编写方法，这个插件将在Xcode的Edit菜单中加入一个叫做“What is selected”的项目，当你点击这个菜单命令的时候，将弹出一个警告框，提示你现在在编辑器中所选中的内容。我相信这个例子能包含绝大部分在插件创建中所必须的步骤和一些有用的方法。由于我自己也只是个半吊子开发者，水平十分有限，因此错误和不当之处还恳请大家轻喷多原谅，并帮助我改正。那么开始..</p></p>
+
+<p><h3 style="text-align: justify;">创建Bundle工程</h3>
+<p style="text-align: justify;"><img class="aligncenter size-full wp-image-1095" src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-1.png" alt="image" width="709" height="237" data-pinit="registered" />
+创建工程，OSX，Framework &amp; Library，选择Bundle，点击Next。</p>
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-1095" src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-2.png" alt="image" width="607" height="370" data-pinit="registered" /></p>
+<p style="text-align: justify;">在Project信息页面中，填入插件名字，在这个例子里，就叫做DemoPlugin，Framework使用默认的Cocoa就行。另外一定记住将Use Automatic Reference Counting前的勾去掉，由于插件只能使用GC来进行内存管理，因此不需要使用ARC。</p></p>
+
+<p><h3 style="text-align: justify;">工程设置</h3>
+<p style="text-align: justify;">插件工程有别于一般工程，需要进行一些特别的设置，以确保能正确编译插件bundle。</p>
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-1095" src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-3.png" alt="image" width="703" height="313" data-pinit="registered" /></p>
+<p style="text-align: justify;">首先，在编辑工程的Info.plist文件（直接编辑plist文件或者是修改TARGETS下对应target的Info都行），加入以下三个布尔值：</p></p>
+
+<p><pre class="lang:objc decode:true">XCGCReady = YES
+XCPluginHasUI = NO 
+XC4Compatible = YES</pre>
+<p style="text-align: justify;">这将告诉编译器工程已经使用了GC，没有另外的UI并且是Xcode4适配的，否则你的插件将不会被加载。接下来，对Bundle Setting进行一些设置：</p>
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-1095" src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-4.png" alt="image" width="705" height="289" data-pinit="registered" /></p></p>
+
+<p><ul style="text-align: justify;">
+	<li>Installation Build Products Location 设置为 ${HOME}
+<ul>
+	<li>Product的根目录</li>
+</ul>
+</li>
+	<li>Installation Directory 设置为</li>
+<ul>
+	<li>/Library/Application Support/Developer/Shared/Xcode/Plug-ins</li>
+	<li>这里指定了插件安装的位置，这样build之后就会将插件直接扔到Plug-ins的目录了。当然不嫌麻烦的话也可以每次自己复制粘贴过去。注意这里不是绝对路径，而是基于上面的${HOME}的路径。</li>
+</ul>
+	<li>Deployment Location 设置为 YES
+<ul>
+	<li>告诉Xcode不要用设置里的build location，而是用Installation Directory来确定build后放哪儿</li>
+</ul>
+</li>
+	<li>Wrapper extension 设置为 xcplugin
+<ul>
+	<li>把产品后缀名改为xcplugin，否则Xcode不会加载插件</li>
+</ul>
+</li>
+</ul>
+<p style="text-align: justify;">如一开始说的那样，Xcode会在每次启动的时候搜索插件目录并进行加载，做如上设置的目的是每次build之后你只需要重新启动Xcode就能看到重新编译后的插件的效果，而避免了自己再去寻找Product然后copy&amp;paste的步骤。<br />
+另外，还需要自己在User-Defined里添加一个键值对：</p>
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-1095" src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-5.png" alt="image" width="607" height="266" data-pinit="registered" /></p></p>
+
+<p><ul style="text-align: justify;">
+	<li>GCC_ENABLE_OBJC_GC 设置为 supported</li>
+</ul>
+<p style="text-align: justify;">至此所有配置工作完成，接下来终于可以开始实现插件了～</p></p>
+
+<p><h3 style="text-align: justify;">Hello World</h3>
+<p style="text-align: justify;">新建一个类，取名叫做VVPluginDemo（当然只要不重，随便什么名字都是可以的），继承自NSObject（做iOS开发的童鞋请不要忘记现在是写Xcode插件，您需要通过OS X的Cocoa里的Objective-C class模版，而不要用Cocoa Touch的模版..）。打开VVPluginDemo.m，加入以下代码：</p></p>
+
+<p><pre class="lang:objc decode:true">+(void)pluginDidLoad:(NSBundle *)plugin { 
+  NSLog(@"Hello World"); 
+}</pre>
+<p style="text-align: justify;">Build（对于OS X 10.8的SDK可能会有提示GC已经废弃的警告，不用管，Xcode本身是GC的，ARC的插件是无法load的），打开控制台（Control+空格 输入console），重新启动Xcode。应该能控制台中看到我们的插件的输出：</p>
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-1095" src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-6.png" alt="image" width="786" height="196" data-pinit="registered" /></p>
+<p style="text-align: justify;">太好了。有句话叫做，写出一个Hello World，就说明你已经掌握了一半…那么，剩下的一半内容，将对开发插件时可能面临的问题和一些常用的手段进行介绍。</p></p>
+
+<p><h3 style="text-align: justify;">创建插件单例，监听事件</h3>
+<p style="text-align: justify;">继续我们的插件，还记得我们的目的么？在Xcode的Edit菜单中加入一个叫做“What is selected”的项目，当你点击这个菜单命令的时候，将弹出一个警告框，提示你现在在编辑器中所选中的内容。一般来说，我们希望插件能够在整个Xcode的生命周期中都存在（不要忘记其实用来写Cocoa的Xcode本身也是一个Cocoa程序）。最好的办法就是在+pluginDidLoad:中初始化单例，如下：</p></p>
+
+<p><pre class="lang:objc decode:true">+ (void) pluginDidLoad: (NSBundle*) plugin { 
+    [self shared]; 
+} </pre></p>
+
+<p>+(id) shared { <br />
+    static dispatch_once_t once; <br />
+    static id instance = nil; <br />
+    dispatch_once(&amp;once, ^{ <br />
+        instance = [[self alloc] init]; <br />
+    }); <br />
+    return instance; <br />
+}
+<span style="text-align: justify;">这样，以后我们在别的类中，就可以简单地通过[VVPluginDemo shared]来访问到插件的实例了。</span>
+<p style="text-align: justify;">在init中，加入一个程序启动完成的事件监听，并在程序完成启动后，在菜单栏的Edit中添加我们所需要的菜单项，这个操作最好是在Xcode完全启动以后再进行，以避免一些潜在的危险和冲突。另外，由于想要在按下按钮时显示编辑器中显示的内容，我们可能需要监听NSTextViewDidChangeSelectionNotification事件（WTF，你为什么会知道要监听什么。别着急，后面会再说，先做demo先做demo）</p></p>
+
+<p><pre class="lang:objc decode:true">- (id)init { 
+  if (self = [super init]) { 
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                   selector:@selector(applicationDidFinishLaunching:) 
+                   name:NSApplicationDidFinishLaunchingNotification 
+                   object:nil]; 
+  } 
+  return self; 
+} </pre></p>
+
+<p>- (void) applicationDidFinishLaunching: (NSNotification*) noti { <br />
+    [[NSNotificationCenter defaultCenter] addObserver:self <br />
+                         selector:@selector(selectionDidChange:) <br />
+                         name:NSTextViewDidChangeSelectionNotification o<br />
+                         bject:nil]; <br />
+  NSMenuItem *editMenuItem = [[NSApp mainMenu] itemWithTitle:@&#8221;Edit&#8221;]; <br />
+  if (editMenuItem) { <br />
+    [[editMenuItem submenu] addItem:[NSMenuItem separatorItem]]; <br />
+    NSMenuItem *newMenuItem = [[NSMenuItem alloc] initWithTitle:@&#8221;What is selected&#8221; action:@selector(showSelected:) keyEquivalent:@&#8221;&#8220;]; <br />
+    [newMenuItem setTarget:self]; <br />
+    [newMenuItem setKeyEquivalentModifierMask: NSAlternateKeyMask]; <br />
+    [[editMenuItem submenu] addItem:newMenuItem]; <br />
+    [newMenuItem release]; <br />
+  } <br />
+} </p>
+
+<p>-(void) selectionDidChange:(NSNotification *)noti { <br />
+  //Nothing now. Just in case of crash. <br />
+} </p>
+
+<p>-(void) showSelected:(NSNotification *)noti { <br />
+  //Nothing now. Just in case of crash. <br />
+}
+<p style="text-align: justify;">现在build，重启Xcode，如果一切顺利的话，你应该能看到菜单栏上的变化了：</p>
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-1095" src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-8.png" alt="image" width="634" height="423" data-pinit="registered" /></p></p>
+
+<p><h3 style="text-align: justify;">完成Demo插件</h3>
+<p style="text-align: justify;">剩下的事情就很简单了，在接收到TextView的ChangeSelection通知后把现在选中的文本更新一下，在点击按钮时显示一个含有储存文字的对话框就行了。Let&#8217;s do it~</p>
+<p style="text-align: justify;">首先在.m文件中加上property声明（个人习惯，喜欢用ivar也可以）。在#import和@implementation之间加上：</p></p>
+
+<p><pre class="lang:objc decode:true">@interface VVPluginDemo() 
+@property (nonatomic,copy) NSString *selectedText; 
+@end</pre>
+<span style="text-align: justify;">得益于新的属性自动绑定，synthesis已经不需要写了（对此还不太了解的童鞋可以参看我的</span><a style="text-align: justify;" href="http://www.onevcat.com/2012/06/modern-objective-c/">这篇博文</a><span style="text-align: justify;">）。然后完成- selectionDidChange:和-showSelected:如下：</span>
+<pre class="lang:objc decode:true">-(void) selectionDidChange:(NSNotification *)noti {
+    if ([[noti object] isKindOfClass:[NSTextView class]]) {
+        NSTextView* textView = (NSTextView *)[noti object];</pre></p>
+
+<p>        NSArray* selectedRanges = [textView selectedRanges];<br />
+        if (selectedRanges.count==0) {<br />
+            return;<br />
+        }</p>
+
+<p>        NSRange selectedRange = [[selectedRanges objectAtIndex:0] rangeValue];<br />
+        NSString* text = textView.textStorage.string;<br />
+        self.selectedText = [text substringWithRange:selectedRange];<br />
+    }<br />
+    //Hello, welcom to OneV&#8217;s Den<br />
+}</p>
+
+<p>-(void) showSelected:(NSNotification *)noti {<br />
+    NSAlert *alert = [[[NSAlert alloc] init] autorelease];<br />
+    [alert setMessageText: self.selectedText];<br />
+    [alert runModal];<br />
+}
+<p style="text-align: justify;">Build，重启Xcode，随便选中一段文本，然后点击Edit中的What is selected。OY～完成～</p>
+<p style="text-align: justify;"><img class="aligncenter size-full wp-image-1095" src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-7.png" alt="image" width="551" height="327" data-pinit="registered" /></p>
+<p style="text-align: justify;">至此，您应该已经掌握了基本的Xcode插件制作方法了。接下来的就是根据您的需求实践了～但是在此之前，还有一些重要的技巧和常用方法可能您会有兴趣。</p></p>
+
+<p><h2 style="text-align: justify;">开发插件时有用的技巧</h2>
+<p style="text-align: justify;">由于没有文档指导插件开发，调试也只能用打log的方式，因此会十分艰难。掌握一些常用的技巧和方法，将会很有帮助。</p></p>
+
+<p><h3 style="text-align: justify;">I Need All Notifications!</h3>
+<p style="text-align: justify;">一种很好的方法是监听需要的消息，并针对消息作出反应。就像demo里的NSTextViewDidChangeSelectionNotification。对于熟悉iOS或者Mac开发的童鞋来说，应该在日常开发里也接触过很多类型的Notification了，而因为插件开发没有文档，因此我们需要自己去寻找想要监听和接收的Notification。<a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSNotificationCenter_Class/Reference/Reference.html">NSNotificationCenter文档</a>中，关于加入Observer的方法-addObserver:selector:name:object:，当给name参数赋值nil时，将可以监听到所有的notification：</p></p>
+
+<p><blockquote>notificationName: The name of the notification for which to register the observer; that is, only notifications with this name are delivered to the observer. If you pass nil, the notification center doesn’t use a notification’s name to decide whether to deliver it to the observer.</blockquote>
+<p style="text-align: justify;">因此可以用它来监测所有的Notification，并从中找到自己所需要的来进行处理：</p></p>
+
+<p><pre class="lang:objc decode:true">-(id)init { 
+  if (self = [super init]) { 
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+             selector:@selector(notificationListener:) 
+             name:nil object:nil]; 
+  } 
+  return self; 
+} </pre></p>
+
+<p>-(void)notificationListener:(NSNotification *)noti { <br />
+  NSLog(@&#8221; Notification: %@&#8221;, [noti name]); <br />
+}
+<p style="text-align: justify;">编译重启后在控制台得到的输出：</p>
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-1095" src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-9.png" alt="image" width="696" height="280" data-pinit="registered" /></p>
+<p style="text-align: justify;">当然如果只是打印名字的话可能帮助不大，也许你需要从noti的object或者userinfo中获得更多的信息。按条件打印，配合控制台的搜索进行寻找会是一个不错的方法。</p></p>
+
+<p><h3 style="text-align: justify;">Hack私有API</h3>
+<p style="text-align: justify;">用OC的动态特性可以做很多事，比如在运行时替换掉某个Xcode的方法。记住Xcode本身也是Cocoa程序，本质上和我们用Xcode所开发的程序没有太大区别。因此如果可以知道Xcode在进行某些操作时候的方法的话，就可以将该方法与我们自己实现的方法进行运行时调换，从而改为执行我们自己的方法。这便是运行时的Method Swizzling（或者叫Monkey patch，管他呢），这在smalltalk类语言中是一种很有趣和方便的做法，关于这方面更详细的，我以前写过一篇关于<a href="http://www.onevcat.com/2012/04/objective-c-runtime/">OC运行时特性的文章</a>。当时提到的method swizzling方法并没有对交换的函数进行检查等工作，通用性也比较差。现在针对OC已经有比较成熟的一套方法交换机制了，其中比较有名的有<a href="https://github.com/rentzsch/jrswizzle">rentzsch的jrswizzle</a>以及<a href="http://cocoadev.com/wiki/MethodSwizzling">OC社区的MethodSwizzling实现</a>。</p>
+<p style="text-align: justify;">有了方法交换的办法，接下来需要寻找要交换的方法。Xcode所使用的所有库都包含在Xcode.app/Contents/的Frameworks，SharedFrameworks和OtherFrameworks三个文件夹下。其中和Xcode关系最为直接以及最为重要的是Frameworks中的IDEKit和IDEFoundation，以及SharedFrameworks中的DVTKit和DVTFoundation四个。其中DVT前缀表示Developer Toolkit，IDE和IDEFoundation中的类基本是DVT中类的子类。这四个framework将是我们在开发改变Xcode默认行为的Xcode插件时最主要要打交道的。另外如果想对IB进行注入，可能还需要用到Frameworks下的IBAutolayoutFoundation（待确定）。关于这些framework中的私有API，可以使用<a href="http://stevenygard.com/projects/class-dump/">class-dump</a>很简单地将头文件提取出来。当然，也有人为懒人们完成了这个工作，<a href="https://github.com/probablycorey/xcode-class-dump">probablycorey的xcode-class-dump</a>中有绝大部分类的头文件。</p>
+<p style="text-align: justify;">作为Demo，我们将简单地完成一个方法交换：在补全代码时，我们简单地输出一句log。</p></p>
+
+<p><h4 style="text-align: justify;">MethodSwizzle</h4>
+<p style="text-align: justify;">为了交换方法，可以直接用现成的MethodSwizzle实现。MethodSwizzle可以在<a href="https://gist.github.com/4696790">这里</a>找到。将.h和.m导入插件工程即可～</p></p>
+
+<p><h4 style="text-align: justify;">寻找对应API</h4>
+<p style="text-align: justify;">通过搜索，补全代码的功能定义在DVKit中的DVTTextCompletionController类，其中有一个方法为- (BOOL)acceptCurrentCompletion，猜测返回的布尔值是否接受当前的补全结果。由于这些都是私有API，因此需要在我们的工程中自己进行声明。在新建文件中的C and C++中选Header File，为工程加入一个Header文件，并加入一下代码：</p></p>
+
+<p><pre class="lang:objc decode:true">@interface DVTTextCompletionController : NSObject 
+- (BOOL)acceptCurrentCompletion; 
+@end</pre>
+然后需要将DVKit.framework添加到工程中，在/Applications/Xcode.app/Contents/SharedFrameworks中找到DVTKit.framework，拷贝到任意正常能访问到的目录下，然后在插件工程的Build Phases中加入framework。嗯？你说找不到DVTKit.framework？亲，私有框架当然找不到，点击Add Other&#8230;然后去刚才copy出来的地方去找吧..
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-1095" src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-10.png" alt="image" width="445" height="474" data-pinit="registered" /></p>
+<p style="text-align: justify;">最后便是加入方法交换了～新建一个DVTTextCompletionController的Category，命名为PluginDemo</p>
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-1095" src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-13.png" alt="image" width="568" height="289" data-pinit="registered" /></p>
+<p style="text-align: justify;">import之前定义的header和MethodSwizzle.h，在DVTTextCompletionController+PluginDemo.m中加入下面实现：</p></p>
+
+<p><pre class="lang:objc decode:true">+ (void)load
+{
+    MethodSwizzle(self, @selector(acceptCurrentCompletion), @selector(swizzledAcceptCurrentCompletion));
+}</pre></p>
+
+<p>- (BOOL)swizzledAcceptCurrentCompletion {<br />
+    NSLog(@&#8221;acceptCurrentCompletion is called by %@&#8221;, self);<br />
+    return [self swizzledAcceptCurrentCompletion];<br />
+}
+<p style="text-align: justify;">+load方法在每个NSObject类或子类被调用时都会被执行，可以用来在runtime配置当前类。这里交换了DVTTextCompletionController的acceptCurrentCompletion方法和我们自己实现的swizzledAcceptCurrentCompletion方法。在swizzledAcceptCurrentCompletion中，先打印了一句log，输出相应该方法的实例。接下来似乎是调用了自己，但是实际上swizzledAcceptCurrentCompletion的方法已经和原来的acceptCurrentCompletion交换，因此这里实际调用的将是原来的方法。那么这段代码所做的就是将Xcode想调用原来的acceptCurrentCompletion的行为，改变成了先打印一个log，之后再进行原来的acceptCurrentCompletion调用。</p>
+<p style="text-align: justify;">编译，重启Xcode，打开一个工程随便输入点东西，让补全出现。控制台中的输出符合我们的预期：</p>
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-1095" src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-12.png" alt="image" width="711" height="178" data-pinit="registered" /></p>
+<p style="text-align: justify;">太棒了，有了对私有API的注入，能做的事情大为扩展了。</p></p>
+
+<p><h3 style="text-align: justify;">研究Xcode的View Hierarchy</h3>
+<p style="text-align: justify;">另外一种常见的插件行为是修改某些界面。再一次说明，Xcode是一个标准Cocoa程序，一切都是那么熟悉（如果你为Cocoa或者CocoaTouch开发的话，应该是很熟悉）。拿到整个App的Window，然后依次递归打印subview。stackoverflow上有<a href="http://stackoverflow.com/questions/2715534/where-does-a-uialertview-live-while-not-dismissed/2715772#2715772">一个UIView的版本</a>，稍微改变一下就可以得到一个NSView版本。新建一个NSView的Dumping Category，加入如下实现：</p></p>
+
+<p><pre class="lang:objc decode:true">-(void)dumpWithIndent:(NSString *)indent {
+    NSString *class = NSStringFromClass([self class]);
+    NSString *info = @"";
+    if ([self respondsToSelector:@selector(title)]) {
+        NSString *title = [self performSelector:@selector(title)];
+        if (title != nil &amp;&amp; [title length] &gt; 0) {
+            info = [info stringByAppendingFormat:@" title=%@", title];
+        }
+    }
+    if ([self respondsToSelector:@selector(stringValue)]) {
+		NSString *string = [self performSelector:@selector(stringValue)];
+		if (string != nil &amp;&amp; [string length] &gt; 0) {
+			info = [info stringByAppendingFormat:@" stringValue=%@", string];
+        }
+	}
+	NSString *tooltip = [self toolTip];
+	if (tooltip != nil &amp;&amp; [tooltip length] &gt; 0) {
+		info = [info stringByAppendingFormat:@" tooltip=%@", tooltip];
+    }</pre></p>
+
+<p>	NSLog(@&#8221;%@%@%@&#8221;, indent, class, info);</p>
+
+<p>	if ([[self subviews] count] &gt; 0) {<br />
+		NSString *subIndent = [NSString stringWithFormat:@&#8221;%@%@&#8221;, indent, ([indent length]/2)%2==0 ? @&#8221;| &#8221; : @&#8221;: &#8220;];<br />
+		for (NSView *subview in [self subviews]) {<br />
+			[subview dumpWithIndent:subIndent];<br />
+        }<br />
+	}<br />
+}
+<p style="text-align: justify;">在合适的时候（比如点击某个按钮时），调用下面一句代码，便可以打印当前Xcode的结构，非常方便。这对了解Xcode的构成和如何搭建一个如Xcode般复杂的程序很有帮助～</p></p>
+
+<p><pre class="lang:objc decode:true">[[[NSApp mainWindow] contentView] dumpWithIndent:@""];</pre>
+<p style="text-align: justify;">在结果控制台中的输出结果类似这样：</p>
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-1095" src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-14.png" alt="image" width="775" height="559" data-pinit="registered" /></p>
+<p style="text-align: justify;">根据自己需要去去相应的view吧～然后配合方法交换，基本可以做到尽情做想做的事情了。</p></p>
+
+<p><h2 style="text-align: justify;">最后的小bonus</h2>
+<p style="text-align: justify;">/Applications/Xcode.app/Contents/Frameworks/IDEKit.framework/Versions/A/Resources中有不少Xcode界面用的图片，pdf，png和tiff格式都有，想要自定义run，stop按钮或者想要让断点标记从蓝色块变成机器猫头像什么的…应该是可能的～</p>
+<p style="text-align: justify;">/Applications/Xcode.app/Contents/PlugIns目录里有很多Xcode自带的“官方版”外挂插件，显然通过class-dump和注入的方法，你可以为Xcode的插件写插件&#8230;嗯～比如改变debugger的行为或者让plist编辑器更聪明，就是这样的。</p>
+<p style="text-align: justify;">希望Apple能提供为Xcode编写插件的支持，所有东西都需要摸索虽然很有趣，但是也比较花时间。</p>
+另外，github等代码托管网站上有不少大神们写的插件，都开源放出。这些必须是学习插件编写的最优秀的教材和参考：
+<ul>
+	<li><a href="https://github.com/omz/ColorSense-for-Xcode">omz / ColorSense-for-Xcode</a> Plugin for Xcode to make working with colors more visual</li>
+	<li><a href="https://github.com/omz/Dash-Plugin-for-Xcode">omz / Dash-Plugin-for-Xcode</a> Plugin for Xcode to integrate the Dash documentation viewer app</li>
+	<li><a href="https://github.com/omz/MiniXcode">omz / MiniXcode</a> Xcode plugin for working without the main toolbar</li>
+	<li><a href="https://github.com/ksuther/KSImageNamed-Xcode">ksuther / KSImageNamed-Xcode</a> Xcode plug-in that provides autocomplete for imageNamed: calls</li>
+	<li><a href="https://github.com/JugglerShu/XVim">JugglerShu / XVim</a> Xcode plugin for Vim keybindings</li>
+	<li><a href="https://github.com/davekeck/Xcode-4-Fixins">davekeck / Xcode-4-Fixins</a> Plugins for fixing Xcode 4 bugs and shortcomings</li>
+	<li><a href="https://github.com/0xced/CLITool-InfoPlist">0xced / CLITool-InfoPlist</a> Xcode plugin to process Info.plist file for CLI Tool targets</li>
+	<li><a href="https://github.com/questbeat/Lin">questbeat / Lin</a> Xcode4 plugin shows completion for NSLocalizedString</li>
+</ul>
+<p style="text-align: justify;">好了，就到这里吧。VVPlugInDemo的工程文件我放到了github上，有需要的话您可以从<a href="https://github.com/onevcat/VVPluginDemo">这里下载</a>并作为参考和起始来使用。谢谢您看完这么长的文。正如一开始所说的，我自己水平十分有限，因此错误和不当之处还恳请大家轻喷多原谅，并帮助我改正，再次谢谢～</p><!--:--><!--:en-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Unity3D中暂停时的动画及粒子效果实现]]></title>
+    <link href="http://blog.onevcat.com/blog/2013/01/26/do_not_pause_me/"/>
+    <updated>2013-01-26T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2013/01/26/do_not_pause_me</id>
+    <content type="html"><![CDATA[<p><!--:zh--><h2 style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2013/01/big副本.png"><img class="aligncenter size-full wp-image-1087" title="unpause" src="http://www.onevcat.com/wp-content/uploads/2013/01/big副本.png" alt="" width="500" height="200" data-pinit="registered" /></a></h2>
+<p style="text-align: justify;">暂停是游戏中经常出现的功能，而Unity3D中对于暂停的处理并不是很理想。一般的做法是将Time.timeScale设置为0。Unity的文档中对于这种情况有以下描述；</p></p>
+
+<p><blockquote>The scale at which the time is passing. This can be used for slow motion effects….When timeScale is set to zero the game is basically paused …</blockquote>
+<p style="text-align: justify;">timeScale表示游戏中时间流逝快慢的尺度。文档中明确表示，这个参数是用来做慢动作效果的。对于将timeScale设置为0的情况，仅只有一个补充说明。在实际使用中，通过设置timeScale来实现慢动作特效，是一种相当简洁且不带任何毒副作用的方法，但是当将timeScale设置为0来实现暂停时，<strong>由于时间不再流逝，所有和时间有关的功能痘将停止</strong>，有些时候这正是我们想要的，因为毕竟是暂停。但是副作用也随之而来，在暂停时各种动画和粒子效果都将无法播放（因为是时间相关的），FixedUpdate也将不再被调用。</p>
+<p style="text-align: justify;"><strong>换句话说，最大的影响是，在timeScale＝0的暂停情况下，你将无法实现暂停菜单的动画以及各种漂亮的点击效果。</strong></p>
+<p style="text-align: justify;">但是并非真的没办法，关于timeScale的文档下就有提示：</p></p>
+
+<p><blockquote>Except for realtimeSinceStartup, timeScale affects all the time and delta time measuring variables of the Time class.</blockquote>
+<p style="text-align: justify;">因为realtimeSinceStartup和timeScale无关，因此也就成了解决在暂停下的动画和粒子效果的救命稻草。对于Unity动画，在每一帧，根据实际时间寻找相应帧并采样显示的方法来模拟动画：</p></p>
+
+<p><pre class="lang:c# mark:19-21 decode:true" title="暂停时采样的核心代码">AnimationState _currState = animation[clipName];
+bool isPlaying = true;</pre></p>
+
+<p>float _progressTime = 0F;<br />
+float _timeAtLastFrame = 0F;<br />
+float _timeAtCurrentFrame = 0F;<br />
+bool _inReversePlaying = false;</p>
+
+<p>float _deltaTime = 0F;<br />
+animation.Play(clipName);<br />
+_timeAtLastFrame = Time.realtimeSinceStartup;</p>
+
+<p>while (isPlaying) {<br />
+    _timeAtCurrentFrame = Time.realtimeSinceStartup;<br />
+    _deltaTime = _timeAtCurrentFrame - _timeAtLastFrame;<br />
+    _timeAtLastFrame = _timeAtCurrentFrame; </p>
+
+<p>    _progressTime += _deltaTime;</p>
+
+<p>    _currState.normalizedTime = _inReversePlaying ? 1.0f - (_progressTime / _currState.length) : _progressTime / _currState.length; <br />
+    animation.Sample();</p>
+
+<p>    //&#8230;repeat or over by wrap mode <br />
+}
+<p style="text-align: justify;">对于粒子效果，同样进行计时，并通过粒子系统的Simulate方法来模拟对应时间的粒子状态来完成效果，比如对于Legacy粒子，使Emitter在timeScale＝0暂停时继续有效发射并显示效果：</p></p>
+
+<p><pre class="lang:c# mark:4-5 decode:true">_deltaTime = Time.realtimeSinceStartup - _timeAtLastFrame;
+_timeAtLastFrame = Time.realtimeSinceStartup;
+if (Time.timeScale == 0 ){
+	_emitter.Simulate(_deltaTime);
+	_emitter.emit = true;
+}</pre>
+<p style="text-align: justify;">核心的代码基本都在上面了，可以根据这个思路完成实现。<a href="https://github.com/onevcat/UnpauseMe">完整的代码和示例工程</a>我放到了github上，有需要的朋友可以去查看，也欢迎大家指正。</p><!--:--><!--:en-->&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Unity编译至Xcode工程后自动添加文件和库的方法]]></title>
+    <link href="http://blog.onevcat.com/blog/2012/12/18/xuporter/"/>
+    <updated>2012-12-18T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2012/12/18/xuporter</id>
+    <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/12/1.png"><img class="aligncenter size-full wp-image-1072" title="XUPorter" src="http://www.onevcat.com/wp-content/uploads/2012/12/1.png" alt="" width="763" height="256" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">废话之前</p>
+<p style="text-align: justify;"><a href="https://github.com/onevcat/XUPorter">XUPorter项目Github链接</a>
+<a href="http://www.onevcat.com/wp-content/uploads/2012/12/XUPorter.unitypackage.zip">Unity打包文件下载</a></p></p>
+
+<p><h3 style="text-align: justify;">为什么想要自动添加</h3>
+<p style="text-align: justify;">由于Unity是全平台的游戏开发环境，在开发中针对特定平台的特定功能时，很难避免根据对象平台的不同而引入不同的依赖。包括源码，需要的库和框架等。在使用各种插件后这种情况愈发严重：比如想加入内购功能，StroreKit.framework必不可少，而且也需要相应的处理代码。按照一般的Unity插件开发流程，在完成.cs的接口声明和Unity侧的调用实现后，最重要的当然是在iOS native侧完成实现。而在以前，包括依赖库和所有源码文件，都只有在Unity生成Xcode工程之后，再手动添加。如果工程小依赖少的话花不了太多时间，但是如果项目很大，很可能折腾一次就要十来分钟，严重影响了工作效率，必须加以解决。</p></p>
+
+<p><h3 style="text-align: justify;">怎么办</h3>
+<p style="text-align: justify;">Unity开发团队也意识到了这个问题，在Unity编译的最后加入了一个脚本调用的命令，会自动搜索Editor文件夹下的PostprocessBuildPlayer，并进行调用，在该文件中可以自己加入脚本来向Xcode中添加库和文件。关于PostprocessBuildPlayer的详细信息，可以参看<a href="http://docs.unity3d.com/Documentation/Manual/BuildPlayerPipeline.html">官方文档</a>，关于向Xcode中添加文件或库，gonzoua的<a href="https://github.com/gonzoua/xcs">xcs</a>也许是不错的选择。但是似乎xcs只能针对Xcode3来添加，在Xcode4中，主工程文件的结构发生了改变，导致xcs失效，而这个项目也迟迟没有更新（也许有时间我会考虑接手继续这个项目，但肯定不是现在&#8230;）。因此不得不打其他主意。</p>
+<p style="text-align: justify;"><!--:--><!--more--><!--:zh--></p>
+<p style="text-align: justify;">在Unity3.5中，加入了一个很棒的标签——<a href="http://docs.unity3d.com/Documentation/ScriptReference/PostProcessBuildAttribute.html">[PostProcessBuild]</a>，被该标签标注的函数将自动在build player后被调用，这为大家提供了一个不需要用脚本和命令行就能添加或修改编译得到的工程的绝好的入口。darktable用python实现了一个Xcode4工程文件读写的接口<a href="https://bitbucket.org/darktable/mod-pbxproj/overview">Mod PBXProj</a>，但是对于Unity来说，更需要的是C#的实现。Cariola完成了<a href="https://github.com/dcariola/XCodeEditor-for-Unity">一部分实现</a>，但是存在一些错误和不太好用的地方，代码也很乱。我在其基础上进行了一些改进和整理。但是因为变动的还是比较大，很难merge回去，所以决定自己开一个项目来继续推进这个项目。</p></p>
+
+<p><h3 style="text-align: justify;">XUPorter</h3>
+<p style="text-align: justify;">我把它叫做XUPorter，a dependency porter from Unity to Xcode。XUPorter可以读取Xcode工程文件并进行解析（再次感谢darktable的工作），之后在Unity工程的Assets目录下寻找所有的.projmods文件，并根据文件内容向工程中添加文件或库。</p></p>
+
+<p><h4 style="text-align: justify;">使用方法</h4>
+<p style="text-align: justify;">将Github项目中的所有文件copy到Unity工程文件夹下的/Assets/Editor目录中，XUPorter使用一个<a href="https://github.com/prime31/UIToolkit/blob/master/Assets/Plugins/MiniJSON.cs">改良版的MiniJSON</a>来进行。如果你的项目中已经在使用这个MiniJSON了的话，可以直接将XUPorter文件夹下的MiniJSON文件夹删掉；如果不一样的话，你可以选择其中一个重构一下或者加上命名空间来解决类名冲突。接下来，Mods文件夹下是示例文件以及需要导入Xcode的文件。在看完以后你需要把Mods文件夹下的所有.projmods文件以及Mods/iOS文件夹下的内容删除或者替换为你所需要的内容。</p>
+<p style="text-align: justify;">在<a href="http://d.pr/f/HAzc">这里</a>提供了.unitypackege格式文件的下载，你也可以选择下载打包好的文件并导入你的工程，之后的步骤和上面一样。</p>
+<p style="text-align: justify;">.projmods文件是一个JSON格式的配置patch文件，定义了要如何设置Xcode工程。举个基本的例子，比如KKKeychain.projmods：</p>
+<p style="text-align: justify;">各参数定义如下： * group：所有由该projmods添加的文件和文件夹所属的Xcode中的group名称 * libs：在Xcode Build Phases中需要添加的动态链接库的名称，比如libz.dylib * frameworks：在Xcode Build Phases中需要添加的框架的名称，比如Security.framework * headerpaths：Xcode中编译设置中的Header Search Paths路径 * files：加入工程的文件名 * folders：加入工程的文件夹，其中所有的文件和文件夹都将被加入工程中 * excludes：忽略的文件的正则表达式，匹配的文件将不会被加入工程中 更多的例子可以参看Mods文件夹中的其他projmods文件。所有的定义路径都是基于当前projmods文件位置的相对路径。 最后，在完成projmods后，Unity会在编译完成后，调用XCodePostProcess的OnPostProcessBuild来对编译得到的Xcode工程进行修改：</p><!--:--><!--:en-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Unity 3D中的内存管理]]></title>
+    <link href="http://blog.onevcat.com/blog/2012/11/16/memory-in-unity3d/"/>
+    <updated>2012-11-16T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2012/11/16/memory-in-unity3d</id>
+    <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/11/unity-technologies-870x531.jpg"><img class="aligncenter size-full wp-image-1043" title="unity-technologies-870x531" src="http://www.onevcat.com/wp-content/uploads/2012/11/unity-technologies-870x531.jpg" alt="" width="870" height="182" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">本文欢迎转载，但烦请保留此行出处信息：<a href="http://www.onevcat.com/2012/11/memory-in-unity3d/">http://www.onevcat.com/2012/11/memory-in-unity3d/</a></p>
+<p style="text-align: justify;">Unity3D在内存占用上一直被人诟病，特别是对于面向移动设备的游戏开发，动辄内存占用飙上一两百兆，导致内存资源耗尽，从而被系统强退造成极差的体验。类似这种情况并不少见，但是绝大部分都是可以避免的。虽然理论上Unity的内存管理系统应当为开发者分忧解难，让大家投身到更有意义的事情中去，但是对于Unity对内存的管理方式，官方文档中并没有太多的说明，基本需要依靠自己摸索。最近在接手的项目中存在严重的内存问题，在参照文档和Unity Answer众多猜测和证实之后，稍微总结了下Unity中的内存的分配和管理的基本方式，在此共享。</p>
+<p style="text-align: justify;">虽然Unity标榜自己的内存使用全都是“Managed Memory”，但是事实上你必须正确地使用内存，以保证回收机制正确运行。如果没有做应当做的事情，那么场景和代码很有可能造成很多非必要内存的占用，这也是很多Unity开发者抱怨内存占用太大的原因。接下来我会介绍Unity使用内存的种类，以及相应每个种类的优化和使用的技巧。遵循使用原则，可以让非必要资源尽快得到释放，从而降低内存占用。</p>
+<p style="text-align: justify;"><!--:--><!--more--><!--:zh--></p></p>
+
+<p><hr /></p>
+
+<p><h3 style="text-align: justify;">Unity中的内存种类</h3>
+<p style="text-align: justify;">实际上Unity游戏使用的内存一共有三种：程序代码、托管堆（Managed Heap）以及本机堆（Native Heap）。</p>
+<p style="text-align: justify;">程序代码包括了所有的Unity引擎，使用的库，以及你所写的所有的游戏代码。在编译后，得到的运行文件将会被加载到设备中执行，并占用一定内存。这部分内存实际上是没有办法去“管理”的，它们将在内存中从一开始到最后一直存在。一个空的Unity默认场景，什么代码都不放，在iOS设备上占用内存应该在17MB左右，而加上一些自己的代码很容易就飙到20MB左右。想要减少这部分内存的使用，能做的就是减少使用的库，稍后再说。</p>
+<p style="text-align: justify;">托管堆是被Mono使用的一部分内存。<a href="http://www.mono-project.com/Main_Page">Mono</a>项目一个开源的.net框架的一种实现，对于Unity开发，其实充当了基本类库的角色。托管堆用来存放类的实例（比如用new生成的列表，实例中的各种声明的变量等）。“托管”的意思是Mono“应该”自动地改变堆的大小来适应你所需要的内存，并且定时地使用垃圾回收（Garbage Collect）来释放已经不需要的内存。关键在于，有时候你会忘记清除对已经不需要再使用的内存的引用，从而导致Mono认为这块内存一直有用，而无法回收。</p>
+<p style="text-align: justify;">最后，本机堆是Unity引擎进行申请和操作的地方，比如贴图，音效，关卡数据等。Unity使用了自己的一套内存管理机制来使这块内存具有和托管堆类似的功能。基本理念是，如果在这个关卡里需要某个资源，那么在需要时就加载，之后在没有任何引用时进行卸载。听起来很美好也和托管堆一样，但是由于Unity有一套自动加载和卸载资源的机制，让两者变得差别很大。自动加载资源可以为开发者省不少事儿，但是同时也意味着开发者失去了手动管理所有加载资源的权力，这非常容易导致大量的内存占用（贴图什么的你懂的），也是Unity给人留下“吃内存”印象的罪魁祸首。</p></p>
+
+<p><hr /></p>
+
+<p><h3 style="text-align: justify;">优化程序代码的内存占用</h3>
+<p style="text-align: justify;">这部分的优化相对简单，因为能做的事情并不多：主要就是减少打包时的引用库，改一改build设置即可。对于一个新项目来说不会有太大问题，但是如果是已经存在的项目，可能改变会导致原来所需要的库的缺失（虽说一般来说这种可能性不大），因此有可能无法做到最优。</p>
+<p style="text-align: justify;"><img src="http://www.onevcat.com/wp-content/uploads/2012/11/unity-setting.png" alt="image" data-pinit="registered" /></p>
+<p style="text-align: justify;">当使用Unity开发时，默认的Mono包含库可以说大部分用不上，在Player Setting（Edit-&gt;Project Setting-&gt;Player或者Shift+Ctrl(Command)+B里的Player Setting按钮）面板里，将最下方的Optimization栏目中“Api Compatibility Level”选为.NET 2.0 Subset，表示你只会使用到部分的.NET 2.0 Subset，不需要Unity将全部.NET的Api包含进去。接下来的“Stripping Level”表示从build的库中剥离的力度，每一个剥离选项都将从打包好的库中去掉一部分内容。你需要保证你的代码没有用到这部分被剥离的功能，选为“Use micro mscorlib”的话将使用最小的库（一般来说也没啥问题，不行的话可以试试之前的两个）。库剥离可以极大地降低打包后的程序的尺寸以及程序代码的内存占用，唯一的缺点是这个功能只支持Pro版的Unity。</p>
+<p style="text-align: justify;">这部分优化的力度需要根据代码所用到的.NET的功能来进行调整，有可能不能使用Subset或者最大的剥离力度。如果超出了限度，很可能会在需要该功能时因为找不到相应的库而crash掉（iOS的话很可能在Xcode编译时就报错了）。比较好地解决方案是仍然用最强的剥离，并辅以较小的第三方的类库来完成所需功能。一个最常见问题是最大剥离时Sysytem.Xml是不被Subset和micro支持的，如果只是为了xml，完全可以导入一个轻量级的xml库来解决依赖（Unity官方推荐<a href="http://unity3d.com/support/documentation/Images/manual/Mono.Xml.zip">这个</a>）。</p>
+<p style="text-align: justify;">关于每个设定对应支持的库的详细列表，可以在<a href="http://docs.unity3d.com/Documentation/ScriptReference/MonoCompatibility.html">这里</a>找到。关于每个剥离级别到底做了什么，<a href="http://unity3d.com/support/documentation/Manual/iphone-playerSizeOptimization.html">Unity的文档</a>也有说明。实际上，在游戏开发中绝大多数被剥离的功能使用不上的，因此不管如何，库剥离的优化方法都值得一试。</p></p>
+
+<p><hr /></p>
+
+<p><h3 style="text-align: justify;">托管堆优化</h3>
+<p style="text-align: justify;">Unity有一篇不错的关于<a href="http://unity3d.com/support/documentation/Manual/Understanding%20Automatic%20Memory%20Management.html">托管堆代码如何写比较好</a>的说明，在此基础上我个人有一些补充。</p>
+<p style="text-align: justify;">首先需要明确，托管堆中存储的是你在你的代码中申请的内存（不论是用js，C#还是Boo写的）。一般来说，无非是new或者Instantiate两种生成object的方法（事实上Instantiate中也是调用了new）。在接收到alloc请求后，托管堆在其上为要新生成的对象实例以及其实例变量分配内存，如果可用空间不足，则向系统申请更多空间。</p>
+<p style="text-align: justify;">当你使用完一个实例对象之后，通常来说在脚本中就不会再有对该对象的引用了（这包括将变量设置为null或其他引用，超出了变量的作用域，或者对Unity对象发送Destory()）。在每隔一段时间，Mono的垃圾回收机制将检测内存，将没有再被引用的内存释放回收。总的来说，你要做的就是在尽可能早的时间将不需要的引用去除掉，这样回收机制才能正确地把不需要的内存清理出来。但是需要注意在内存清理时有可能造成游戏的短时间卡顿，这将会很影响游戏体验，因此如果有大量的内存回收工作要进行的话，需要尽量选择合适的时间。</p>
+<p style="text-align: justify;">如果在你的游戏里，有特别多的类似实例，并需要对它们经常发送Destroy()的话，游戏性能上会相当难看。比如<a href="http://www.onevcat.com/showcase/coinpush/">小熊推金币</a>中的金币实例，按理说每枚金币落下台子后都需要对其Destory()，然后新的金币进入台子时又需要Instantiate，这对性能是极大的浪费。一种通常的做法是在不需要时，不摧毁这个GameObject，而只是隐藏它，并将其放入一个重用数组中。之后需要时，再从重用数组中找到可用的实例并显示。这将极大地改善游戏的性能，相应的代价是消耗部分内存，一般来说这是可以接受的。关于对象重用，可以参考<a href="http://docs.unity3d.com/Documentation/Manual/UnderstandingAutomaticMemoryManagement.html">Unity关于内存方面的文档中Reusable Object Pools部分</a>，或者Prime31有一个是用Linq来建立重用池的视频教程（Youtube，需要翻墙，<a href="http://www.youtube.com/watch?v=IX041ZvgQKE">上</a>，<a href="http://www.youtube.com/watch?v=d9078u8ft58">下</a>）。</p>
+<p style="text-align: justify;">如果不是必要，应该在游戏进行的过程中尽量减少对GameObject的Instantiate()和Destroy()调用，因为对计算资源会有很大消耗。在便携设备上短时间大量生成和摧毁物体的话，很容易造成瞬时卡顿。如果内存没有问题的话，尽量选择先将他们收集起来，然后在合适的时候（比如按暂停键或者是关卡切换），将它们批量地销毁并且回收内存。Mono的内存回收会在后台自动进行，系统会选择合适的时间进行垃圾回收。在合适的时候，也可以手动地调用System.GC.Collect()来建议系统进行一次垃圾回收。要注意的是这里的调用真的仅仅只是建议，可能系统会在一段时间后在进行回收，也可能完全不理会这条请求，不过在大部分时间里，这个调用还是靠谱的。</p></p>
+
+<p><hr /></p>
+
+<p><h3 style="text-align: justify;">本机堆的优化</h3>
+<p style="text-align: justify;">当你加载完成一个Unity的scene的时候，scene中的所有用到的asset（包括Hierarchy中所有GameObject上以及脚本中赋值了的的材质，贴图，动画，声音等素材），都会被自动加载（这正是Unity的智能之处）。也就是说，当关卡呈现在用户面前的时候，所有Unity编辑器能认识的本关卡的资源都已经被预先加入内存了，这样在本关卡中，用户将有良好的体验，不论是更换贴图，声音，还是播放动画时，都不会有额外的加载，这样的代价是内存占用将变多。Unity最初的设计目的还是面向台式机，几乎无限的内存和虚拟内存使得这样的占用似乎不是问题，但是这样的内存策略在之后移动平台的兴起和大量移动设备游戏的制作中出现了弊端，因为移动设备能使用的资源始终非常有限。因此在面向移动设备游戏的制作时，尽量减少在Hierarchy对资源的直接引用，而是使用Resource.Load的方法，在需要的时候从硬盘中读取资源，在使用后用Resource.UnloadAsset()和Resources.UnloadUnusedAssets()尽快将其卸载掉。总之，这里是一个处理时间和占用内存空间的trade off，如何达到最好的效果没有标准答案，需要自己权衡。</p>
+<p style="text-align: justify;">在关卡结束的时候，这个关卡中所使用的所有资源将会被卸载掉（除非被标记了DontDestroyOnLoad）的资源。注意不仅是DontDestroyOnLoad的资源本身，其相关的所有资源在关卡切换时都不会被卸载。DontDestroyOnLoad一般被用来在关卡之间保存一些玩家的状态，比如分数，级别等偏向文本的信息。如果DontDestroyOnLoad了一个包含很多资源（比如大量贴图或者声音等大内存占用的东西）的话，这部分资源在场景切换时无法卸载，将一直占用内存，这种情况应该尽量避免。</p>
+<p style="text-align: justify;">另外一种需要注意的情况是脚本中对资源的引用。大部分脚本将在场景转换时随之失效并被回收，但是，在场景之间被保持的脚本不在此列（通常情况是被附着在DontDestroyOnLoad的GameObject上了）。而这些脚本很可能含有对其他物体的Component或者资源的引用，这样相关的资源就都得不到释放，这绝对是不想要的情况。另外，static的单例（singleton）在场景切换时也不会被摧毁，同样地，如果这种单例含有大量的对资源的引用，也会成为大问题。因此，尽量减少代码的耦合和对其他脚本的依赖是十分有必要的。如果确实无法避免这种情况，那应当手动地对这些不再使用的引用对象调用Destroy()或者将其设置为null。这样在垃圾回收的时候，这些内存将被认为已经无用而被回收。</p>
+<p style="text-align: justify;">需要注意的是，Unity在一个场景开始时，根据场景构成和引用关系所自动读取的资源，只有在读取一个新的场景或者reset当前场景时，才会得到清理。因此这部分内存占用是不可避免的。在小内存环境中，这部分初始内存的占用十分重要，因为它决定了你的关卡是否能够被正常加载。因此在计算资源充足或是关卡开始之后还有机会进行加载时，尽量减少Hierarchy中的引用，变为手动用Resource.Load，将大大减少内存占用。在Resource.UnloadAsset()和Resources.UnloadUnusedAssets()时，只有那些真正没有任何引用指向的资源会被回收，因此请确保在资源不再使用时，将所有对该资源的引用设置为null或者Destroy。同样需要注意，这两个Unload方法仅仅对Resource.Load拿到的资源有效，而不能回收任何场景开始时自动加载的资源。与此类似的还有AssetBundle的Load和Unload方法，灵活使用这些手动自愿加载和卸载的方法，是优化Unity内存占用的不二法则～</p><!--:--><!--:en-->&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Perl中JSON的解析和utf-8乱码的解决]]></title>
+    <link href="http://blog.onevcat.com/blog/2012/10/29/perl-json-utf/"/>
+    <updated>2012-10-29T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2012/10/29/perl-json-utf</id>
+    <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;">最近在做一个带有网络通讯和同步功能的app，需要自己写一些后台的东西。因为是半路入门，所以从事开发以来就没有做过后台相关的工作，属于绝对的小白菜鸟。而因为公司在入职前给新员工提过学习Perl的要求，所以还算是稍微看过一些。这次的后台也直接就用Perl来写了。</p></p>
+
+<p><h3 style="text-align: justify;">基本使用</h3>
+<p style="text-align: justify;">和app的通讯，很大程度上依赖了JSON，一来是熟悉，二来是iOS现在解析JSON也十分方便。iOS客户端的话JSON的解析和生成都是没什么问题的：iOS5中加入了<a href="http://developer.apple.com/library/ios/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html">NSJSONSerialization</a>类来提供相关功能，如果希望支持更早的系统版本的话，相关的开源代码也有很多，也简单易用，比如<a href="http://stig.github.com/json-framework/">SBJson</a>或者<a href="https://github.com/johnezang/JSONKit">JSONKit</a>。同样，在Perl里也有不少类似的JSON处理的模块，最有名最早的应该是<a href="http://search.cpan.org/~makamaka/JSON-2.53/lib/JSON.pm">JSON</a>模块了，同时也简单易用，应该可以满足大部分情况下的需求了。</p>
+<p style="text-align: justify;"><!--:--><!--more--><!--:zh--></p>
+<p style="text-align: justify;">使用也很简单，安装完模块后，use之后使用encode_json命令即可将perl的array或者dic转换为标准的JSON字符串了：</p>
+<p style="text-align: justify;">[gist id=3970516 file=Perl_JSON_encode.pl]</p>
+<p style="text-align: justify;">得到的字符串为</p></p>
+
+<p><blockquote>[{&#8220;name&#8221;:&#8221;Ken&#8221;,&#8221;age&#8221;:19},{&#8220;name&#8221;:&#8221;Ken&#8221;,&#8221;age&#8221;:25}]</blockquote>
+<p style="text-align: justify;">相对应地，解析也很容易</p>
+<p style="text-align: justify;">[gist id=3970516 file=Perl_JSON_decode.pl]</p></p>
+
+<p><div style="text-align: justify;">得到的$array是含有两个字典的数组的ref。</div>
+<div style="text-align: justify;"></div>
+<div style="text-align: justify;"></div>
+<h3 style="text-align: justify;">UTF-8乱码解决</h3>
+<p style="text-align: justify;">在数据中含有UTF-8字符的时候需要稍微注意，如果直接按照上面的方法将会出现乱码。JSON模块的encode_json和decode_json自身是支持UTF8编码的，但是perl为了简洁高效，默认是认为程序是非UTF8的，因此在程序开头处需要申明需要UTF8支持。另外，如果需要用到JSON编码的功能（即encode_json）的话，还需要加入Encode模块的支持。总之，在程序开始处加入以下：</p>
+<p style="text-align: justify;">[gist id=3970516 file=header.pl]</p>
+<p style="text-align: justify;">另外，如果使用非UTF8进行编码的内容的话，最好先使用Encode的from_to命令转换成UTF8，之后再进行JSON编码。比如使用GBK编码的简体字（一般来自比较早的Windows的文件等会偶尔变成非UTF8编码），先进性如下转换：</p>
+<p style="text-align: justify;">[crayon lang=&#8221;perl&#8221; url = &#8220;https://gist.github.com/raw/3970516/47d582812cc8ad9658b7287c88ededaa07a22c76/from_to.pl&#8221; /]</p></p>
+
+<p><div style="text-align: justify;">其他的，如果追求更高的JSON转换性能的话，可以试试看<a href="http://search.cpan.org/~mlehmann/JSON-XS-2.33/XS.pm">JSON::XS</a>之类的附加模块～</div><!--:--><!--:en-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[再见，祖国]]></title>
+    <link href="http://blog.onevcat.com/blog/2012/09/27/see-you-my-country/"/>
+    <updated>2012-09-27T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2012/09/27/see-you-my-country</id>
+    <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;">这篇日志发送的时候，我应该已经在离开中国的飞机上了，也有可能已经到达异国他乡了。这是一次不知道归期的旅途，也是一次充满未知的探索，从现在开始，祝自己好运。</p>
+<p style="text-align: justify;">我在中国待了二十六载春秋，对这片土地有着深厚的感情。无论何时何地，无论此去经年，这个经历了太多磨难和挫折并且面临着巨大挑战的国家，始终是我魂牵梦萦的地方。虽然还有各种问题，虽然不足和缺点明显到让人无力吐槽，但是这个国家是我的祖国。对于自己的国家，一个人是没有任何理由和立场去厌恶的。</p>
+<p style="text-align: justify;">记得本科入学式的时候，校长有这样一句话：“你们来到这里，是因为祖国选择了你们”。而讽刺的是，在四年或者七年后，我们中有一大批人选择了离开祖国，而且可能永远不会再回来。学校很尴尬的恢复成了最初成立时的“留美预备学校”的性质。确实，在这100年的时间里，似乎很多东西都回到了起点…</p>
+<p style="text-align: justify;">到达之后可能会消失一段时间了，因为网络和通讯以及生活的安定都会需要一段时间。之后的blog风格依然会以iOS开发的技术的入门介绍为主，当然因为在国外一切都很新鲜，也许国外生活的介绍和感想的比例会稍微高一些。也许工作会相当忙，但是我仍然希望能有时间做一些工作之外的自己的事情，因为毕竟工作只是工作，它的目的不是代替生活，而是服务生活的～</p>
+<p style="text-align: justify;">那么，祖国，再见。</p><!--:--><!--:en-->&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[WWDC 2012 Session笔记——202, 228, 232 AutoLayout（自动布局）入门]]></title>
+    <link href="http://blog.onevcat.com/blog/2012/09/20/autoayout/"/>
+    <updated>2012-09-20T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2012/09/20/autoayout</id>
+    <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/09/QQ20120920-8.png"><img class="aligncenter size-full wp-image-1017" title="QQ20120920-8" src="http://www.onevcat.com/wp-content/uploads/2012/09/QQ20120920-8.png" alt="" width="651" height="262" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
+<p style="text-align: justify;">AutoLayout在去年的WWDC上被引入Cocoa，而在今年的WWDC上，Apple不惜花费了三个Session的前所未见的篇幅来详细地向开发者讲解AutoLayout在iOS上的应用，是由起原因的：iPhone5的屏幕将变为4寸，开发者即将面临为不同尺寸屏幕进行应用适配的工作。Android平台开发中最令人诟病的适配工作的厄运现在似乎也将降临在iOS开发者的头上。基于这样的情况，Apple大力推广使用AutoLayout的方法来进行UI布局，以一举消除适配的烦恼。AutoLayout将是自Interface Builder和StoryBoard之后UI制作上又一次重要的变化，也必然是之后iOS开发的趋势，因此这个专题很值得学习。</p></p>
+
+<p><h2 style="text-align: justify;">AutoLayout是什么？</h2>
+<p style="text-align: justify;">使用一句Apple的官方定义的话</p></p>
+
+<p><blockquote>AutoLayout是一种基于约束的，描述性的布局系统。</blockquote></p>
+
+<p>Auto Layout Is a Constraint-Based, Descriptive Layout System.
+<p style="text-align: justify;">关键词：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>基于约束 － 和以往定义frame的位置和尺寸不同，AutoLayout的位置确定是以所谓相对位置的约束来定义的，比如<em>x坐标为superView的中心，y坐标为屏幕底部上方10像素</em>等</li>
+	<li>描述性 － 约束的定义和各个view的关系使用接近自然语言或者可视化语言（稍后会提到）的方法来进行描述</li>
+	<li>布局系统 － 即字面意思，用来负责界面的各个元素的位置。</li>
+</ul>
+<div style="text-align: justify;"><!--:--><!--:en-->&nbsp;</div></p>
+
+<p><!--:--><!--more--><!--:zh-->
+<p style="text-align: justify;">总而言之，AutoLayout为开发者提供了一种不同于传统对于UI元素位置指定的布局方法。以前，不论是在IB里拖放，还是在代码中写，每个UIView都会有自己的frame属性，来定义其在当前视图中的位置和尺寸。使用AutoLayout的话，就变为了使用约束条件来定义view的位置和尺寸。这样的<strong>最大好处是一举解决了不同分辨率和屏幕尺寸下view的适配问题，另外也简化了旋转时view的位置的定义</strong>，原来在底部之上10像素居中的view，不论在旋转屏幕或是更换设备（iPad或者iPhone5或者以后可能出现的mini iPad）的时候，始终还在底部之上10像素居中的位置，不会发生变化。</p>
+<p style="text-align: justify;">总结</p></p>
+
+<p><blockquote>使用约束条件来描述布局，view的frame会依据这些约束来进行计算</blockquote></p>
+
+<p>Describe the layout with constraints, and frames are calculated automatically.</p>
+
+<p><hr /></p>
+
+<p><h2 style="text-align: justify;">AutoLayout和Autoresizing Mask的区别</h2>
+<p style="text-align: justify;">Autoresizing Mask是我们的老朋友了…如果你以前一直是代码写UI的话，你肯定写过UIViewAutoresizingFlexibleWidth之类的枚举；如果你以前用IB比较多的话，一定注意到过每个view的size inspector中都有一个红色线条的Autoresizing的指示器和相应的动画缩放的示意图，这就是Autoresizing Mask。在iOS6之前，关于屏幕旋转的适配和iPhone，iPad屏幕的自动适配，基本都是由Autoresizing Mask来完成的。但是随着大家对iOS app的要求越来越高，以及已经以及今后可能出现的多种屏幕和分辨率的设备来说，Autoresizing Mask显得有些落伍和迟钝了。AutoLayout可以完成所有原来Autoresizing Mask能完成的工作，同时还能够胜任一些原来无法完成的任务，其中包括：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>AutoLayout可以指定任意两个view的相对位置，而不需要像Autoresizing Mask那样需要两个view在直系的view hierarchy中。</li>
+	<li>AutoLayout不必须指定相等关系的约束，它可以指定非相等约束（大于或者小于等）；而Autoresizing Mask所能做的布局只能是相等条件的。</li>
+	<li>AutoLayout可以指定约束的优先级，计算frame时将优先按照满足优先级高的条件进行计算。</li>
+</ul>
+<p style="text-align: justify;">总结</p></p>
+
+<p><blockquote>Autoresizing Mask是AutoLayout的子集，任何可以用Autoresizing Mask完成的工作都可以用AutoLayout完成。AutoLayout还具备一些Autoresizing Mask不具备的优良特性，以帮助我们更方便地构建界面。</blockquote></p>
+
+<p><hr /></p>
+
+<p><h2 style="text-align: justify;">AutoLayout基本使用方法</h2>
+<h3 style="text-align: justify;">Interface Builder</h3>
+<p style="text-align: justify;">最简单的使用方法是在IB中直接拖。在IB中任意一个view的File inspector下面，都有Use Autolayout的选择框（没有的同学可以考虑升级一下Xcode了=。=），钩上，然后按照平常那样拖控件就可以了。拖动控件后在左边的view hierarchy栏中会出现Constraints一向，其中就是所有的约束条件。</p>
+<p style="text-align: justify;"><img src="http://ww3.sinaimg.cn/mw690/83bbf18dgw1dwxkfbus7qj.jpg" alt="" data-pinit="registered" /></p>
+<p style="text-align: justify;">选中某个约束条件后，在右边的Attributes inspector中可以更改约束的条件，距离值和优先度等：
+<img src="http://ww2.sinaimg.cn/mw690/83bbf18dgw1dwxklmxul8j.jpg" alt="" data-pinit="registered" /></p>
+<p style="text-align: justify;">对于没有自动添加的约束，可以在IB中手动添加。选择需要添加约束的view，点击菜单的Edit-&gt;Pin里的需要的选项，或者是点击IB主视图右下角的<img src="http://ww3.sinaimg.cn/mw690/83bbf18dgw1dwxkrarjvmj.jpg" alt="" />按钮，即可添加格外的约束条件。</p>
+<p style="text-align: justify;">可视化的添加不仅很方便直观，而且基本不会出错，是优先推荐的添加约束的方式。但是有时候只靠IB是无法完成某些约束的添加的（比如跨view hierarchy的约束），有时候IB添加的约束不能满足要求，这时就需要使用约束的API进行补充。</p></p>
+
+<p><h3 style="text-align: justify;">手动使用API添加约束</h3>
+<h4 style="text-align: justify;">创建</h4>
+<p style="text-align: justify;">iOS6中新加入了一个类：NSLayoutConstraint，一个形如这样的约束</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>item1.attribute = multiplier ⨉ item2.attribute + constant</li>
+</ul>
+<p style="text-align: justify;">对应的代码为</p></p>
+
+<p><pre class="lang:objc decode:true ">[NSLayoutConstraint constraintWithItem:button
+                             attribute:NSLayoutAttributeBottom
+                             relatedBy:NSLayoutRelationEqual
+                                toItem:superview
+                             attribute:NSLayoutAttributeBottom
+                            multiplier:1.0
+                              constant:-padding]</pre>
+&nbsp;
+<p style="text-align: justify;">这对应的约束是“button的底部（y） ＝ superview的底部 －10”。</p></p>
+
+<p><h4 style="text-align: justify;">添加</h4>
+<p style="text-align: justify;">在创建约束之后，需要将其添加到作用的view上。UIView（当然NSView也一样）加入了一个新的实例方法：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>-(void)addConstraint:(NSLayoutConstraint *)constraint;</li>
+</ul>
+<p style="text-align: justify;">用来将约束添加到view。在添加时唯一要注意的是添加的目标view要遵循以下规则：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>对于两个同层级view之间的约束关系，添加到他们的父view上</li>
+</ul>
+<p style="text-align: justify;"><img src="http://ww1.sinaimg.cn/mw690/83bbf18dgw1dx3236wmnnj.jpg" alt="" data-pinit="registered" /></p></p>
+
+<p><ul style="text-align: justify;">
+	<li>对于两个不同层级view之间的约束关系，添加到他们最近的共同父view上</li>
+</ul>
+<p style="text-align: justify;"><img src="http://ww1.sinaimg.cn/mw690/83bbf18dgw1dx3237dsbxj.jpg" alt="" data-pinit="registered" /></p></p>
+
+<p><ul style="text-align: justify;">
+	<li>对于有层次关系的两个view之间的约束关系，添加到层次较高的父view上</li>
+</ul>
+<p style="text-align: justify;"><img src="http://ww4.sinaimg.cn/mw690/83bbf18dgw1dx32384ardj.jpg" alt="" data-pinit="registered" /></p></p>
+
+<p><h4 style="text-align: justify;">刷新</h4>
+<p style="text-align: justify;">可以通过-setNeedsUpdateConstraints和-layoutIfNeeded两个方法来刷新约束的改变，使UIView重新布局。这和CoreGraphic的-setNeedsDisplay一套东西是一样的～</p></p>
+
+<p><h3 style="text-align: justify;">Visual Format Language 可视格式语言</h3>
+<p style="text-align: justify;">UIKit团队这次相当有爱，估计他们自己也觉得新加约束的API名字太长了，因此他们发明了一种新的方式来描述约束条件，十分有趣。这种语言是对视觉描述的一种抽象，大概过程看起来是这样的：</p>
+<p style="text-align: justify;">accept按钮在cancel按钮右侧默认间距处</p>
+<p style="text-align: justify;"><img src="http://ww2.sinaimg.cn/mw690/83bbf18dgw1dx32c2yth4j.jpg" alt="" /></p>
+<p style="text-align: justify;"><img src="http://ww4.sinaimg.cn/mw690/83bbf18dgw1dx32c3win2j.jpg" alt="" /></p>
+<p style="text-align: justify;"><img src="http://ww3.sinaimg.cn/mw690/83bbf18dgw1dx32c47ab9j.jpg" alt="" /></p>
+<p style="text-align: justify;">最后使用VFL（Visual Format Language）描述变成这样：</p></p>
+
+<p><pre class="lang:objc decode:true ">[NSLayoutConstraint constraintsWithVisualFormat:@"[cancelButton]-[acceptButton]" 
+                                        options:0 
+                                        metrics:nil 
+                                          views:viewsDictionary];</pre>
+&nbsp;
+<p style="text-align: justify;">其中viewsDictionary是绑定了view的名字和对象的字典，对于这个例子可以用以下方法得到对应的字典：</p></p>
+
+<p><pre class="lang:objc decode:true ">UIButton *cancelButton = ... 
+UIButton *acceptButton = ... 
+viewsDictionary = NSDictionaryOfVariableBindings(cancelButton,acceptButton);</pre>
+&nbsp;
+<p style="text-align: justify;">生成的字典为</p></p>
+
+<p><pre><code>{ acceptButton = ""; cancelButton = ""; } </code></pre>
+<p style="text-align: justify;">当然，不嫌累的话自己手写也未尝不可。现在字典啊数组啊写法相对简化了很多了，因此也不复杂。关于Objective-C的新语法，可以参考我之前的一篇WWDC 2012笔记：<a href="http://www.onevcat.com/2012/06/modern-objective-c/">WWDC 2012 Session笔记——405 Modern Objective-C</a>。</p>
+<p style="text-align: justify;">在view名字后面添加括号以及连接处的数字可以赋予表达式更多意义，以下进行一些举例：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>[cancelButton(72)]-12-[acceptButton(50)]
+<ul>
+	<li>取消按钮宽72point，accept按钮宽50point，它们之间间距12point</li>
+</ul>
+</li>
+	<li>[wideView(&gt;=60@700)]
+<ul>
+	<li>wideView宽度大于等于60point，该约束条件优先级为700（优先级最大值为1000，优先级越高的约束越先被满足）</li>
+</ul>
+</li>
+	<li>V:[redBox][yellowBox(==redBox)]
+<ul>
+	<li>竖直布局，先是一个redBox，其下方紧接一个宽度等于redBox宽度的yellowBox</li>
+</ul>
+</li>
+	<li>H:|-[Find]-[FindNext]-[FindField(&gt;=20)]-|
+<ul>
+	<li>水平布局，Find距离父view左边缘默认间隔宽度，之后是FindNext距离Find间隔默认宽度；再之后是宽度不小于20的FindField，它和FindNext以及父view右边缘的间距都是默认宽度。（竖线&#8217;|‘ 表示superview的边缘）</li>
+</ul>
+</li>
+</ul></p>
+
+<p><hr /></p>
+
+<p><h2 style="text-align: justify;">容易出现的错误</h2>
+<p style="text-align: justify;">因为涉及约束问题，因此约束模型下的所有可能出现的问题这里都会出现，具体来说包括两种：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>Ambiguous Layout 布局不能确定</li>
+	<li>Unsatisfiable Constraints 无法满足约束</li>
+</ul>
+<p style="text-align: justify;">布局不能确定指的是给出的约束条件无法唯一确定一种布局，也即约束条件不足，无法得到唯一的布局结果。这种情况一般添加一些必要的约束或者调整优先级可以解决。无法满足约束的问题来源是有约束条件互相冲突，因此无法同时满足，需要删掉一些约束。两种错误在出现时均会导致布局的不稳定和错误，Ambiguous可以被容忍并且选择一种可行布局呈现在UI上，Unsatisfiable的话会无法得到UI布局并报错。</p>
+<p style="text-align: justify;">对于不能确定的布局，可以通过调试时暂停程序，在debugger中输入</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>po [[UIWindow keyWindow] _autolayoutTrace]</li>
+</ul>
+<p style="text-align: justify;">来检查是否存在Ambiguous Layout以及存在的位置，来帮助添加条件。另外还有一些检查方法，来查看view的约束和约束状态：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>[view constraintsAffectingLayoutForOrientation/Axis: NSLayoutConstraintOrientationHorizontal/Vertical]</li>
+	<li>[view hasAmbiguousLayout]
+<ul>
+	<li>[view exerciseAmbiguityInLayout]</li>
+</ul>
+</li>
+</ul></p>
+
+<p><hr /></p>
+
+<p><h2 style="text-align: justify;">布局动画</h2>
+<p style="text-align: justify;">动画是UI体验的重要部分，更改布局以后的动画也非常关键。说到动画，Core Animation又立功了..自从CA出现以后，所有的动画效果都非常cheap，在auto layout中情况也和collection view里一样，很简单（可以参考<a href="http://www.onevcat.com/2012/08/advanced-collection-view/">WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts</a>），只需要把layoutIfNeeded放到animation block中即可～</p></p>
+
+<p><pre class="lang:objc decode:true ">[UIView animateWithDuration:0.5 animations:^{
+    [view layoutIfNeeded];
+}];</pre>
+&nbsp;
+<p style="text-align: justify;">如果对block不熟悉的话，可以看看我很早时候写的一篇<a title="Objective-C中的Block" href="http://www.onevcat.com/2011/11/objective-c%e4%b8%ad%e7%9a%84block/">block的文章</a>。</p><!--:--><!--:en-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts]]></title>
+    <link href="http://blog.onevcat.com/blog/2012/08/28/advanced-collection-view/"/>
+    <updated>2012-08-28T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2012/08/28/advanced-collection-view</id>
+    <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/08/QQ20120828-3.png"><img class="aligncenter size-full wp-image-984" title="uicollectionview-struct" src="http://www.onevcat.com/wp-content/uploads/2012/08/QQ20120828-3.png" alt="" width="983" height="251" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
+<p style="text-align: justify;">在上一篇<a href="http://www.onevcat.com/2012/06/introducing-collection-views/">UICollectionView的入门介绍</a>中，大概地对iOS6新加入的强大的UICollectionView进行了一些说明。在这篇博文中，将结合WWDC2012 Session219：Advanced Collection View的内容，对Collection View进行一个深入的使用探讨，并给出一个自定义的Demo。</p></p>
+
+<p><h2 style="text-align: justify;">UICollectionView的结构回顾</h2>
+<p style="text-align: justify;">首先回顾一下Collection View的构成，我们能看到的有三个部分：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>Cells</li>
+	<li>Supplementary Views 追加视图 （类似Header或者Footer）</li>
+	<li>Decoration Views 装饰视图 （用作背景展示）</li>
+</ul>
+<p style="text-align: justify;">而在表面下，由两个方面对UICollectionView进行支持。其中之一和tableView一样，即提供数据的UICollectionViewDataSource以及处理用户交互的UICollectionViewDelegate。另一方面，对于cell的样式和组织方式，由于collectionView比tableView要复杂得多，因此没有按照类似于tableView的style的方式来定义，而是专门使用了一个类来对collectionView的布局和行为进行描述，这就是UICollectionViewLayout。</p>
+<p style="text-align: justify;">这次的笔记将把重点放在UICollectionViewLayout上，因为这不仅是collectionView和tableView的最重要求的区别，也是整个UICollectionView的精髓所在。</p>
+<p style="text-align: justify;"><!--:--><!--more--><!--:zh--></p>
+<p style="text-align: justify;">如果对UICollectionView的基本构成要素和使用方法还不清楚的话，可以移步到我之前的一篇笔记：<a href="http://www.onevcat.com/2012/06/introducing-collection-views/">Session笔记——205 Introducing Collection Views</a>中进行一些了解。</p></p>
+
+<p><hr /></p>
+
+<p><h2 style="text-align: justify;">UICollectionViewLayoutAttributes</h2>
+<p style="text-align: justify;">UICollectionViewLayoutAttributes是一个非常重要的类，先来看看property列表：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>@property (nonatomic) CGRect frame</li>
+	<li>@property (nonatomic) CGPoint center</li>
+	<li>@property (nonatomic) CGSize size</li>
+	<li>@property (nonatomic) CATransform3D transform3D</li>
+	<li>@property (nonatomic) CGFloat alpha</li>
+	<li>@property (nonatomic) NSInteger zIndex</li>
+	<li>@property (nonatomic, getter=isHidden) BOOL hidden</li>
+</ul>
+<p style="text-align: justify;">可以看到，UICollectionViewLayoutAttributes的实例中包含了诸如边框，中心点，大小，形状，透明度，层次关系和是否隐藏等信息。和DataSource的行为十分类似，当UICollectionView在获取布局时将针对每一个indexPath的部件（包括cell，追加视图和装饰视图），向其上的UICollectionViewLayout实例询问该部件的布局信息（在这个层面上说的话，实现一个UICollectionViewLayout的时候，其实很像是zap一个delegate，之后的例子中会很明显地看出），这个布局信息，就以UICollectionViewLayoutAttributes的实例的方式给出。</p></p>
+
+<p><hr /></p>
+
+<p><h2 style="text-align: justify;">自定义的UICollectionViewLayout</h2>
+<p style="text-align: justify;">UICollectionViewLayout的功能为向UICollectionView提供布局信息，不仅包括cell的布局信息，也包括追加视图和装饰视图的布局信息。实现一个自定义layout的常规做法是继承UICollectionViewLayout类，然后重载下列方法：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>-(CGSize)collectionViewContentSize
+<ul>
+	<li>返回collectionView的内容的尺寸</li>
+</ul>
+</li>
+	<li>-(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
+<ul>
+	<li>返回rect中的所有的元素的布局属性</li>
+	<li>返回的是包含UICollectionViewLayoutAttributes的NSArray</li>
+	<li>UICollectionViewLayoutAttributes可以是cell，追加视图或装饰视图的信息，通过不同的UICollectionViewLayoutAttributes初始化方法可以得到不同类型的UICollectionViewLayoutAttributes：
+<ul>
+	<li>layoutAttributesForCellWithIndexPath:</li>
+	<li>layoutAttributesForSupplementaryViewOfKind:withIndexPath:</li>
+	<li>layoutAttributesForDecorationViewOfKind:withIndexPath:</li>
+</ul>
+</li>
+</ul>
+</li>
+	<li>-(UICollectionViewLayoutAttributes <em>)layoutAttributesForItemAtIndexPath:(NSIndexPath </em>)indexPath
+<ul>
+	<li>返回对应于indexPath的位置的cell的布局属性</li>
+</ul>
+</li>
+	<li>-(UICollectionViewLayoutAttributes <em>)layoutAttributesForSupplementaryViewOfKind:(NSString </em>)kind atIndexPath:(NSIndexPath *)indexPath
+<ul>
+	<li>返回对应于indexPath的位置的追加视图的布局属性，如果没有追加视图可不重载</li>
+</ul>
+</li>
+	<li>-(UICollectionViewLayoutAttributes * )layoutAttributesForDecorationViewOfKind:(NSString<em>)decorationViewKind atIndexPath:(NSIndexPath </em>)indexPath
+<ul>
+	<li>返回对应于indexPath的位置的装饰视图的布局属性，如果没有装饰视图可不重载</li>
+</ul>
+</li>
+	<li>-(BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
+<ul>
+	<li>当边界发生改变时，是否应该刷新布局。如果YES则在边界变化（一般是scroll到其他地方）时，将重新计算需要的布局信息。</li>
+</ul>
+</li>
+</ul>
+<p style="text-align: justify;">另外需要了解的是，在初始化一个UICollectionViewLayout实例后，会有一系列准备方法被自动调用，以保证layout实例的正确。</p>
+<p style="text-align: justify;">首先，-(void)prepareLayout将被调用，默认下该方法什么没做，但是在自己的子类实现中，一般在该方法中设定一些必要的layout的结构和初始需要的参数等。</p>
+<p style="text-align: justify;">之后，-(CGSize) collectionViewContentSize将被调用，以确定collection应该占据的尺寸。注意这里的尺寸不是指可视部分的尺寸，而应该是所有内容所占的尺寸。collectionView的本质是一个scrollView，因此需要这个尺寸来配置滚动行为。</p>
+<p style="text-align: justify;">接下来-(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect被调用，这个没什么值得多说的。初始的layout的外观将由该方法返回的UICollectionViewLayoutAttributes来决定。</p>
+<p style="text-align: justify;">另外，在需要更新layout时，需要给当前layout发送 -invalidateLayout，该消息会立即返回，并且预约在下一个loop的时候刷新当前layout，这一点和UIView的setNeedsLayout方法十分类似。在-invalidateLayout后的下一个collectionView的刷新loop中，又会从prepareLayout开始，依次再调用-collectionViewContentSize和-layoutAttributesForElementsInRect来生成更新后的布局。</p></p>
+
+<p><hr /></p>
+
+<p><h2 style="text-align: justify;">Demo</h2>
+<p style="text-align: justify;">说了那么多，其实还是Demo最能解决问题。Apple官方给了一个flow layout和一个circle layout的例子，都很经典，需要的同学可以从<a href="http://www.onevcat.com/wp-content/uploads/2012/08/advanced-collection-view-demo.zip">这里下载</a>。</p></p>
+
+<p><h3 style="text-align: justify;">LineLayout——对于个别UICollectionViewLayoutAttributes的调整</h3>
+<p style="text-align: justify;">先看LineLayout，它继承了UICollectionViewFlowLayout这个Apple提供的基本的布局。它主要实现了单行布局，自动对齐到网格以及当前网格cell放大三个特性。如图：</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/08/QQ20120828-1-e1346145550225.png"><img class="aligncenter size-full wp-image-988" title="collection-view-line-layout" src="http://www.onevcat.com/wp-content/uploads/2012/08/QQ20120828-1-e1346145550225.png" alt="" width="800" height="264" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">先看LineLayout的init方法：</p></p>
+
+<p><pre>-(id)init
+{
+    self = [super init];
+    if (self) {
+        self.itemSize = CGSizeMake(ITEM_SIZE, ITEM_SIZE);
+        self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        self.sectionInset = UIEdgeInsetsMake(200, 0.0, 200, 0.0);
+        self.minimumLineSpacing = 50.0;
+    }
+    return self;
+}</pre>
+<p style="text-align: justify;">self.sectionInset = UIEdgeInsetsMake(200, 0.0, 200, 0.0); 确定了缩进，此处为上方和下方各缩进200个point。由于cell的size已经定义了为200x200，因此屏幕上在缩进后就只有一排item的空间了。</p>
+<p style="text-align: justify;">self.minimumLineSpacing = 50.0; 这个定义了每个item在水平方向上的最小间距。</p>
+<p style="text-align: justify;">UICollectionViewFlowLayout是Apple为我们准备的开袋即食的现成布局，因此之前提到的几个必须重载的方法中需要我们操心的很少，即使完全不重载它们，现在也可以得到一个不错的线状一行的gridview了。而我们的LineLayout通过重载父类方法后，可以实现一些新特性，比如这里的动对齐到网格以及当前网格cell放大。</p>
+<p style="text-align: justify;">自动对齐到网格</p></p>
+
+<p><pre>- (CGPoint)targetContentOffsetForProposedContentOffset: (CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
+{
+    //proposedContentOffset是没有对齐到网格时本来应该停下的位置
+    CGFloat offsetAdjustment = MAXFLOAT;
+    CGFloat horizontalCenter = proposedContentOffset.x + (CGRectGetWidth(self.collectionView.bounds) / 2.0);</pre></p>
+
+<p>    CGRect targetRect = CGRectMake(proposedContentOffset.x, 0.0, self.collectionView.bounds.size.width, self.collectionView.bounds.size.height);<br />
+    NSArray* array = [super layoutAttributesForElementsInRect:targetRect];</p>
+
+<p>    //对当前屏幕中的UICollectionViewLayoutAttributes逐个与屏幕中心进行比较，找出最接近中心的一个<br />
+    for (UICollectionViewLayoutAttributes* layoutAttributes in array) {<br />
+        CGFloat itemHorizontalCenter = layoutAttributes.center.x;<br />
+        if (ABS(itemHorizontalCenter - horizontalCenter) &lt; ABS(offsetAdjustment)) {<br />
+        offsetAdjustment = itemHorizontalCenter - horizontalCenter;<br />
+        }<br />
+    }    <br />
+    return CGPointMake(proposedContentOffset.x + offsetAdjustment, proposedContentOffset.y);<br />
+}
+<p style="text-align: justify;">当前item放大</p></p>
+
+<p><pre>-(NSArray*)layoutAttributesForElementsInRect:(CGRect)rect
+{
+    NSArray* array = [super layoutAttributesForElementsInRect:rect];
+    CGRect visibleRect;
+    visibleRect.origin = self.collectionView.contentOffset;
+    visibleRect.size = self.collectionView.bounds.size;</pre></p>
+
+<p>    for (UICollectionViewLayoutAttributes* attributes in array) {<br />
+        if (CGRectIntersectsRect(attributes.frame, rect)) {<br />
+            CGFloat distance = CGRectGetMidX(visibleRect) - attributes.center.x;<br />
+            CGFloat normalizedDistance = distance / ACTIVE_DISTANCE;<br />
+            if (ABS(distance) &lt; ACTIVE_DISTANCE) {<br />
+                CGFloat zoom = 1 + ZOOM_FACTOR*(1 - ABS(normalizedDistance));<br />
+                attributes.transform3D = CATransform3DMakeScale(zoom, zoom, 1.0);<br />
+                attributes.zIndex = 1;<br />
+            }<br />
+        }<br />
+    }<br />
+    return array;<br />
+}
+<p style="text-align: justify;">对于个别UICollectionViewLayoutAttributes进行调整，以达到满足设计需求是UICollectionView使用中的一种思路。在根据位置提供不同layout属性的时候，需要记得让-shouldInvalidateLayoutForBoundsChange:返回YES，这样当边界改变的时候，-invalidateLayout会自动被发送，才能让layout得到刷新。</p></p>
+
+<p><h3 style="text-align: justify;">CircleLayout——完全自定义的Layout，添加删除item，以及手势识别</h3>
+<p style="text-align: justify;">CircleLayout的例子稍微复杂一些，cell分布在圆周上，点击cell的话会将其从collectionView中移出，点击空白处会加入一个cell，加入和移出都有动画效果。</p>
+<p style="text-align: justify;">这放在以前的话估计够写一阵子了，而得益于UICollectionView，基本只需要100来行代码就可以搞定这一切，非常cheap。通过CircleLayout的实现，可以完整地看到自定义的layout的编写流程，非常具有学习和借鉴的意义。</p>
+<p style="text-align: justify;"><img src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-5.png" alt="CircleLayout" data-pinit="registered" /></p>
+<p style="text-align: justify;">首先，布局准备中定义了一些之后计算所需要用到的参数。</p></p>
+
+<p><pre>-(void)prepareLayout
+{   //和init相似，必须call super的prepareLayout以保证初始化正确
+    [super prepareLayout];</pre></p>
+
+<p>    CGSize size = self.collectionView.frame.size;<br />
+    _cellCount = [[self collectionView] numberOfItemsInSection:0];<br />
+    _center = CGPointMake(size.width / 2.0, size.height / 2.0);<br />
+    _radius = MIN(size.width, size.height) / 2.5;<br />
+}
+<p style="text-align: justify;">其实对于一个size不变的collectionView来说，除了_cellCount之外的中心和半径的定义也可以扔到init里去做，但是显然在prepareLayout里做的话具有更大的灵活性。因为每次重新给出layout时都会调用prepareLayout，这样在以后如果有collectionView大小变化的需求时也可以自动适应变化。</p>
+<p style="text-align: justify;">然后，按照UICollectionViewLayout子类的要求，重载了所需要的方法：</p></p>
+
+<p><pre>//整个collectionView的内容大小就是collectionView的大小（没有滚动）
+-(CGSize)collectionViewContentSize
+{
+    return [self collectionView].frame.size;
+}</pre></p>
+
+<p>//通过所在的indexPath确定位置。<br />
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)path<br />
+{
+    UICollectionViewLayoutAttributes* attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:path]; //生成空白的attributes对象，其中只记录了类型是cell以及对应的位置是indexPath</p>
+
+<p>    //配置attributes到圆周上<br />
+    attributes.size = CGSizeMake(ITEM_SIZE, ITEM_SIZE);<br />
+    attributes.center = CGPointMake(_center.x + _radius * cosf(2 * path.item * M_PI / _cellCount), _center.y + _radius * sinf(2 * path.item * M_PI / _cellCount));<br />
+    return attributes;<br />
+}</p>
+
+<p>//用来在一开始给出一套UICollectionViewLayoutAttributes<br />
+-(NSArray*)layoutAttributesForElementsInRect:(CGRect)rect<br />
+{
+    NSMutableArray* attributes = [NSMutableArray array];<br />
+    for (NSInteger i=0 ; i &lt; self.cellCount; i++) {<br />
+        //这里利用了-layoutAttributesForItemAtIndexPath:来获取attributes<br />
+        NSIndexPath* indexPath = [NSIndexPath indexPathForItem:i inSection:0];<br />
+        [attributes addObject:[self layoutAttributesForItemAtIndexPath:indexPath]];<br />
+    }    <br />
+    return attributes;<br />
+}
+<p style="text-align: justify;">现在已经得到了一个circle layout。为了实现cell的添加和删除，需要为collectionView加上手势识别，这个很简单，在ViewController中：</p></p>
+
+<p><pre>UITapGestureRecognizer* tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+[self.collectionView addGestureRecognizer:tapRecognizer];</pre>
+<p style="text-align: justify;">对应的处理方法handleTapGesture:为</p></p>
+
+<p><pre>- (void)handleTapGesture:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        CGPoint initialPinchPoint = [sender locationInView:self.collectionView];
+        NSIndexPath* tappedCellPath = [self.collectionView indexPathForItemAtPoint:initialPinchPoint]; //获取点击处的cell的indexPath
+        if (tappedCellPath!=nil) { //点击处没有cell
+            self.cellCount = self.cellCount - 1;
+            [self.collectionView performBatchUpdates:^{
+                [self.collectionView deleteItemsAtIndexPaths:[NSArray arrayWithObject:tappedCellPath]];
+            } completion:nil];
+        } else {
+            self.cellCount = self.cellCount + 1;
+            [self.collectionView performBatchUpdates:^{
+                [self.collectionView insertItemsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForItem:0 inSection:0]]];
+            } completion:nil];
+        }
+    }
+}</pre>
+<p style="text-align: justify;">performBatchUpdates:completion: 再次展示了block的强大的一面..这个方法可以用来对collectionView中的元素进行批量的插入，删除，移动等操作，同时将触发collectionView所对应的layout的对应的动画。相应的动画由layout中的下列四个方法来定义：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>initialLayoutAttributesForAppearingItemAtIndexPath:</li>
+	<li>initialLayoutAttributesForAppearingDecorationElementOfKind:atIndexPath:</li>
+	<li>finalLayoutAttributesForDisappearingItemAtIndexPath:</li>
+	<li>finalLayoutAttributesForDisappearingDecorationElementOfKind:atIndexPath:</li>
+</ul>
+<div style="text-align: justify;"><span style="color: #ff0000;">更正：正式版中API发生了变化（而且不止一次变化）。</span></div>
+<div style="text-align: justify;"><span style="color: #ff0000;">initialLayoutAttributesForInsertedItemAtIndexPath:在正式版中已经被废除。现在在insert或者delete之前，prepareForCollectionViewUpdates:会被调用，可以使用这个方法来完成添加/删除的布局。关于更多这方面的内容以及新的示例demo，可以参看<a href="http://markpospesel.wordpress.com/2012/10/25/fixing-circlelayout/">这篇博文</a>（需要翻墙）。新的示例demo在Github上也有，<a href="https://github.com/mpospese/CircleLayout">链接</a>。</span></div>
+<p style="text-align: justify;">在CircleLayout中，实现了cell的动画。</p></p>
+
+<p><pre>//插入前，cell在圆心位置，全透明
+- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForInsertedItemAtIndexPath:(NSIndexPath *)itemIndexPath
+{
+    UICollectionViewLayoutAttributes* attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
+    attributes.alpha = 0.0;
+    attributes.center = CGPointMake(_center.x, _center.y);
+    return attributes;
+}</pre></p>
+
+<p>//删除时，cell在圆心位置，全透明，且只有原来的1/10大<br />
+- (UICollectionViewLayoutAttributes *)finalLayoutAttributesForDeletedItemAtIndexPath:(NSIndexPath *)itemIndexPath<br />
+{
+    UICollectionViewLayoutAttributes* attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];<br />
+    attributes.alpha = 0.0;<br />
+    attributes.center = CGPointMake(_center.x, _center.y);<br />
+    attributes.transform3D = CATransform3DMakeScale(0.1, 0.1, 1.0);<br />
+    return attributes;<br />
+}
+<p style="text-align: justify;">在插入或删除时，将分别以插入前和删除后的attributes和普通状态下的attributes为基准，进行UIView的动画过渡。而这一切并没有很多代码要写，几乎是free的，感谢苹果…</p></p>
+
+<p><hr /></p>
+
+<p><h2 style="text-align: justify;">布局之间的切换</h2>
+<p style="text-align: justify;">有时候可能需要不同的布局，Apple也提供了方便的布局间切换的方法。直接更改collectionView的collectionViewLayout属性可以立即切换布局。而如果通过setCollectionViewLayout:animated:，则可以在切换布局的同时，使用动画来过渡。对于每一个cell，都将有对应的UIView动画进行对应，又是一个接近free的特性。</p>
+<p style="text-align: justify;">对于我自己来说，UICollectionView可能是我转向iOS 6 SDK的最具有吸引力的特性之一，因为UIKit团队的努力和CoreAnimation的成熟，使得创建一个漂亮优雅的UI变的越来越简单了。可以断言说UICollectionView在今后的iOS开发中，一定会成为和UITableView一样的强大和最常用的类之一。在iOS 6还未正式上市前，先对其特性进行一些学习，以期尽快能使用新特性来简化开发流程，可以说是非常值得的。</p><!--:--><!--:en-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[学生时代的终焉]]></title>
+    <link href="http://blog.onevcat.com/blog/2012/08/11/not-a-studen/"/>
+    <updated>2012-08-11T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2012/08/11/not-a-studen</id>
+    <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/08/me.jpg"><img class="aligncenter size-full wp-image-973" title="student" src="http://www.onevcat.com/wp-content/uploads/2012/08/me.jpg" alt="" width="838" height="256" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">距离研究生毕业，已经过去一个月了。在毕业季的离愁和从学生身份的转变的怅惘渐渐淡去时，大概是时候对我的整个的大学生涯做一个小结了。很多事情的记忆已经在时间的冲蚀中变得模糊了，但是也有一些事情比其他的琐事更深地印刻在了记忆之中，也许简单的梳理和回忆，无法把这七年刻画的细致入微，但是作为轮廓的勾勒和回顾，却已然绰绰有余了。（写完之后终于发现又被写成标准流水账了，这个从小学开始的写作文的毛病在不写博客两个月之后再次复发了哎…）</p></p>
+
+<p><h3 style="text-align: justify;">悲剧的开始</h3>
+<p style="text-align: justify;">大学本科加上研究生，七年时间，说长不长，说短却也不短。在经历了中学时代的辉煌之后，我终于还是在大学里找到了自己真正的位置。如果大学不在清华，如果不在清华里可谓最变态的电子系，如果不在清华里可谓最变态的电子系中最变态的班的话，也许我的大学生活会完全不一样吧。</p>
+<p style="text-align: justify;">这里有在央视热门节目露过脸的高考状元，</p>
+<p style="text-align: justify;">这里有“百度一下”能检出几万条结果的全省第一，</p>
+<p style="text-align: justify;">这里有奥数好几块金牌的超级达人，</p>
+<p style="text-align: justify;">这里有中学带了五个社团还能考到第一的变态，</p>
+<p style="text-align: justify;">这里有之后叱咤清华被老师们认可为几十年难遇的特奖得主和学生会主席。</p>
+<p style="text-align: justify;">当然，这里还有我，一个基本是以倒数一二的成绩分到这个班的可怜的差生。虽然说来之前已经被打过预防针，但是我真的不知道，这七年，会这么开始。</p>
+<p style="text-align: justify;"><!--:--><!--more--><!--:zh--></p>
+<p style="text-align: justify;">当每个人都在叫嚷着自己不会啊考试要挂了啊的时候，我还暗自得意过自己貌似这些题都还算能做一做。最后结果出来发现自己在为自己的80分沾沾自喜的时候，周围基本都是一片95+，那种&#8221;你是一个傻逼&#8221;的打击对于那时的我来说着实不轻。对于从一个教育相对落后的地区出来的学生来说，这可能是很正常很普遍的现象，但是从遥遥领先到远远落后，这样的落差，一时间确实难以接受。不过几次下来，麻木之后，也就对自己所处的位置心安理得了。当时为自己找到的借口是这些东西别人高中里都学过或者接触过，而自己高中时一不搞竞赛二也从来没自己私下刻苦学习过，所以一开始起点就落后很多了。学习这个东西，就像F1赛车一样，发车的时候落后，之后想赶上的话，要付出的代价可要大得多，所以得过且过了…</p></p>
+
+<p><h3 style="text-align: justify;">一点点改变</h3>
+<p style="text-align: justify;">还好之后不久便觉得这样的想法实在很可恶…大二的挂科犹如当头棒喝。本科有整整四年的时间，这比初中的三年和高中的三年都要多，而且这四年时间中真正属于自己的时间很多很多。想要努力学习的话，不一定能在这里出类拔萃，但是有所斩获却是毋庸置疑。有句话很好，上帝给每个人都基本公平地发了时间这种万能货币，而一个人，想要怎么样的生活，想要成为怎样的人，与他把时间这种货币用来换了什么有莫大关系。大一和大二的公共课程和电子通讯方向的学习让我感到十分疲惫，我感到的是时间的浪费。而这时正好有机会在专业上进行一个细分，可以选择继续电子或者转为微电子方向。</p>
+<p style="text-align: justify;">其实这个时候的境遇和我高一结束后文理分班和校区迁移那时候很像。高一的时候的状况真是糟糕透顶，每天上学放学路上疲惫不堪，加上进入高中时相似的心理落差（当然没有从高中到大学差距这么大），让我几乎无法专于学习了。当时也正好遇上了分班和校址迁移，让我有机会得到喘息，从而有了一个新的开始。我当然希望这次也能有同样的效果，于是毫不犹豫的选择了转到新的专业去。</p>
+<p style="text-align: justify;">事实证明了这是一个明智的选择。我也许真的是那种喜欢去适应，喜欢去改变的人吧。有时候奶酪被拿走了，总会喜欢去寻找更新鲜的奶酪，也许是自己潜意识中的那只嗅嗅，在不断指引着我吧（笑）。总之，在微电的这段时光还是很快乐的。在这里虽然在绩点上也没什么了不起的突破，但是却在感情上找到了归宿。其实这么说来，到现在为止，我在自己人生的每个阶段，都很好的完成了我的任务：小学初中是快乐地生活成长，高中考到一个很好的大学，大学时找到很好的伴侣。虽然种种不顺，但是看起来却是不折不扣的成功呐…</p></p>
+
+<p><h3 style="text-align: justify;">继续努力</h3>
+<p style="text-align: justify;">在好不容易真正习惯了清华的生活的时候，本科也快毕业了。靠着本科后两年拉回来的绩点，在本科最后踩着线随大流保了研。那时候真的没有想过继续深造和工作哪个好，也不太明白读研意味着什么。只是盲目地从众，而等我真正明白的时候，硕士都已经快毕业了。</p>
+<p style="text-align: justify;">其实硕士期间我是很幸运的，因为遇到了一位真的非常非常非常开明的导师。对比起很多其他同学的导师，我的导师几乎具备了一切优点：发钱多，派活少，不push，除了不太请我们吃饭以外，已经和忘年交的朋友差不多了。所以在硕士阶段，属于自己的时间也有很多，也正是以此为条件，我有机会仔细思考我真正想要的和喜欢的东西是什么。</p>
+<p style="text-align: justify;">首先，肯定不是研究。一看论文就犯困，一做试验就想逃，这些特质决定了必然不会是一个好的科研人员。我一直认为很多科学研究是毫无意义并且对这个世界是不会有任何改变的（特别是在中国，对然这句话肯定是错的，不过这就是我的想法）。国内的科研环境，就我所看到的号称中国最好的大学之一来说，也满满充斥着拉关系跑经费，报批各种各样的项目，面临无穷无尽的审计，大家真正忙的一切，都和科研本身没什么关系，而最后往往就靠几个真正还不那么讨厌科研的学生的寒碜的所谓“成果”来应付课题最终检查。在这方面，我完全没有入门，也并不是太了解真正的科研的感觉应该是怎么样的。但是在这里，我体会到的是一种低效和浑噩，从真心里，我不喜欢这样的生活。</p>
+<p style="text-align: justify;">为了尽量不在科研上花过多的时间，我选了一个非常奇葩的研究方向，做着前人从未做过的试验。因为课题很新，和研究组里所有人的课题都基本没有交集，导师也对新的方法表示闻所未闻。于是我几乎失去了所有的来自研究组的指导和支持，独自一人在黑暗中摸索。但是好处是，我做的试验没有其他人做过，因此我的结果也就没有人能够给出权威的评判，因为在这个领域其实我就是权威。那种感觉，真心不错。</p>
+<p style="text-align: justify;">但是这样做的目的，其实是解放自己的时间。不再被无数的试验束缚的同时，我开始尝试走向高效，去做一些自己喜欢做的事情。其实，每个人在青春的时候都应该有那么一段奋斗的历史，这样才不至于在老去后回首时发现一片苍白。拥有狂热的兴趣爱好也罢，全身心地投入某件事情也罢，都会在十几年甚至几十年后成为一段非常美好的回忆。努力过做过，在这个世界上留下一些什么东西，能够时不时被人想起，有时候，存在感和被认同感，还是十分重要的。</p></p>
+
+<p><h3 style="text-align: justify;">新的开始</h3>
+<p style="text-align: justify;">找工作的那段时间还是相当郁闷的。虽说好歹算是名校毕业，但是一样四处碰壁。首先我很个性的做了一份比较非主流的简历，这直接导致了所有的正统企业都把我拒之门外（其实应该是我把他们拒之门外吧，233）；接着，投出去的一些简历直接没有了回音，估计是没见过清华的学生去投他们，觉得是在调戏？但是我真的没有乱投简历啊，给了简历的企业都是我真的想去的地方啊；最后，给了笔试的企业的各种笔试基本都没通过，各种请你写出XX算法，写你妹啊我木有学过啊有木有..而且在我做了这些项目以后我就觉得算法什么的就是扯淡啊有木有，你招的是码农啊，又不是计算机科学家，你要的那些算法google一下不就完事儿了。</p>
+<p style="text-align: justify;">于是，我好像是被所有的中国企业抛弃了，或者好听一点的话，是中国这些企业都和自己相性不符吧，真的，没有任何一家中国企业愿意给我offer，无奈最后只能去日本了。</p>
+<p style="text-align: justify;">然后，顺利的毕业了。不过毕业前的那段日子还是相当难熬的，每天白天在实验室待一整天，做试验整理数据攒论文不亦乐乎，晚上到兼职的地方作项目有时候deadline前忙到夜里两三点的时候也有，周末两天为了之后的工作还要到北语上课。如此高强度的无休生活如果可能一个月两个月的话还好，再长的话可能真的要崩溃掉。幸运的是我没感到什么太大压力就撑下来了，可能以后遇到什么时间上的压力的话，想想这段狗一般的经历就能平静许多了吧…</p>
+<p style="text-align: justify;">离开清华的一个月里，都在北语混迹。每天过着标准的学生生活，上课，食堂，宿舍。只不过上课由模电课、数电课、工艺课变成了日语课、日语课、日语课，食堂由麻辣烫、煎鸡饭、铁板烧变成了超市鸡、超市鸡、超市鸡，宿舍从逛论坛、打魔兽、侃大山变成了写代码、写代码、写代码。不过还好这种生活也就还有两周就结束了，再之后是回家，好好待上一个月。这应该是我最后一个这么长的假期了吧，之后的新的生活，应该会很忙碌。</p>
+<p style="text-align: justify;">大学的生活，很值得回忆。不管以后怎样NB的我们，可能永远都忘不了这段SB的日子。如果用一句话总结这七年，那不妨抄一句游戏台词：虽有遗憾，却无后悔。</p>
+<p style="text-align: justify;">流水账结束。今后，祝自己天天开心，愿自己继续加油。</p><!--:--><!--:en-->&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Pomodoro Do - 拖延症患者的福音]]></title>
+    <link href="http://blog.onevcat.com/blog/2012/07/25/pomodoro-do-%E6%8B%96%E5%BB%B6%E7%97%87%E6%82%A3%E8%80%85%E7%9A%84%E7%A6%8F%E9%9F%B3/"/>
+    <updated>2012-07-25T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2012/07/25/pomodoro-do-拖延症患者的福音</id>
+    <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: center;"><img title="PomodoroDo Logo" src="http://pomo.onevcat.com/img/Icon-50.png" alt="" width="282" height="141" data-pinit="registered" /></p>
+<p style="text-align: justify;"><span style="color: #ff0000;"><em>由于完全是自己完成的应用啦，所以详细介绍就写的偏向广告一点吧～欢迎大家购买使用，并给我提意见哦～我会不断完善这款app的。</em></span></p></p>
+
+<p><ul>
+	<li>App Store地址：<a href="http://itunes.apple.com/cn/app/pomodoro-do/id533469911?ls=1&amp;mt=8">http://itunes.apple.com/cn/app/pomodoro-do/id533469911?ls=1&amp;mt=8</a></li>
+	<li>Pomodoro Do官方主页：<a href="http://pomo.onevcat.com/">http://pomo.onevcat.com/</a></li>
+	<li>i果儿评测：<a href="http://www.iguor.com/4050.html">Pomodoro Do——拖延症什么的，我才不怕呢</a></li>
+	<li>PunApp：<a href="http://punapp.com/review/article/7437">用一顆番茄來改變你的人生 – Pomodoro Do 評測</a></li>
+</ul>
+<p style="text-align: justify;"></p></p>
+
+<p><h2 style="text-align: justify;">什么是Pomodoro Do</h2>
+<p style="text-align: justify;">一款新鲜上架的番茄工作法辅助应用，功能上十分齐全，从自定义时间到历史统计和推送都很完整。这款应用加入了成就系统和箴言系统的创新，让用户自然地养成使用番茄工作法的习惯，从而提高效率。有拖延症和想提高效率的读者可以试试看这款应用。</p>
+<p style="text-align: justify;">拖延症是现在颇为流行的一个说法，人们在习惯网络带来的便利同时也容易被网络分散太多的时间，相信大家多少都有点拖延症患者的感觉，每天工作开始总要那么一些时间浏览一下网页、收收邮件才能进入学习或者工作状态，或者工作到一半不知不觉地就开始刷刷微博，时间不知不觉就过去了，但是手上的事儿却远没做完。这款应用对于那些希望告别拖延症的用户来说正是瞌睡送来的枕头，只要您有一点决心，就可以显著改善拖延症的状况。</p>
+<p style="text-align: justify;">我们先来简单了解一下番茄工作法：所谓番茄工作法，就是设定一个任务，将番茄时间设为25分钟，专注工作，中途不允许做任何与该任务无关的事，直到番茄时钟响起，短暂休息一下（5分钟）完成一个番茄时段，每4个番茄时段有一个长休息。通过番茄工作法可以有效提升集中力和注意力。不太了解的朋友对于番茄工作法的详细介绍可以<a href="http://baike.baidu.com/view/5259318.htm">百度一下</a>，E文好的朋友可以直接看看<a href="http://www.pomodorotechnique.com/">番茄工作法的官方网站</a>哦。</p>
+<p style="text-align: justify;"><!--:--><!--more--><!--:zh--></p></p>
+
+<p><hr /></p>
+
+<p><h2 style="text-align: justify;">详细介绍</h2>
+<h3 style="text-align: justify;">主界面</h3>
+<p style="text-align: justify;">应用打开后就直接是主界面。主界面十分简洁美观，深灰色的主题体现了稳重大方。上方为番茄计时框，下方为今天的历史记录，计时框里的小喇叭可以快速开关声音。</p>
+<img class="aligncenter" title="主界面" src="http://i.minus.com/jsa8GEHqQcEzv_e.jpg" alt="" width="286" height="429" data-pinit="registered" />   <img class="aligncenter" title="抽屉菜单" src="http://i.minus.com/jbbVzDlANOqkXZ_e.jpg" alt="" width="286" height="429" data-pinit="registered" />
+<h3>新建</h3>
+一个番茄任务。点击右上角的“+”号，应用切换到了任务设定的界面，可以设定任务时长，任务名称，选择向社交网络共享，文本框里会随机出现励志箴言，也可以自己进行编辑。设置完成以后，一个番茄时间就开始计时了。</p>
+
+<p><img class="aligncenter" title="新页面" src="http://i.minus.com/j3bzTZSKFOR1h_e.jpg" alt="" width="286" height="429" data-pinit="registered" />
+<h3>推送提醒</h3>
+将手机放在一边专注于预设的任务，待一个番茄时间结束时，PomodoroDo会将手机从睡眠中摇醒，用推送信息告诉你，你完成了一个番茄。</p>
+
+<p><img class="aligncenter" title="推送" src="http://i.minus.com/jAcQCqnYvQEYA_e.jpg" alt="" width="286" height="429" data-pinit="registered" />
+<h3>打断和箴言</h3>
+在做一个番茄任务的时候，有事情打扰，我们点击右上角的“X”，可以根据具体情况选择暂停或者打断。如果可以很快回到番茄任务来，选择暂停，有15秒的时间处理问题，如果是费时的紧急事件，就只能选择打断，放弃这个任务了。未能完成的任务也会出现在主界面的历史记录里。回顾一天的番茄任务完成情况，会对这一天的工作情况有个直观的了解，随附的励志箴言也让人充满斗志。</p>
+
+<p><img class="aligncenter" title="打断和箴言" src="http://i.minus.com/j9tugJa3rhgue_e.jpg" alt="" width="286" height="429" data-pinit="registered" />
+<h3>统计功能</h3>
+回到主界面，我们试着按一下左上角的按钮，出现了菜单界面。其中的任务和历史分别根据任务内容和日期对您做过的番茄任务进行统计。这是这款番茄工作法应用的一大亮点，可以方便用户适时对自己一段时间以来的任务情况做一个总结和调整。</p>
+
+<p><img class="aligncenter" title="项目统计" src="http://i.minus.com/jqwcnJvMJZ3XW_e.jpg" alt="" width="286" height="429" data-pinit="registered" />   <img class="aligncenter" title="时间统计" src="http://i.minus.com/jXhxIj3nicDCV_e.jpg" alt="" width="286" height="429" data-pinit="registered" />
+<h3>成就系统</h3>
+我们看到，菜单中还有成就系统，在时间管理应用中添加成就系统无疑提高了应用的趣味性，在努力实现新成就的同时，您又向高效管理自己的时间迈近了一步。</p>
+
+<p><img class="aligncenter" title="成就" src="http://i.minus.com/jbtP7LC9fQbimQ_e.jpg" alt="" width="286" height="429" data-pinit="registered" />
+<h3>灵活设置</h3>
+设定菜单中可以设置默认番茄时间、音效开关和社交网络管理。另外比较值得注意的是可以选择箴言的语言，目前该应用支持中文、英文和日文。对于正在学习英语和日语的用户来说，换换箴言的语言类型会有意外的收获呢。</p>
+
+<p><img class="aligncenter" title="设置" src="http://i.minus.com/jbu2R995HUwR0_e.jpg" alt="" width="286" height="429" data-pinit="registered" /></p>
+
+<p><hr /></p>
+
+<p><h2>总结</h2>
+AppStore上也有不少番茄工作法的应用。相比起来，Pomodoro Do的话，在使用习惯上可能更适合大家一些，另外功能上也非常齐全。 另外相比起来，这款番茄计时器的界面简洁细腻一些，操作流畅，界面可滑动切换和操作，是一款精致的应用。利用番茄工作法，减少对时间的焦虑，使用户快速进入注意力高度集中的状态，利用适当的工作-休息周期，提高一天的工作和学习效率。最后抄一下AppStore中自己总结的应用特点：
+<blockquote>1、不拘泥于番茄工作法推荐的25分钟-5分钟，灵活的番茄和休息时间，根据个人特点指定效率计划；<br />
+2、加入后台提醒，开始番茄后立即开始工作。达到预定时间后将提醒您进行下一阶段；<br />
+3、社交网络分享，自我激励，让朋友帮助您提高效率，让相关人士了解您的工作进展和专注；<br />
+4、每个番茄都对应一句箴言，内心平静方可成就大业；<br />
+5、丰富的成就系统，照目标提高效率，帮助您建立良好习惯；<br />
+6、完整的番茄记录，帮助您总结和回顾您的效率情况。</blockquote>
+对于有提高自己效率和减少时间浪费的读者，可以推荐尝试一下～ 简单的任务设计和使用方法，在iPhone上实践番茄工作法，就能快速提高自己的工作和学习效率。
+<ul>
+	<li>App Store地址：<a href="http://itunes.apple.com/cn/app/pomodoro-do/id533469911?ls=1&amp;mt=8">http://itunes.apple.com/cn/app/pomodoro-do/id533469911?ls=1&amp;mt=8</a></li>
+	<li>Pomodoro Do官方主页：<a href="http://pomo.onevcat.com/">http://pomo.onevcat.com/</a></li>
+	<li>i果儿评测：<a href="http://www.iguor.com/4050.html">Pomodoro Do——拖延症什么的，我才不怕呢</a></li>
+	<li>PunApp：<a href="http://punapp.com/review/article/7437">用一顆番茄來改變你的人生 – Pomodoro Do 評測</a></li>
+</ul><!--:--><!--:en-->&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[日语学习中...顺便宣传我的新app]]></title>
+    <link href="http://blog.onevcat.com/blog/2012/07/09/japanese-learin/"/>
+    <updated>2012-07-09T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2012/07/09/japanese-learin</id>
+    <content type="html"><![CDATA[<p><!--:zh-->如题，被房东赶出来了，现在住到了北语的临时宿舍，网络情况很不乐观&#8230;可能会有一段时间无法更新博客了&#8230;</p>
+
+<p>不过还好在之前完成了Pomodoro Do的所有开发和上传工作，接下来不出大的意外的话审核什么的应该不会有太大问题，再之后就可以上架了&#8230;还是可以期待一下的，毕竟是自己完全独立制作和拥有的第一个app。虽然可能很简陋功能也比较简单，但是还是比较用心了的&#8230;</p>
+
+<p>有兴趣的童鞋可以到<a href="http://pomo.onevcat.com">pomo.onevcat.com</a>看看，这是一款番茄工作法的辅助app，可以帮助您规划时间，提高工作效率。</p>
+
+<p>如果想了解一些如何提高效率的小tip以及这个app的最新情况，可以在新浪微博上关注<a href="http://weibo.com/pomodorodo">@PomodoroDo</a>，我会抽空进行一些更新的。</p>
+
+<p>谢谢支持～8月22号日语培训结束，到时候再进行大规模更新了～<!--:--><!--:en-->&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[WWDC 2012 Session笔记——205 Introducing Collection Views]]></title>
+    <link href="http://blog.onevcat.com/blog/2012/06/30/introducing-collection-views/"/>
+    <updated>2012-06-30T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2012/06/30/introducing-collection-views</id>
+    <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-7.png"><img class="aligncenter size-full wp-image-943" title="QQ20120630-7" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-7.png" alt="" width="732" height="113" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
+<p style="text-align: justify;">在之前的<a href="http://www.onevcat.com/2012/06/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%80%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84ios6-sdk%E6%96%B0%E7%89%B9%E6%80%A7/">iOS6 SDK新特性前瞻</a>中我曾经提到过UICollectionView，当时只把CollectionView当作是一个现在已有的开源GridView，仔细研究了下WWDC2012相关的Session后发现并不是那么简单。Apple这次真的给广大开发者带来了一个非常powerful的view，其强大程度可以说远超UITableView。接下来的这篇笔记将对应Session 205，作为使用UICollectionView的入门，之后还将完成一篇关于深入使用UICollectionView以及相应的Layout的笔记。</p>
+<p style="text-align: justify;">废话到此，正式开始。</p></p>
+
+<p><h3 style="text-align: justify;">什么是UICollectionView</h3>
+<p style="text-align: justify;">UICollectionView是一种新的数据展示方式，简单来说可以把他理解成多列的UITableView(请一定注意这是UICollectionView的最最简单的形式)。如果你用过iBooks的话，可能你还对书架布局有一定印象：一个虚拟书架上放着你下载和购买的各类图书，整齐排列。其实这就是一个UICollectionView的表现形式，或者iPad的iOS6中的原生时钟应用中的各个时钟，也是UICollectionView的最简单的一个布局，如图：</p>
+<p style="text-align: justify;"><!--:--><!--more--><!--:zh--></p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-1.png"><img class="aligncenter size-full wp-image-937" title="QQ20120630-1" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-1.png" alt="" width="513" height="499" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">最简单的UICollectionView就是一个GridView，可以以多列的方式将数据进行展示。标准的UICollectionView包含三个部分，它们都是UIView的子类：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>Cells 用于展示内容的主体，对于不同的cell可以指定不同尺寸和不同的内容，这个稍后再说</li>
+	<li>Supplementary Views 追加视图 如果你对UITableView比较熟悉的话，可以理解为每个Section的Header或者Footer，用来标记每个section的view</li>
+	<li>Decoration Views 装饰视图 这是每个section的背景，比如iBooks中的书架就是这个</li>
+</ul>
+<div style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-2.png"><img class="aligncenter size-full wp-image-938" title="QQ20120630-2" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-2.png" alt="" width="657" height="515" data-pinit="registered" /></a></div>
+<div style="text-align: justify;"></div>
+<div style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-3.png"><img class="aligncenter size-full wp-image-939" title="QQ20120630-3" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-3.png" alt="" width="860" height="521" data-pinit="registered" /></a></div>
+<p style="text-align: justify;">不管一个UICollectionView的布局如何变化，这三个部件都是存在的。再次说明，复杂的UICollectionView绝不止上面的几幅图，关于较复杂的布局和相应的特性，我会在本文稍后和<a title="WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts" href="http://www.onevcat.com/2012/08/advanced-collection-view/">下一篇笔记</a>中进行一些深入。</p></p>
+
+<p><hr /></p>
+
+<p><h3 style="text-align: justify;">实现一个简单的UICollectionView</h3>
+<p style="text-align: justify;">先从最简单的开始，UITableView是iOS开发中的非常非常非常重要的一个类，相信如果你是开发者的话应该是对这个类非常熟悉了。实现一个UICollectionView和实现一个UITableView基本没有什么大区别，它们都同样是datasource和delegate设计模式的：datasource为view提供数据源，告诉view要显示些什么东西以及如何显示它们，delegate提供一些样式的小细节以及用户交互的相应。因此在本节里会大量对比collection view和table view来进行说明，如果您还不太熟悉table view的话，也是个对照着复习的好机会。</p></p>
+
+<p><h4 style="text-align: justify;">￼￼￼￼UICollectionViewDataSource</h4>
+<ul style="text-align: justify;">
+	<li>section的数量 ￼-numberOfSectionsInCollection:</li>
+	<li>某个section里有多少个item ￼-collectionView:numberOfItemsInSection:</li>
+	<li>对于某个位置应该显示什么样的cell ￼-collectionView:cellForItemAtIndexPath:</li>
+</ul>
+<p style="text-align: justify;">实现以上三个委托方法，基本上就可以保证CollectionView工作正常了。当然，还有提供Supplementary View的方法</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>collectionView:viewForSupplementaryElementOfKind:atIndexPath:</li>
+</ul>
+<p style="text-align: justify;">对于Decoration Views，提供方法并不在UICollectionViewDataSource中，而是直接在UICollectionViewLayout类中的(因为它仅仅是视图相关，而与数据无关)，放到稍后再说。</p></p>
+
+<p><h4 style="text-align: justify;">关于重用</h4>
+<p style="text-align: justify;">为了得到高效的View，对于cell的重用是必须的，避免了不断生成和销毁对象的操作，这与在UITableView中的情况是一致的。但值得注意的时，在UICollectionView中，不仅cell可以重用，Supplementary View和Decoration View也是可以并且应当被重用的。在iOS5中，Apple对UITableView的重用做了简化，以往要写类似这样的代码：</p></p>
+
+<p><pre>UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MY_CELL_ID"]; 
+if (!cell) //如果没有可重用的cell，那么生成一个 { 
+    cell = [[UITableViewCell alloc] init]; 
+} 
+//配置cell，blablabla 
+return cell;</pre>
+<p style="text-align: justify;">而如果我们在TableView向数据源请求数据之前使用-registerNib:forCellReuseIdentifier:方法为@“MY_CELL_ID&#8221;注册过nib的话，就可以省下每次判断并初始化cell的代码，要是在重用队列里没有可用的cell的话，runtime将自动帮我们生成并初始化一个可用的cell。</p>
+<p style="text-align: justify;">这个特性很受欢迎，因此在UICollectionView中Apple继承使用了这个特性，并且把其进行了一些扩展。使用以下方法进行注册：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>-registerClass:forCellWithReuseIdentifier:</li>
+	<li>-registerClass:forSupplementaryViewOfKind:withReuseIdentifier:</li>
+	<li>-registerNib:forCellWithReuseIdentifier:</li>
+	<li>-registerNib:forSupplementaryViewOfKind:withReuseIdentifier:</li>
+</ul>
+<p style="text-align: justify;">相比UITableView有两个主要变化：一是加入了对某个Class的注册，这样即使不用提供nib而是用代码生成的view也可以被接受为cell了；二是不仅只是cell，Supplementary View也可以用注册的方法绑定初始化了。在对collection view的重用ID注册后，就可以像UITableView那样简单的写cell配置了：</p></p>
+
+<p><pre>- (UICollectionView*)collectionView:(UICollectionView*)cv cellForItemAtIndexPath:(NSIndexPath*)indexPath { 
+    MyCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@”MY_CELL_ID”]; 
+    // Configure the cell's content 
+    cell.imageView.image = ... 
+    return cell; 
+}</pre>
+<p style="text-align: justify;">需要吐槽的是，对collection view，取重用队列的方法的名字和UITableView里面不一样了，在Identifier前面多加了Reuse五个字母，语义上要比以前清晰，命名规则也比以前严谨了..不知道Apple会不会为了追求完美而把UITableView中的命名不那么好的方法deprecate掉。</p></p>
+
+<p><h4 style="text-align: justify;">UICollectionViewDelegate</h4>
+<p style="text-align: justify;">数据无关的view的外形啊，用户交互啊什么的，由UICollectionViewDelegate来负责：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>cell的高亮</li>
+	<li>cell的选中状态</li>
+	<li>可以支持长按后的菜单</li>
+</ul>
+<p style="text-align: justify;">关于用户交互，UICollectionView也做了改进。每个cell现在有独立的高亮事件和选中事件的delegate，用户点击cell的时候，现在会按照以下流程向delegate进行询问：</p></p>
+
+<p><ol style="text-align: justify;">
+	<li>-￼collectionView:shouldHighlightItemAtIndexPath: 是否应该高亮？</li>
+	<li>-￼collectionView:didHighlightItemAtIndexPath: 如果1回答为是，那么高亮</li>
+	<li>-￼collectionView:shouldSelectItemAtIndexPath: 无论1结果如何，都询问是否可以被选中？</li>
+	<li>-collectionView:didUnhighlightItemAtIndexPath: 如果1回答为是，那么现在取消高亮</li>
+	<li>-collectionView:didSelectItemAtIndexPath: 如果3回答为是，那么选中cell</li>
+</ol>
+<p style="text-align: justify;">状态控制要比以前灵活一些，对应的高亮和选中状态分别由highlighted和selected两个属性表示。</p></p>
+
+<p><h4 style="text-align: justify;">关于Cell</h4>
+<p style="text-align: justify;">相对于UITableViewCell来说，UICollectionViewCell没有这么多花头。首先UICollectionViewCell不存在各式各样的默认的style，这主要是由于展示对象的性质决定的，因为UICollectionView所用来展示的对象相比UITableView来说要来得灵活，大部分情况下更偏向于图像而非文字，因此需求将会千奇百怪。因此SDK提供给我们的默认的UICollectionViewCell结构上相对比较简单，由下至上：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>首先是cell本身作为容器view</li>
+	<li>然后是一个大小自动适应整个cell的backgroundView，用作cell平时的背景</li>
+	<li>再其上是selectedBackgroundView，是cell被选中时的背景</li>
+	<li>最后是一个contentView，自定义内容应被加在这个view上</li>
+</ul>
+<p style="text-align: justify;">这次Apple给我们带来的好康是被选中cell的自动变化，所有的cell中的子view，也包括contentView中的子view，在当cell被选中时，会自动去查找view是否有被选中状态下的改变。比如在contentView里加了一个normal和selected指定了不同图片的imageView，那么选中这个cell的同时这张图片也会从normal变成selected，而不需要额外的任何代码。</p></p>
+
+<p><h4 style="text-align: justify;">￼UICollectionViewLayout</h4>
+<p style="text-align: justify;">终于到UICollectionView的精髓了…这也是UICollectionView和UITableView最大的不同。UICollectionViewLayout可以说是UICollectionView的大脑和中枢，它负责了将各个cell、Supplementary View和Decoration Views进行组织，为它们设定各自的属性，包括但不限于：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>位置</li>
+	<li>尺寸</li>
+	<li>透明度</li>
+	<li>层级关系</li>
+	<li>形状</li>
+	<li>等等等等…</li>
+</ul>
+<p style="text-align: justify;">Layout决定了UICollectionView是如何显示在界面上的。在展示之前，一般需要生成合适的UICollectionViewLayout子类对象，并将其赋予CollectionView的collectionViewLayout属性。关于详细的自定义UICollectionViewLayout和一些细节，我将写在之后一篇笔记中。</p>
+<p style="text-align: justify;">Apple为我们提供了一个最简单可能也是最常用的默认layout对象，￼￼￼UICollectionViewFlowLayout。Flow Layout简单说是一个直线对齐的layout，最常见的Grid View形式即为一种Flow Layout配置。上面的照片架界面就是一个典型的Flow Layout。</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>首先一个重要的属性是itemSize，它定义了每一个item的大小。通过设定itemSize可以全局地改变所有cell的尺寸，如果想要对某个cell制定尺寸，可以使用-collectionView:layout:sizeForItemAtIndexPath:方法。</li>
+	<li>间隔 可以指定item之间的间隔和每一行之间的间隔，和size类似，有全局属性，也可以对每一个item和每一个section做出设定：
+<ul>
+	<li>@property (CGSize) minimumInteritemSpacing</li>
+	<li>@property (CGSize) minimumLineSpacing</li>
+	<li>-collectionView:layout:minimumInteritemSpacingForSectionAtIndex:</li>
+	<li>-collectionView:layout:minimumLineSpacingForSectionAtIndex:</li>
+</ul>
+</li>
+	<li>滚动方向 由属性scrollDirection确定scroll view的方向，将影响Flow Layout的基本方向和由header及footer确定的section之间的宽度
+<ul>
+	<li>UICollectionViewScrollDirectionVertical</li>
+	<li>UICollectionViewScrollDirectionHorizontal</li>
+</ul>
+</li>
+	<li>Header和Footer尺寸 同样地分为全局和部分。需要注意根据滚动方向不同，header和footer的高和宽中只有一个会起作用。垂直滚动时section间宽度为该尺寸的高，而水平滚动时为宽度起作用，如图。
+<ul>
+	<li>@property (CGSize) headerReferenceSize</li>
+	<li>@property (CGSize) footerReferenceSize</li>
+	<li>-collectionView:layout:referenceSizeForHeaderInSection:</li>
+	<li>-collectionView:layout:referenceSizeForFooterInSection:</li>
+</ul>
+</li>
+	<li>缩进
+<ul>
+	<li>@property UIEdgeInsets sectionInset;</li>
+	<li>-collectionView:layout:insetForSectionAtIndex:</li>
+</ul>
+</li>
+</ul>
+<h4 style="text-align: justify;">总结</h4>
+<p style="text-align: justify;">一个UICollectionView的实现包括两个必要部分：UICollectionViewDataSource和UICollectionViewLayout，和一个交互部分：UICollectionViewDelegate。而Apple给出的UICollectionViewFlowLayout已经是一个很强力的layout方案了。</p></p>
+
+<p><hr /></p>
+
+<p><h3 style="text-align: justify;">几个自定义的Layout</h3>
+<p style="text-align: justify;">但是光是UICollectionViewFlowLayout的话，显然是不够用的，而且如果单单是这样的话，就和现有的开源各类Grid View没有区别了…UICollectionView的强大之处，就在于各种layout的自定义实现，以及它们之间的切换。先看几个相当exiciting的例子吧～</p>
+<p style="text-align: justify;">比如，堆叠布局：</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-4.png"><img class="aligncenter size-full wp-image-940" title="QQ20120630-4" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-4.png" alt="" width="620" height="169" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">圆形布局：</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-5.png"><img class="aligncenter size-medium wp-image-946" title="QQ20120630-5" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-5-300x290.png" alt="" width="300" height="290" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">和Cover Flow布局：</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-6.png"><img class="aligncenter size-full wp-image-942" title="QQ20120630-6" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-6.png" alt="" width="719" height="228" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">所有这些布局都采用了同样的数据源和委托方法，因此完全实现了model和view的解耦。但是如果仅这样，那开源社区也已经有很多相应的解决方案了。Apple的强大和开源社区不能比拟的地方在于对SDK的全局掌控，CollectionView提供了非常简单的API可以令开发者只需要一次简单调用，就可以使用CoreAnimation在不同的layout之间进行动画切换，这种切换必定将大幅增加用户体验，代价只是几十行代码就能完成的布局实现，以及简单的一句API调用，不得不说现在所有的开源代码与之相比，都是相形见拙了…不得不佩服和感谢UIKit团队的努力。</p>
+<p style="text-align: justify;">关于上面几种自定义Layout和实现细节，和其他高级CollectionView应用，将在<a title="WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts" href="http://www.onevcat.com/2012/08/advanced-collection-view/">下一篇笔记</a>中进行详细说明～</p><!--:--><!--:en-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[WWDC 2012 Session笔记——405 Modern Objective-C]]></title>
+    <link href="http://blog.onevcat.com/blog/2012/06/24/modern-objective-c/"/>
+    <updated>2012-06-24T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2012/06/24/modern-objective-c</id>
+    <content type="html"><![CDATA[<p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120624-1.png"><img class="aligncenter size-full wp-image-912" title="QQ20120624-1" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120624-1.png" alt="" width="600" height="112" data-pinit="registered" /></a></p>
+
+<p>这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
+
+<p>2007年的时候，Objective-C在TIOBE编程语言排名里还排在可怜的第45位，而随着移动互联网的迅速发展和iPhone，iPad等iOS设备的广阔市场前景，Objective-C也迅速崛起，走进了开发者的视野。在最近的TIOBE排名中，Objective-C达到了惊人的第4名，可以说已经成为当今世界上一门非常重要的编程语言。</p>
+
+<p>而Objective-C现在主要是由Apple在负责维护了。一直以来Apple为了适应开发的发展需要，不断在完善OC以及相应的cocoa库，2.0中引入的property，随着iOS4引入的block，以及去年引入的ARC，都受到了绝大部分开发者的欢迎。几乎每年都有重大特性的加入，这不是每种语言都能做到的，更况且这些特性都为大家带来了众多的便利。</p>
+
+<p><!--:--><!--more--><!--:zh--></p>
+
+<p>今年WWDC也不例外，OC和LLVM将得到重大的改进。本文将对这些改进进行一个简单整理和评述。
+<h3>方法顺序</h3>
+如果有以下代码：
+<pre>@interface SongPlayer : NSObject 
+- (void)playSong:(Song *)song; 
+@end </pre></p>
+
+<p>@implementation SongPlayer <br />
+- (void)playSong:(Song *)song { <br />
+    NSError *error; <br />
+    [self startAudio:&amp;error]; <br />
+    &#8230; <br />
+} </p>
+
+<p>- (void)startAudio:(NSError **)error { &#8230; } <br />
+@end
+在早一些的编译环境中，上面的代码会在[self startAudio:&amp;error]处出现一个实例方法未找到的警告。由于编译顺序，编译器无法得知在-playSong:方法之后还有一个-startAudio:，因此给出警告。以前的解决方案有两种：要么将-startAudio:的实现移到-playSong:的上方，要么在类别中声明-startAudio:(顺便说一句..把-startAudio:直接拿到.h文件中是完全错误的做法，因为这个方法不应该是public的)。前者破坏.m文件的结构打乱了方法排列的顺序，导致以后维护麻烦；后者要写额外的不必要代码，使.m文件变长。其实两种方法都不是很好的解决方案。</p>
+
+<p>现在不需要再头疼这个问题了，LLVM中加入了新特性，现在直接使用上面的代码，不需要做额外处理也可以避免警告了。新编译器改变了以往顺序编译的行为，改为先对方法申明进行扫描，然后在对方法具体实现进行编译。这样，在同一实现文件中，无论方法写在哪里，编译器都可以在对方法实现进行编译前知道所有方法的名称，从而避免了警告。</p>
+
+<p><hr /></p>
+
+<p><h3>枚举改进</h3>
+从Xcode4.4开始，有更好的枚举的写法了：
+<pre>typedef enum NSNumberFormatterStyle : NSUInteger {
+    NSNumberFormatterNoStyle, 
+    NSNumberFormatterDecimalStyle, 
+    NSNumberFormatterCurrencyStyle, 
+    NSNumberFormatterPercentStyle, 
+    NSNumberFormatterScientificStyle, 
+    NSNumberFormatterSpellOutStyle 
+} NSNumberFormatterStyle;</pre>
+在列出枚举列表的同时绑定了枚举类型为NSUInteger，相比起以前的直接枚举和先枚举再绑定类型好处是方便编译器给出更准确的警告。个人觉得对于一般开发者用处并不是特别大，因为往往并不会涉及到很复杂的枚举，用以前的枚举申明方法也不至于就搞混。所以习惯用哪种枚举方式还是接着用就好了..不过如果有条件或者还没有形成自己的习惯或者要开新工程的话，还是尝试一下这种新方法比较好，因为相对来说要严格一些。</p>
+
+<p><hr /></p>
+
+<p><h3>属性自动绑定</h3>
+人人都爱用property，这是毋庸置疑的。但是写property的时候一般都要对应写实例变量和相应的synthesis，这实在是一件让人高兴不起来的事情。Apple之前做了一些努力，至少把必须写实例变量的要求去掉了。在synthesis中等号后面的值即为实力变量名。<strong>现在Apple更进一步，给我们带来了非常好的消息：以后不用写synthesis了！</strong>Xcode 4.4之后，synthesis现在会对应property自动生成。</p>
+
+<p>默认行为下，对于属性foo，编译器会自动在实现文件中为开发者补全synthesis，就好像你写了@synthesis foo = _foo;一样。默认的实例变量以下划线开始，然后接属性名。如果自己有写synthesis的话，将以开发者自己写的synthesis为准，比如只写了@synthesis foo;那么实例变量名就是foo。如果没有synthesis，而自己又实现了-foo以及-setFoo:的话，该property将不会对应实例变量。而如果只实现了getter或者setter中的一个的话，另外的方法会自动帮助生成(即使没有写synthesis，当然readonly的property另说)。</p>
+
+<p>对于写了@dynamic的实现，所有的对应的synthesis都将不生效(即使没有写synthesis，这是runtime的必然..)，可以理解为写了dynamic的话setter和getter就一定是运行时确定的。</p>
+
+<p>总结一下，新的属性绑定规则如下：
+<ul>
+	<li>除非开发者在实现文件中提供getter或setter，否则将自动生成</li>
+	<li>除非开发者同时提供getter和setter，否则将自动生成实例变量</li>
+	<li>只要写了synthesis，无论有没有跟实例变量名，都将生成实例变量</li>
+	<li>dynamic优先级高于synthesis</li>
+</ul></p>
+
+<p><hr /></p>
+
+<p><h3>简写</h3>
+OC的语法一直被认为比较麻烦，绝大多数的消息发送都带有很长的函数名。其实这是一把双刃剑，好的方面，它使得代码相当容易阅读，因为几乎所有的方法都是以完整的英语进行描述的，而且如果遵守命名规则的话，参数类型和方法作用也一清二楚，但是不好的方面，它使得coding的时候要多不少不必要的键盘敲击，降低了开发效率。Apple意识到了这一点，在新的LLVM中引入了一系列列规则来简化OC。经过简化后，以降低部分可读性为代价，换来了开发时候稍微快速一些，可以说比较符合现在短开发周期的需要。简化后的OC代码的样子向Perl或者Python这样的快速开发语言靠近了一步，至于实际用起来好不好使，就还是仁智各异了…至少我个人对于某些简写不是特别喜欢..大概是因为看到简写的代码还没有形成直觉，总要反应一会儿才能知道这是啥…
+<h4>NSNumber</h4>
+所有的[NSNumber numberWith…:]方法都可以简写了：
+<ul>
+	<li>[NSNumber numberWithChar:‘X’] 简写为 @‘X’;</li>
+	<li>[NSNumber numberWithInt:12345] 简写为 @12345</li>
+	<li>[NSNumber numberWithUnsignedLong:12345ul] 简写为 @12345ul</li>
+	<li>[NSNumber numberWithLongLong:12345ll] 简写为 @12345ll</li>
+	<li>[NSNumber numberWithFloat:123.45f] 简写为 @123.45f</li>
+	<li>[NSNumber numberWithDouble:123.45] 简写为 @123.45</li>
+	<li>[NSNumber numberWithBool:YES] 简写为 @YES</li>
+</ul>
+嗯…方便很多啊～以前最讨厌的就是数字放Array里还要封装成NSNumber了…现在的话直接用@开头接数字，可以简化不少。
+<h4>NSArray</h4>
+部分NSArray方法得到了简化：
+<ul>
+	<li>[NSArray array] 简写为 @[]</li>
+	<li>[NSArray arrayWithObject:a] 简写为 @[ a ]</li>
+	<li>[NSArray arrayWithObjects:a, b, c, nil] 简写为 @[ a, b, c ]</li>
+</ul>
+可以理解为@符号就表示NS对象(和NSString的@号一样)，然后接了一个在很多其他语言中常见的方括号[]来表示数组。实际上在我们使用简写时，编译器会将其自动翻译补全为我们常见的代码。比如对于@[ a, b, c ]，实际编译时的代码是
+<pre>// compiler generates: </pre></p>
+
+<p>id objects[] = { a, b, c }; <br />
+NSUInteger count = sizeof(objects)/ sizeof(id); <br />
+array = [NSArray arrayWithObjects:objects count:count];
+需要特别注意，要是a,b,c中有nil的话，在生成NSArray时会抛出异常，而不是像[NSArray arrayWithObjects:a, b, c, nil]那样形成一个不完整的NSArray。其实这是很好的特性，避免了难以查找的bug的存在。
+<h4>NSDictionary</h4>
+既然数组都简化了，字典也没跑儿，还是和Perl啊Python啊Ruby啊很相似，意料之中的写法：
+<ul>
+	<li>[NSDictionary dictionary] 简写为 @{}</li>
+	<li>[NSDictionary dictionaryWithObject:o1 forKey:k1] 简写为 @{ k1 : o1 }</li>
+	<li>[NSDictionary dictionaryWithObjectsAndKeys:o1, k1, o2, k2, o3, k3, nil] 简写为 @{ k1 : o1, k2 : o2, k3 : o3 }</li>
+</ul>
+和数组类似，当写下@{ k1 : o1, k2 : o2, k3 : o3 }时，实际的代码会是
+<pre>// compiler generates: 
+id objects[] = { o1, o2, o3 }; 
+id keys[] = { k1, k2, k3 }; 
+NSUInteger count = sizeof(objects) / sizeof(id); 
+dict = [NSDictionary dictionaryWithObjects:objects forKeys:keys count:count];</pre>
+<h4>Mutable版本和静态版本</h4>
+上面所生成的版本都是不可变的，想得到可变版本的话，可以对其发送-mutableCopy消息以生成一份可变的拷贝。比如
+<pre>NSMutableArray *mutablePlanets = [@[ 
+                                  @"Mercury", @"Venus", 
+                                  @"Earth", @"Mars", 
+                                  @"Jupiter", @"Saturn", 
+                                  @"Uranus", @"Neptune" ] 
+                                  mutableCopy];</pre>
+另外，对于标记为static的数组(没有static的字典..哈希和排序是在编译时完成的而且cocoa框架的key也不是常数)，不能使用简写为其赋值(其实原来的传统写法也不行)。解决方法是在类方法+ (void)initialize中对static进行赋值，比如：
+<pre>static NSArray *thePlanets; 
++ (void)initialize { 
+    if (self == [MyClass class]) { 
+        thePlanets = @[ @"Mercury", @"Venus", @"Earth", @"Mars", @"Jupiter", @"Saturn", @"Uranus", @"Neptune" ]; 
+    } 
+}</pre>
+<h4>下标</h4>
+其实使用这些简写的一大目的是可以使用下标来访问元素：
+<ul>
+	<li>[<em>array objectAtIndex:idx] 简写为 </em>array[idx];</li>
+	<li>[<em>array replaceObjectAtIndex:idx withObject:newObj] 简写为 </em>array[idx] = newObj</li>
+	<li>[<em>dic objectForKey:key] 简写为 </em>dic[key]</li>
+	<li>[<em>dic setObject:object forKey:key] 简写为 </em>dic[key] = newObject</li>
+</ul>
+很方便，但是一定需要注意，对于字典用的也是方括号[]，而不是想象中的花括号{}。估计是想避免和代码块的花括号发生冲突吧…简写的实际工作原理其实真的就只是简单的对应的方法的简写，没有什么惊喜。</p>
+
+<p>但是还是有惊喜的..那就是使用类似的一套方法，可以做到对于我们自己的类，也可以使用下标来访问。而为了达到这样的目的，我们需要实现以下方法，<br />
+对于类似数组的结构：
+<pre>- (elementType)objectAtIndexedSubscript:(indexType)idx; </pre></p>
+
+<p>- (void)setObject:(elementType)object atIndexedSubscript:(indexType)idx;
+对于类似字典的结构：
+<pre>- (elementType)objectForKeyedSubscript:(keyType)key; </pre></p>
+
+<p>- (void)setObject:(elementType)object forKeyedSubscript:(keyType)key;</p>
+
+<p><hr /></p>
+
+<p><h3>固定桥接</h3>
+对于ARC来说，最让人迷惑和容易出错的地方大概就是桥接的概念。由于历史原因，CF对象和NSObject对象的转换一直存在一些微妙的关系，而在引入ARC之后，这些关系变得复杂起来：主要是要明确到底应该是由CF还是由NSObject来负责内存管理的问题(关于ARC和更详细的说明，可以参看我之前写的一篇<a title="手把手教你ARC——ARC入门和使用" href="http://www.onevcat.com/2012/06/arc-hand-by-hand/">ARC入门教程</a>)。</p>
+
+<p>在Xcode4.4之后，之前区分到底谁拥有对象的工作可以模糊化了。在代码块区间加上CF_IMPLICIT_BRIDGING_ENABLED和CF_IMPLICIT_BRIDGING_DISABLED，在之前的桥接转换就都可以简单地写作CF和NS之间的强制转换，而不再需要加上__bridging的关键字了。谁来管这块内存呢？交给系统去头疼吧～</p>
+
+<p><hr /></p>
+
+<p>Objective-C确实是一门正在高速变化的语言。一方面，它的动态特性和small talk的烙印深深不去，另一方面，它又正积极朝着各种简单语言的语法方向靠近。各类的自动化处理虽然有些让人不放心，但是事实证明了它们工作良好，而且也确实为开发者节省了时间。尽快努力去拥抱新的变化吧～<!--:--><!--:en-->&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[WWDC 2012 Session笔记——200 What is new in Cocoa Touch]]></title>
+    <link href="http://blog.onevcat.com/blog/2012/06/20/what-is-new-in-cocoa-touch/"/>
+    <updated>2012-06-20T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2012/06/20/what-is-new-in-cocoa-touch</id>
+    <content type="html"><![CDATA[<p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120620-1.png"><img class="aligncenter size-full wp-image-892" title="what-is-new-in-cocoa-touch" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120620-1.png" alt="" width="748" height="141" data-pinit="registered" /></a></p>
+
+<p>这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
+
+<p>之前写过<a href="http://www.onevcat.com/2012/06/%e5%bc%80%e5%8f%91%e8%80%85%e6%89%80%e9%9c%80%e8%a6%81%e7%9f%a5%e9%81%93%e7%9a%84ios6-sdk%e6%96%b0%e7%89%b9%e6%80%a7/">一篇iOS6 SDK新内容的总览</a>，从这篇开始，将对WWDC 2012的我个人比较感兴趣的Session进行一些笔记，和之后的笔记一起应该可以形成一个比较完整的WWDC 2012 Session部分的个人记录。</p>
+
+<p>因为WWDC的内容可谓众多，我自觉不太可能看完所有Session(其实也没有这个必要..)，所以对于内容覆盖上可能有所欠缺。另外我本身也只是一个iOS开发初学者加业余爱好者，因此很多地方也都不明白，不理解，因此难免有各种不足。这些笔记的最大作用是给自己做一些留底，同时帮助理解Session的内容。欢迎高手善意地指出我的错误和不足..谢谢！</p>
+
+<p>所有的WWDC 2012 Session的视频和讲义可以在<a href="https://developer.apple.com/videos/wwdc/2012/">这里</a>找到，如果想看或者下载的话可能需要一个野生开发者账号(就是不用交99美金那种)。iOS6 Beta和Xcode4.5预览版现在已经提供开发者下载(需要家养开发者的账号，就在iOS Resource栏里)，当然网上随便搜索一下不是开发者肯定也能下载到，不过如果你不太懂的话还是不建议尝试iOS6 Beta，有时间限制麻烦不说，而且可能存在各种bug，Xcode4.5预览版同理..</p>
+
+<p><!--:--><!--more--><!--:zh--></p>
+
+<p>作为WWDC 2012 Session部分的真正的开场环节，Session200可以说是iOS开发者必听必看的。这个Session介绍了关于Cocoa Touch的新内容，可以说是对整个iOS6 SDK的概览。</p>
+
+<p>我也将这个Session作为之后可能会写的一系列的Session笔记的第一章，我觉得用Session 200作为一个开始，是再适合不过的了～</p>
+
+<p><hr /></p>
+
+<p><h3>更多的外观自定义</h3>
+从iOS5开始，Apple就逐渐致力于标准控件的可自定义化，基本包括颜色，图片等的替换。对于标准控件的行为，Apple一向控制的还是比较严格的。而开发者在做app时，最好还是遵守Apple的人机交互手册来确定控件的功能，否则可能遇到意想不到的麻烦…</p>
+
+<p>iOS6中Apple继续扩展了一些控件的可定义性。对于不是特别追求UI的开发团队或者实力有限的个人开发者来说这会是一个不错的消息，使用现有的资源和新加的API，可以快速开发出界面还不错的应用。
+<h4>UIPopoverBackgroundView</h4>
+UIPopoverBackgroundView是iOS5引入的，可以为popover自定义背景。iOS6中新加入了询问是否以默认方式显示的方法：
+<pre>+ (BOOL)wantsDefaultContentAppearance;</pre>
+返回NO的话，将以新的立体方式显示popover。</p>
+
+<p>具体关于UIPopoverBackgroundView的用法，可以参考<a href="http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIPopoverBackgroundView_class/Reference/Reference.html">文档</a>
+<h4>UIStepper</h4>
+UIStepper也是iOS5引入的新控件，在iOS5中Apple为标准控件自定义做出了相当大的努力（可以参看WWDC2011的相关内容），而对于新出生的UIStepper却没有相应的API。在iOS6里终于加上了..可以说是预料之中的。
+<pre>@property (nonatomic,retain) UIColor *tintColor;</pre>
+这个属性定义颜色。</p>
+
+<p><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120620-2.png"><img class="aligncenter size-full wp-image-893" title="QQ20120620-2" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120620-2.png" alt="" width="299" height="121" data-pinit="registered" /></a>
+<pre>- (void)setBackgroundImage:(UIImage*)image forState:(UIControlState)state;</pre></p>
+
+<p>- (void)setDividerImage:(UIImage*)image forLeftSegmentState:(UIControlState)left rightSegmentState:(UIControlState)right; </p>
+
+<p>- (void)setIncrementImage:(UIImage *)image forState:(UIControlState)state; </p>
+
+<p>- (void)setDecrementImage:(UIImage *)image forState:(UIControlState)state;
+可以定义背景图片、分隔图片和增减按钮的图片，都很简单明了，似乎没什么好说的。
+<h4>￼￼￼UISwitch</h4>
+同样地，现在有一系列属性可以自定义了。
+<pre>@property (nonatomic, retain) UIColor *tintColor; </pre></p>
+
+<p>@property (nonatomic, retain) UIColor *thumbTintColor; </p>
+
+<p>@property (nonatomic, retain) UIImage *onImage; </p>
+
+<p>@property (nonatomic, retain) UIImage *offImage;
+其中thumbTintColor指的是开关的圆形滑钮的颜色。另外对于on和off时候可以自定义图片，那么很大程度上其实开关控件已经可以完全自定义，基本不再需要自己再去实现一次了..</p>
+
+<p><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120620-3.png"><img class="aligncenter size-full wp-image-894" title="QQ20120620-3" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120620-3.png" alt="" width="218" height="101" data-pinit="registered" /></a>
+<h4>￼UINavigationBar &amp; UITabBar</h4>
+加入了阴影图片的自定义：
+<pre>@property (nonatomic,retain) UIImage *shadowImage;</pre>
+这个不太清楚，没有自己实际试过。以后有机会做个小demo看看可以…
+<h4>￼￼UIBarButtonItem</h4>
+现在提供设置背景图片的API：
+<pre>- (void)setBackgroundImage:(UIImage *)bgImage 
+                  forState:(UIControlState)state 
+                     style:(UIBarButtonItemStyle)style 
+                barMetrics:(UIBarMetrics)barMetrics;</pre>
+这个非常有用…以前在自定义UINavigationBar的时候，对于BarButtonItem的背景图片的处理非常复杂，通常需要和designer进行很多配合，以保证对于不同宽度的按钮背景图都可以匹配。现在直接提供一个UIImage就OK了..初步目测是用resizableImageWithCapInsets:做的实现..很赞，可以偷不少懒～</p>
+
+<p><hr /></p>
+
+<p><h3>UIImage的API变化</h3>
+随着各类Retina设备的出现，对于图片的处理方面之前的API有点力不从心..反应最大的就是图片在不同设备上的适配问题。对于iPhone4之前，是普通图片。对于iPhone4和4S，由于Retina的原因，需要将图片宽高均乘2，并命名为@2x。对于遵循这样原则的图片，cocoa touch将会自动进行适配，将4个pixel映射到1个point上去，以保证图片不被拉伸以及比例的适配。对于iPhone开发，相关的文档是比较全面的，但是对于iPad就没那么好运了。Apple对于iPad开发的支持显然做的不如对iPhone那样好，所以很多iPad开发者在对图片进行处理的时候往往不知所措——特别是在retina的new iPad出现以后，更为严重。而这次UIImage的最大变化在于自己可以对scale进行指定了～这样虽然在coding的时候变麻烦了一点，但是图片的Pixel to Point对应关系可以自己控制了，在做适配的时候可以省心不少。具体相关几个API如下：
+<pre>+ (UIImage *)imageWithData:(NSData *)data scale:(CGFloat)scale; </pre></p>
+
+<p>- (id)initWithData:(NSData *)data scale:(CGFloat)scale; </p>
+
+<p>+ (UIImage *)imageWithCIImage:(CIImage *)ciImage <br />
+                        scale:(CGFloat)scale <br />
+                  orientation:(UIImageOrientation)orientation;</p>
+
+<p>- (id)initWithCIImage:(CIImage *)ciImage <br />
+                scale:(CGFloat)scale <br />
+          orientation:(UIImageOrientation)orientation;
+指定scale=2之后即可对retina屏幕适配，相对来说还是比较简单的。</p>
+
+<p><hr /></p>
+
+<p><h3>UITableView的改动</h3>
+UITableView就不多介绍了，基础中的基础…在iOS5引入StoryBoard之后，由StoryBoard生成的UITableViewController中对cell进行操作时所有的cell的alloc语句都可以不写，可以为cell绑定nib等，都简化了UITableView的使用。在iOS6中，对cell的复用有一些新的方法：
+<pre>- (void)registerClass:(Class)cellClass forCellReuseIdentifier:(NSString *)identifier;</pre>
+将一个类注册为某个重用ID。
+<pre>- (id)dequeueReusableCellWithIdentifier:(NSString *)identifier 
+                           forIndexPath:(NSIndexPath *)indexPath;</pre>
+将指定indexPath的cell重用(若不能重用则返回nil，在StoryBoard会自动生成一个新的cell)。</p>
+
+<p>另外，对UITableView的Header、Footer和Section分隔添加了一系列的property以帮助自定义，并且加入了关于Header和Footer的delegate方法。可以说对于TableView的控制更强大了…</p>
+
+<p><hr /></p>
+
+<p><h3>￼UIRefreshControl</h3>
+这个是新加的东西，Apple的抄袭之作，官方版的下拉刷新。下拉刷新自出现的第一分钟起，就成为了人民群众喜闻乐见的手势，对于这种得到大众认可的手势，Apple是一定不会<br />
+放过的。</p>
+
+<p>相对与现在已有的开源下拉刷新来说，功能上还不那么强大，可自定义的内容不多，而且需要iOS6以后的系统，因此短期内还难以形成主流。但是相比开源代码，减去了拖源码加库之类的麻烦，并且和系统整合很好，再加上Apple的维护，相信未来是有机会成为主流的。现在来说的话，也就只是一种实现的选择而已。</p>
+
+<p><hr /></p>
+
+<p><h3>UICollectionView</h3>
+这个是iOS的UIKit的重头戏..一定意义上可以把UICollectionView理解成多列的UITableView。开源社区有很多类似的实现，基本被称作GridView，我个人比较喜欢的实现有<a href="https://github.com/AlanQuatermain/AQGridView">AQGridView</a>和<a href="https://github.com/gmoledina/GMGridView">GMGridView</a>.开源实现基本上都是采用了和UITableView类似的方法，继承自UIScrollView，来进行多列排列。功能上来说相对都比较简单..</p>
+
+<p>而UICollectionView可以说是非常强大..强大到基本和UITableView一样了..至少使用起来和UITableView一样，用惯了UITableView的童鞋甚至可以不用看文档就能上手。一样的DataSource和Delegate，不同之处在于多了一个Layout对象对其进行排列的设定，这个稍后再讲。我们先来看Datasource和Delegate的API
+<pre>//DataSource</pre></p>
+
+<p>-numberOfSectionsInCollectionView: </p>
+
+<p>-collectionView:numberOfItemsInSection: </p>
+
+<p>-collectionView:cellForItemAtIndexPath:
+<pre>//Delegate </pre></p>
+
+<p>-collectionView:shouldHighlightItemAtIndexPath: </p>
+
+<p>-collectionView:shouldSelectItemAtIndexPath: </p>
+
+<p>-collectionView:didSelectItemAtIndexPath:
+没什么值得说的，除了名字以外，和UITableView的DataSource和Delegate没有任何不同。值得一提的是对应的UICollectionViewCell和UITableViewCell略有不同，UICollectionViewCell没有所谓的默认style，cell的子view自下而上有Background View、Selected Background View和一个Content View。开发者将自定义内容扔到Content View里即可。</p>
+
+<p>需要认真看看的是Layout对象，它控制了整个UICollectionView中每个Section甚至Section中的每个cell的位置和关系。Apple提供了几种不错的Layout，足以取代现在常用的几个开源库，其中包括了像Linkedin和Pinterest的视图。可以说Apple对于利用AppStore这个平台，向第三方开发者进行学习的能力是超强的。</p>
+
+<p>关于UICollectionView，在之后有两个session专门进行了讨论，我应该也会着重看一看相关内容，之后再进行补充了～</p>
+
+<p><hr /></p>
+
+<p><h3>UIViewController</h3>
+<strong>这个绝对是重磅消息～</strong>一直以来我们会在viewDidUnload方法中做一些清空outlet或者移除observer的事情。在viewDidUnload中清理observer其实并不是很安全，因此在iOS5中Apple引入了viewWillUnload，建议开发者们在viewWillUnload的时候就移除observer。而对于出现内存警告时，某些不用的view将被清理，这时候将自动意外执行viewWillUnload和viewDidUnload，很可能造成莫名其妙的crash，而这种内存警告造成的问题又因为其随机性难以debug。</p>
+
+<p>于是Apple这次做了一个惊人的决定，直接在<strong>iOS6里把viewWillUnload和viewDidUnload标注为了Deprecated</strong>，并且不再再会调用他们。绝大部分开发者其实是对iOS3.0以来就伴随我们的viewDidUnload是有深深的感情的，但是现在需要和这个方法说再见了。对于使用iOS6 SDK的app来说不应该再去实现这两个方法，而之前在这两个方法中所做的工作需要重新考虑其更合适的位置：比如在viewWillDisappear中去移除observer，在dealloc中将outlet置为nil等。</p>
+
+<p><hr /></p>
+
+<p><h3>状态恢复</h3>
+在之前的一篇iOS6 SDK的简述中已经说过这个特性。简单讲就是对每个view现在都多了一个属性：
+<pre>@property (nonatomic, copy) NSString *restorationIdentifier;</pre>
+通过在用户点击Home键时的一系列delegate里对现有的view进行编码存储后，在下一次打开文件时进行解码恢复。更多的详细内容之后也会有session进行详细说明，待更新。</p>
+
+<p><hr /></p>
+
+<p><h3>总结</h3>
+其他的很多新特性，包括社交网络，GameCenter和PassKit等也会在之后逐渐深入WWDC 2012 Session的时候进行笔记..</p>
+
+<p>作为开篇，就这样吧。<!--:--><!--:en-->&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[开发者所需要知道的iOS6 SDK新特性]]></title>
+    <link href="http://blog.onevcat.com/blog/2012/06/12/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%80%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84ios6-sdk%E6%96%B0%E7%89%B9%E6%80%A7/"/>
+    <updated>2012-06-12T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2012/06/12/开发者所需要知道的ios6-sdk新特性</id>
+    <content type="html"><![CDATA[<p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/ios6.png"><img class="aligncenter size-full wp-image-859" title="ios6" src="http://www.onevcat.com/wp-content/uploads/2012/06/ios6.png" alt="" width="766" height="238" data-pinit="registered" /></a></p>
+
+<p>欢迎转载本文，但是转载请注明本文出处： <strong><a href="http://2.gy/erSp" target="_blank">http://2.gy/erSp</a></strong></p>
+
+<p>iOS6 beta和相应的SDK已经放出了，WWDC2012要进入session环节了。iOS6无疑是这届WWDC的重点，在keynote上面对消费者展示了很多新鲜的特性，而之后的seesion对于开发者来说应该是更为重要。这里先大概把iOS6里新增的开发者可能用到的特性做个简单的整理。之后我也会挑一些自己感兴趣的session做一些整理和翻译工作，也算是对自己的一种锻炼吧～相关的笔记整理如下：</p>
+
+<p><a href="http://www.onevcat.com/2012/06/what-is-new-in-cocoa-touch/">Session 200 What&#8217;s New in Cocoa Touch</a>  Cocoa Touch新特性一览</p>
+
+<p><a title="WWDC 2012 Session笔记——405 Modern Objective-C" href="http://www.onevcat.com/2012/06/modern-objective-c/">Session 405 Modern Objective-C</a> 先进Objective-C</p>
+
+<p><a title="WWDC 2012 Session笔记——205 Introducing Collection Views" href="http://www.onevcat.com/2012/06/introducing-collection-views/">Session 205 Introducing Collection Views</a> Collection View入门</p>
+
+<p><a title="WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts" href="http://www.onevcat.com/2012/08/advanced-collection-view/">Session 219 Advanced Collection Views and Building Custom Layouts</a> 高级Collection View和自定义布局</p>
+
+<p><a title="WWDC 2012 Session笔记——202, 228, 232 AutoLayout（自动布局）入门" href="http://www.onevcat.com/2012/09/autoayout/">Session 202,228,232 AutoLayout使用</a></p>
+
+<p><hr /></p>
+
+<p><h3>地图</h3>
+iOS6抛弃了一直用的google map，而使用了自家的地图服务。相应地，MapKit框架也自然变成和Apple自家的地图服务绑定了。随之而来的好处是因为都是自家的内容，所以整合和开放会更进一步，第三方app现在有机会和地图应用进行交互了。也就是说，不使用自身搭载地图信息的app现在可以打开地图应用，并且显示一些感兴趣的路线和地点，这对于路线规划和记录类的应用来说这是个好消息～<!--:--><!--:en--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/ios6.png"><img class="aligncenter size-full wp-image-859" title="ios6" src="http://www.onevcat.com/wp-content/uploads/2012/06/ios6.png" alt="" width="766" height="238" data-pinit="registered" /></a></p>
+
+<p>欢迎转载本文，但是转载请注明本文出处： <strong><a href="http://2.gy/erSp" target="_blank">http://2.gy/erSp</a></strong></p>
+
+<p>iOS6 beta和相应的SDK已经放出了，WWDC2012要进入session环节了。iOS6无疑是这届WWDC的重点，在keynote上面对消费者展示了很多新鲜的特性，而之后的seesion对于开发者来说应该是更为重要。这里先大概把iOS6里新增的开发者可能用到的特性做个简单的整理。之后我也会挑一些自己感兴趣的session做一些整理和翻译工作，也算是对自己的一种锻炼吧～相关的笔记整理如下：</p>
+
+<p><a href="http://www.onevcat.com/2012/06/what-is-new-in-cocoa-touch/">Session 200 What&#8217;s New in Cocoa Touch</a>  Cocoa Touch新特性一览</p>
+
+<p><a title="WWDC 2012 Session笔记——405 Modern Objective-C" href="http://www.onevcat.com/2012/06/modern-objective-c/">Session 405 Modern Objective-C</a> 先进Objective-C</p>
+
+<p><a title="WWDC 2012 Session笔记——205 Introducing Collection Views" href="http://www.onevcat.com/2012/06/introducing-collection-views/">Session 205 Introducing Collection Views</a> Collection View入门</p>
+
+<p><a title="WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts" href="http://www.onevcat.com/2012/08/advanced-collection-view/">Session 219 Advanced Collection Views and Building Custom Layouts</a> 高级Collection View和自定义布局</p>
+
+<p><a title="WWDC 2012 Session笔记——202, 228, 232 AutoLayout（自动布局）入门" href="http://www.onevcat.com/2012/09/autoayout/">Session 202,228,232 AutoLayout使用</a></p>
+
+<p><hr /></p>
+
+<p><h3>地图</h3>
+iOS6抛弃了一直用的google map，而使用了自家的地图服务。相应地，MapKit框架也自然变成和Apple自家的地图服务绑定了。随之而来的好处是因为都是自家的内容，所以整合和开放会更进一步，第三方app现在有机会和地图应用进行交互了。也就是说，不使用自身搭载地图信息的app现在可以打开地图应用，并且显示一些感兴趣的路线和地点，这对于路线规划和记录类的应用来说这是个好消息～<!--:--><!--more--><!--more--><!--:zh--></p>
+
+<p><hr /></p>
+
+<p><h3>深度社交网络集成</h3>
+iOS5的时候深度集成了Twitter，而Apple似乎从中尝到了不少甜头。现在Apple深度集成了Facebook和Sina Weibo。是的你没看错..新浪微博现在被深度集成了。对于开发这来说，特别是中国开发者来说确实是个好消息，因为如果只是想发条信息的话，不再需要进行繁琐的API申请，不再需要接受新浪恶心的应用审核，也不再需要忍受新浪程序员写出来的错误百出的SDK了。使用新的Social.framework可以很简单的从系统中拿到认证然后向社交网络发送消息，这对app的推广来说是很好的补充。</p>
+
+<p>另外，Apple提供了一类新的ViewController：UIActivityViewController来询问用户的社交行为，可以看做这是Apple为统一界面和用户体验做的努力，但是估计除了Apple自家的应用意外可能很少有人会用默认界面吧..毕竟冒了会和自己的UI风格不符的危险…</p>
+
+<p><hr /></p>
+
+<p><h3>Passbook和PassKit</h3>
+Passbook是iOS6自带的新应用，可以用来存储一些优惠券啊电影票啊登机牌啊什么的。也许Passbook这个新应用不是很被大家看好，但是我坚持认为这会是一个很有前景的方向。这是又一次使用数字系统来取代物理实体的尝试，而且从Passbook里我看到了Apple以后在NFC领域发展的空间。因为iPhone的设备很容易统一，因此也许会由Apple首先制定NFC的新游戏标准也为可知，如果成真那电子钱包和电子支付将会变成一大桶金呐…</p>
+
+<p>扯远了，PassKit是新加入的，可以说是配合或者呼应Passbook存在的框架。开发者可以使用PassKit生成和读取包含一些类似优惠券电影票之类信息的特殊格式的文件，然后以加密签名的方式发送给用户。然后在使用时，出示这些凭证即可按照类似物理凭证的方式进行使用。这给了类似电影院和餐馆这样的地方很多机会，可以利用PassKit进行售票系统或者优惠系统的开发，来引入更方便的购票体系，争取更多的客户。当然，现在还只能是当做物理凭证的补充来使用，我始终相信当iPhone里加入NFC模块以后，Passbook将摇身一变，而你的iPhone便理所当然的成了电子钱包。</p>
+
+<p><hr /></p>
+
+<p><h3>Game Center</h3>
+这个iOS4引入的东东一直不是很好用，iOS6里Apple终于对这个体系进行了一些升级。简单说就是完善了一些功能，主要是联机对战匹配的东西，不过我依然不看好…想当时写小熊对战的时候曾经想使用GameCenter的匹配系统来写，结果各种匹配和网络的悲剧，导致白白浪费了一个月时间。而像水果忍者这类的游戏，使用了GameCenter的对战系统，但是也面临经常性的掉线之类的问题，可以说游戏体验是大打折扣的。虽然iOS6里新加了一些特性，但是整个机制和基本没有改变，因此我依旧不看好Game Center的表现(或者说是在中国的表现，如果什么时候Apple能在中国架GameCenter的服务器的话也许会有改善)。</p>
+
+<p>不过值得注意的是，Mountain Lion里也加入了GameCenter。也就是说，我们在以后可能可以用iOS设备和Mac通过GameCenter进行联机对战，或者甚至是直接用Mac和Mac进行联机对战。这对于没有自己服务器/自己不会写服务器后端/没有精力维护的个人开发者提供了很好的思路。使用GameCenter做一些简单的网络游戏并不是很难，而因为GameCenter的特性，这个成本也将会非常低。这也许会是以后的一个不错的方向～</p>
+
+<p><hr /></p>
+
+<p><h3>提醒</h3>
+自带的提醒应用得到了加强，Apple终于开放了向Reminder里添加东西和从中读取的API(Event Kit框架)，以及一套标准的用户界面。这个没太多好说的，To-Do类应用已经在AppStore泛滥成灾，无非是提供了一个反向向系统添加list的功能，但是专业To-Do类应用的其他功能相信Apple现在不会以后也不想去替代。</p>
+
+<p><hr /></p>
+
+<p><h3>新的IAP</h3>
+IAP（应用内购买）现在能直接从iTunes Store购买音乐了。这配合iTunes Match什么的用很不错，但是和天朝用户无关…首先是iTunes Store在天朝不开，其次是要是我朝用户什么时候具有买正版音乐的意识的话，我们这些开发者可能就要笑惨了。</p>
+
+<p><hr /></p>
+
+<p><h3>Collection Views</h3>
+不得不说Apple很无耻(或者说很聪明)。&#8221;会抄袭的艺术家是好的艺术家，会剽窃的艺术家是优秀的艺术家&#8221;这句话再次得到了诠释。基本新的UICollectionView实现了<a href="https://github.com/ptshih/PSCollectionView">PSCollectionView</a>的功能，简单说就是类似Pinterest那样的&#8221;瀑布流&#8221;的展示方式。当然UICollectionView更灵活一些，可以根据要求变化排列的方式。嗯..Apple还很贴心地提供了相应的VC：UICollectionViewController。</p>
+
+<p>可能这一套UI展现方式在iPhone上不太好用，但是在iPad上会很不错。不少照片展示之类的app可以用到.但是其实如果只是瀑布流的话估计短时间内大家还是会用开源代码，毕竟only for iOS6的话或多或少会减少用户的..</p>
+
+<p><hr /></p>
+
+<p><h3>UI状态保存</h3>
+Apple希望用户关闭app，然后下一次打开时能保持关闭时的界面状态。对于支持后台且不被kill掉的app来说是天然的。但是如果不支持后台运行或者用户自己kill掉进程的话，就没那么简单了。现在的做法是从rootViewController开始把所有的VC归档后存成NSData，然后下次启动的时候做检查如果需要恢复的话就解压出来。</p>
+
+<p>每次都要在appDelegate写这些代码的话，既繁杂又不优雅，于是Apple在iOS6里帮开发者做了这件脏活累活，还不错～其实机理应该没变，就是把这些代码放到app启动里去做了..</p>
+
+<p><hr /></p>
+
+<p><h3>隐私控制</h3>
+自从之前Apple被爆隐私门以后，就对这个比较重视了。现在除了位置信息以外，联系人、日历、提醒和照片的访问也强制需求用户的允许了。对普通开发者影响不大，因为如果确实需要的话用户一定会理解，但是可能对于360之流的流氓公司会造成冲击吧，对此只要呵呵就好了..= =？</p>
+
+<p><hr /></p>
+
+<p><h3>其他一些值得一提的改动</h3>
+<ul>
+	<li>整个UIView都支持NSAttributedString的格式化字符串了。特别是UITextView和UITextField～(再次抄袭开源社区，Apple你又赢了)</li>
+	<li>UIImage现在多了一个新方法，可以在生成UIImage对象时指定scale。为retina iPad开发的童鞋们解脱了..</li>
+	<li>NSUUID，用这个类现在可以很方便的创建一个uuid了.注意这个是uuid，不要和udid弄混了…Apple承诺的udid解决方案貌似还没出现..现在要拿udid的话还是用<a href="https://github.com/ylechelle/OpenUDID">OpenUDID</a>吧～</li>
+</ul></p>
+
+<p><hr /></p>
+
+<p>按照以往WWDC的惯例，之后几天的开发者Session会对这些变化以及之前就存在在iOS里的一些issues和tips做解释和交流。在session公布之后我会挑选一些自己感兴趣并且可能比较实用的部分再进行整理～尽情期待～<sup>O</sup>^<!--:--><!--:en--></p>
+
+<p><hr /></p>
+
+<p><h3>深度社交网络集成</h3>
+iOS5的时候深度集成了Twitter，而Apple似乎从中尝到了不少甜头。现在Apple深度集成了Facebook和Sina Weibo。是的你没看错..新浪微博现在被深度集成了。对于开发这来说，特别是中国开发者来说确实是个好消息，因为如果只是想发条信息的话，不再需要进行繁琐的API申请，不再需要接受新浪恶心的应用审核，也不再需要忍受新浪程序员写出来的错误百出的SDK了。使用新的Social.framework可以很简单的从系统中拿到认证然后向社交网络发送消息，这对app的推广来说是很好的补充。</p>
+
+<p>另外，Apple提供了一类新的ViewController：UIActivityViewController来询问用户的社交行为，可以看做这是Apple为统一界面和用户体验做的努力，但是估计除了Apple自家的应用意外可能很少有人会用默认界面吧..毕竟冒了会和自己的UI风格不符的危险…</p>
+
+<p><hr /></p>
+
+<p><h3>Passbook和PassKit</h3>
+Passbook是iOS6自带的新应用，可以用来存储一些优惠券啊电影票啊登机牌啊什么的。也许Passbook这个新应用不是很被大家看好，但是我坚持认为这会是一个很有前景的方向。这是又一次使用数字系统来取代物理实体的尝试，而且从Passbook里我看到了Apple以后在NFC领域发展的空间。因为iPhone的设备很容易统一，因此也许会由Apple首先制定NFC的新游戏标准也为可知，如果成真那电子钱包和电子支付将会变成一大桶金呐…</p>
+
+<p>扯远了，PassKit是新加入的，可以说是配合或者呼应Passbook存在的框架。开发者可以使用PassKit生成和读取包含一些类似优惠券电影票之类信息的特殊格式的文件，然后以加密签名的方式发送给用户。然后在使用时，出示这些凭证即可按照类似物理凭证的方式进行使用。这给了类似电影院和餐馆这样的地方很多机会，可以利用PassKit进行售票系统或者优惠系统的开发，来引入更方便的购票体系，争取更多的客户。当然，现在还只能是当做物理凭证的补充来使用，我始终相信当iPhone里加入NFC模块以后，Passbook将摇身一变，而你的iPhone便理所当然的成了电子钱包。</p>
+
+<p><hr /></p>
+
+<p><h3>Game Center</h3>
+这个iOS4引入的东东一直不是很好用，iOS6里Apple终于对这个体系进行了一些升级。简单说就是完善了一些功能，主要是联机对战匹配的东西，不过我依然不看好…想当时写小熊对战的时候曾经想使用GameCenter的匹配系统来写，结果各种匹配和网络的悲剧，导致白白浪费了一个月时间。而像水果忍者这类的游戏，使用了GameCenter的对战系统，但是也面临经常性的掉线之类的问题，可以说游戏体验是大打折扣的。虽然iOS6里新加了一些特性，但是整个机制和基本没有改变，因此我依旧不看好Game Center的表现(或者说是在中国的表现，如果什么时候Apple能在中国架GameCenter的服务器的话也许会有改善)。</p>
+
+<p>不过值得注意的是，Mountain Lion里也加入了GameCenter。也就是说，我们在以后可能可以用iOS设备和Mac通过GameCenter进行联机对战，或者甚至是直接用Mac和Mac进行联机对战。这对于没有自己服务器/自己不会写服务器后端/没有精力维护的个人开发者提供了很好的思路。使用GameCenter做一些简单的网络游戏并不是很难，而因为GameCenter的特性，这个成本也将会非常低。这也许会是以后的一个不错的方向～</p>
+
+<p><hr /></p>
+
+<p><h3>提醒</h3>
+自带的提醒应用得到了加强，Apple终于开放了向Reminder里添加东西和从中读取的API(Event Kit框架)，以及一套标准的用户界面。这个没太多好说的，To-Do类应用已经在AppStore泛滥成灾，无非是提供了一个反向向系统添加list的功能，但是专业To-Do类应用的其他功能相信Apple现在不会以后也不想去替代。</p>
+
+<p><hr /></p>
+
+<p><h3>新的IAP</h3>
+IAP（应用内购买）现在能直接从iTunes Store购买音乐了。这配合iTunes Match什么的用很不错，但是和天朝用户无关…首先是iTunes Store在天朝不开，其次是要是我朝用户什么时候具有买正版音乐的意识的话，我们这些开发者可能就要笑惨了。</p>
+
+<p><hr /></p>
+
+<p><h3>Collection Views</h3>
+不得不说Apple很无耻(或者说很聪明)。&#8221;会抄袭的艺术家是好的艺术家，会剽窃的艺术家是优秀的艺术家&#8221;这句话再次得到了诠释。基本新的UICollectionView实现了<a href="https://github.com/ptshih/PSCollectionView">PSCollectionView</a>的功能，简单说就是类似Pinterest那样的&#8221;瀑布流&#8221;的展示方式。当然UICollectionView更灵活一些，可以根据要求变化排列的方式。嗯..Apple还很贴心地提供了相应的VC：UICollectionViewController。</p>
+
+<p>可能这一套UI展现方式在iPhone上不太好用，但是在iPad上会很不错。不少照片展示之类的app可以用到.但是其实如果只是瀑布流的话估计短时间内大家还是会用开源代码，毕竟only for iOS6的话或多或少会减少用户的..</p>
+
+<p><hr /></p>
+
+<p><h3>UI状态保存</h3>
+Apple希望用户关闭app，然后下一次打开时能保持关闭时的界面状态。对于支持后台且不被kill掉的app来说是天然的。但是如果不支持后台运行或者用户自己kill掉进程的话，就没那么简单了。现在的做法是从rootViewController开始把所有的VC归档后存成NSData，然后下次启动的时候做检查如果需要恢复的话就解压出来。</p>
+
+<p>每次都要在appDelegate写这些代码的话，既繁杂又不优雅，于是Apple在iOS6里帮开发者做了这件脏活累活，还不错～其实机理应该没变，就是把这些代码放到app启动里去做了..</p>
+
+<p><hr /></p>
+
+<p><h3>隐私控制</h3>
+自从之前Apple被爆隐私门以后，就对这个比较重视了。现在除了位置信息以外，联系人、日历、提醒和照片的访问也强制需求用户的允许了。对普通开发者影响不大，因为如果确实需要的话用户一定会理解，但是可能对于360之流的流氓公司会造成冲击吧，对此只要呵呵就好了..= =？</p>
+
+<p><hr /></p>
+
+<p><h3>其他一些值得一提的改动</h3>
+<ul>
+	<li>整个UIView都支持NSAttributedString的格式化字符串了。特别是UITextView和UITextField～(再次抄袭开源社区，Apple你又赢了)</li>
+	<li>UIImage现在多了一个新方法，可以在生成UIImage对象时指定scale。为retina iPad开发的童鞋们解脱了..</li>
+	<li>NSUUID，用这个类现在可以很方便的创建一个uuid了.注意这个是uuid，不要和udid弄混了…Apple承诺的udid解决方案貌似还没出现..现在要拿udid的话还是用<a href="https://github.com/ylechelle/OpenUDID">OpenUDID</a>吧～</li>
+</ul></p>
+
+<p><hr /></p>
+
+<p>按照以往WWDC的惯例，之后几天的开发者Session会对这些变化以及之前就存在在iOS里的一些issues和tips做解释和交流。在session公布之后我会挑选一些自己感兴趣并且可能比较实用的部分再进行整理～尽情期待～<sup>O</sup>^<!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[EURO 2012]]></title>
+    <link href="http://blog.onevcat.com/blog/2012/06/11/euro2012/"/>
+    <updated>2012-06-11T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2012/06/11/euro2012</id>
+    <content type="html"><![CDATA[<p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/euro2012.png"><img class="aligncenter size-full wp-image-853" title="euro2012" src="http://www.onevcat.com/wp-content/uploads/2012/06/euro2012.png" alt="" width="1024" height="256" data-pinit="registered" /></a></p>
+
+<p>又是一届欧洲杯。</p>
+
+<p>那一年，当各色时装铺满球场，当克林斯曼哭得像个小孩的时候，我4岁。那时的我，懵懂中认识了足球。</p>
+
+<p>那一年，当小劳德鲁普挑起大梁，在绿茵上奔走书写丹麦童话的时候，我6岁。那时的我，刚懂得什么是足球。</p>
+
+<p>那一年，当巴乔在玫瑰碗忧郁叹息，当塔法雷尔仰天长啸的时候，我8岁。那时的我，已经可以和小伙伴踢踢小场。</p>
+
+<p>那一年，当高卢雄鸡昂首怒掏巴西，我和老爸做在电视前的地上一起喝酒看球的时候，我12岁。那时的我，已经是小学队里最出色的门将，奇拉维特和巴特兹是我的偶像。</p>
+
+<p>那一年，当特雷泽盖打进金球绝杀意大利，我独自在电视前感叹人生如球场瞬息多变的时候，我14岁。那时的我，刚刚开始学会思考和冷静。</p>
+
+<p>那一年，当小组赛第一场开始我就预言希腊夺冠，同学家人纷纷不信，而最终却拜服的时候，我18岁。那时的我，籍以生存的，是理性和惯性，更多的是一种纯粹和执着。</p>
+
+<p>那一年，黄健翔高喊意大利万岁格罗索无敌。</p>
+
+<p>那一年，和我几乎同龄的伊涅斯塔、席尔瓦，托雷斯和法布雷加斯的名字不过刚刚进入人们的视野，西班牙的黄金一代终于成型。</p>
+
+<p>那一年，C罗梅西罗本集体哑火，身价越高状态越差的怪圈笼罩了所有的球星。</p>
+
+<p>可以说，足球，陪伴我长大。关于足球的这些记忆，可能永远也无法抹去了。</p>
+
+<p>而现在，在同样这块七千平米的草地上，又会演绎出什么样的故事呢…？<!--:--><!--:en-->&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[手把手教你ARC——iOS/Mac开发ARC入门和使用]]></title>
+    <link href="http://blog.onevcat.com/blog/2012/06/04/arc-hand-by-hand/"/>
+    <updated>2012-06-04T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2012/06/04/arc-hand-by-hand</id>
+    <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120604-1.png"><img class="size-full wp-image-810" title="ARC" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120604-1.png" alt="" width="1069" height="265" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">本文部分实例取自iOS 5 Toturail一书中关于ARC的教程和公开内容，仅用于技术交流和讨论。请不要将本文的部分或全部内容用于商用，谢谢合作。</p>
+<p style="text-align: justify;">欢迎转载本文，但是转载请注明本文出处：<a href="http://www.onevcat.com/2012/06/arc-hand-by-hand/">http://www.onevcat.com/2012/06/arc-hand-by-hand/</a></p>
+<p style="text-align: justify;">本文适合人群：对iOS开发有一定基础，熟悉iOS开发中内存管理的Reference Counting机制，对ARC机制有听闻很向往但是一直由于种种原因没有使用的童鞋。本文将从ARC机理入手对这个解放广大iOS开发者的伟大机制进行一个剖析，并逐步引导你开始使用ARC。一旦习惯ARC，你一定会被它的简洁高效所征服。</p></p>
+
+<p><h2 style="text-align: justify;">写在开头</h2>
+<p style="text-align: justify;">虽然距离WWDC2011和iOS 5已经快一年时间，但是很多开发者并没有利用新方法来提高自己的水平，这点在ARC的使用上非常明显(特别是国内，基本很少见到同行转向ARC)。我曾经询问过一些同行为什么不转向使用ARC，很多人的回答是担心内存管理不受自己控制..其实我个人认为这是对于ARC机制了解不足从而不自信，所导致的对新事物的恐惧。而作为最需要“追赶时髦”的职业，这样的心态将相当不利。谨以此文希望能清楚表述ARC的机理和用法，也希望能够成为现在中文入门教学缺失的补充。</p></p>
+
+<p><hr /></p>
+
+<p><h2 style="text-align: justify;">什么是ARC</h2>
+<p style="text-align: justify;">Automatic Reference Counting，自动引用计数，即ARC，可以说是WWDC2011和iOS5所引入的最大的变革和最激动人心的变化。ARC是新的LLVM 3.0编译器的一项特性，使用ARC，可以说一举解决了广大iOS开发者所憎恨的手动内存管理的麻烦。</p>
+<p style="text-align: justify;">在工程中使用ARC非常简单：只需要像往常那样编写代码，只不过永远不写retain,release和autorelease三个关键字就好～这是ARC的基本原则。当ARC开启时，编译器将自动在代码合适的地方插入retain, release和autorelease，而作为开发者，完全不需要担心编译器会做错（除非开发者自己错用ARC了）。好了，ARC相当简单吧～到此为止，本教程结束。</p>
+<p style="text-align: justify;">等等…也许还有其他问题，最严重的问题是“我怎么确定让ARC来管理不会出问题？”或者“用ARC会让程序性能下降吧”。对于ARC不能正处理内存管理的质疑自从ARC出生以来就一直存在，而现在越来越多的代码转向ARC并取得了很好的效果，这证明了ARC是一套有效的简化开发复杂程度的机制，另外通过研究ARC的原理，可以知道使用ARC甚至能提高程序的效率。在接下来将详细解释ARC的运行机理并且提供了一个step-by-step的教程，将非ARC的程序转换为ARC。</p>
+<p style="text-align: justify;"><!--:--><!--more--><!--:zh--></p></p>
+
+<p><hr /></p>
+
+<p><h2 style="text-align: justify;">ARC工作原理</h2>
+<p style="text-align: justify;">手动内存管理的机理大家应该已经非常清楚了，简单来说，只要遵循以下三点就可以在手动内存管理中避免绝大部分的麻烦：</p></p>
+
+<p><blockquote>如果需要持有一个对象，那么对其发送retain 如果之后不再使用该对象，那么需要对其发送release（或者autorealse） 每一次对retain,alloc或者new的调用，需要对应一次release或autorealse调用</blockquote>
+<p style="text-align: justify;">初学者可能仅仅只是知道这些规则，但是在实际使用时难免犯错。但是当开发者经常使用手动引用计数 Manual Referecen Counting(MRC)的话，这些规则将逐渐变为本能。你会发现少一个release的代码怎么看怎么别扭，从而减少或者杜绝内存管理的错误。可以说MRC的规则非常简单，但是同时也非常容易出错。往往很小的错误就将引起crash或者OOM之类的严重问题。</p>
+<p style="text-align: justify;">在MRC的年代里，为了避免不小心忘写release，Xcode提供了一个很实用的小工具来帮助可能存在的代码问题(Xcode3里默认快捷键Shift+A？不记得了)，可以指出潜在的内存泄露或者过多释放。而ARC在此基础上更进一步：ARC是Objective-C编译器的特性，而不是运行时特性或者垃圾回收机制，ARC所做的只不过是在代码编译时为你自动在合适的位置插入release或autorelease，就如同之前MRC时你所做的那样。因此，至少在效率上ARC机制是不会比MRC弱的，而因为可以在最合适的地方完成引用计数的维护，以及部分优化，使用ARC甚至能比MRC取得更高的运行效率。</p></p>
+
+<p><h3 style="text-align: justify;">ARC机制</h3>
+<p style="text-align: justify;">学习ARC很简单，在MRC时代你需要自己retain一个想要保持的对象，而现在不需要了。现在唯一要做的是用一个指针指向这个对象，只要指针没有被置空，对象就会一直保持在堆上。当将指针指向新值时，原来的对象会被release一次。这对实例变量，sunthesize的变量或者局部变量都是适用的。比如</p></p>
+
+<p><pre class="lang:objc decode:true">NSString *firstName = self.textField.text;</pre>
+<p style="text-align: justify;">firstName现在指向NSString对象，这时这个对象（textField的内容字符串）将被hold住。比如用字符串@“OneV&#8221;作为例子，这个时候firstName持有了@&#8221;OneV&#8221;。</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic1.png"><img class="alignleft size-full wp-image-795" title="arcpic1" src="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic1.png" alt="" width="727" height="371" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">当然，一个对象可以拥有不止一个的持有者（这个类似MRC中的retainCount&gt;1的情况）。在这个例子中显然self.textField.text也是@“OneV&#8221;，那么现在有两个指针指向对象@&#8221;OneV”(被持有两次，retainCount=2，其实对NSString对象说retainCount是有问题的，不过anyway～就这个意思而已.)。</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic2.png"><img class="alignleft size-full wp-image-796" title="arcpic2" src="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic2.png" alt="" width="785" height="417" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">过了一会儿，也许用户在textField里输入了其他的东西，那么self.textField.text指针显然现在指向了别的字符串，比如@“onevcat&#8221;，但是这时候原来的对象已然是存在的，因为还有一个指针firstName持有它。现在指针的指向关系是这样的：</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic3.png"><img class="alignleft size-full wp-image-797" title="arcpic3" src="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic3.png" alt="" width="889" height="418" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">只有当firstName也被设定了新的值，或者是超出了作用范围的空间(比如它是局部变量但是这个方法执行完了或者它是实例变量但是这个实例被销毁了)，那么此时firstName也不再持有@“OneV&#8221;，此时不再有指针指向@&#8221;OneV&#8221;，在ARC下这种状况发生后对象@&#8221;OneV&#8221;即被销毁，内存释放。</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic4.png"><img class="alignleft size-full wp-image-798" title="arcpic4" src="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic4.png" alt="" width="986" height="391" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">类似于firstName和self.textField.text这样的指针使用关键字&#8221;strong&#8221;进行标志，它意味着只要该指针指向某个对象，那么这个对象就不会被销毁。反过来说，ARC的一个基本规则即使，<strong>只要某个对象被任一strong指针指向，那么它将不会被销毁。如果对象没有被任何strong指针指向，那么就将被销毁</strong>。在默认情况下，所有的实例变量和局部变量都是strong类型的。可以说strong类型的指针在行为上和MRC时代retain的property是比较相似的。</p>
+<p style="text-align: justify;">既然有&#8221;strong&#8221;，那肯定有&#8221;weak&#8221;咯～weak类型的指针也可以指向对象，但是并不会持有该对象。比如：</p></p>
+
+<p><pre>__weak NSString *weakName = self.textField.text</pre>
+<p style="text-align: justify;">得到的指向关系是：</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic5.png"><img class="alignleft size-full wp-image-799" title="arcpic5" src="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic5.png" alt="" width="808" height="390" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">这里声明了一个weak的指针weakName，它并不持有@“onevcat&#8221;。如果self.textField.text的内容发生改变的话，根据之前提到的<strong>&#8220;只要某个对象被任一strong指针指向，那么它将不会被销毁。如果对象没有被任何strong指针指向，那么就将被销毁”</strong>原则，此时指向@“onevcat&#8221;的指针中没有strong类型的指针，@&#8221;onevcat&#8221;将被销毁。同时，在ARC机制作用下，所有指向这个对象的weak指针将被置为nil。这个特性相当有用，相信无数的开发者都曾经被指针指向已释放对象所造成的EXC_BAD_ACCESS困扰过，使用ARC以后，不论是strong还是weak类型的指针，都不再会指向一个dealloced的对象，从根源上解决了意外释放导致的crash。</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic6.png"><img class="alignleft size-full wp-image-800" title="arcpic6" src="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic6.png" alt="" width="995" height="416" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">不过在大部分情况下，weak类型的指针可能并不会很常用。比较常见的用法是在两个对象间存在包含关系时：对象1有一个strong指针指向对象2，并持有它，而对象2中只有一个weak指针指回对象1，从而避免了循环持有。一个常见的例子就是oc中常见的delegate设计模式，viewController中有一个strong指针指向它所负责管理的UITableView，而UITableView中的dataSource和delegate指针都是指向viewController的weak指针。可以说，weak指针的行为和MRC时代的assign有一些相似点，但是考虑到weak指针更聪明些（会自动指向nil），因此还是有所不同的。细节的东西我们稍后再说。</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic7.png"><img class="alignleft size-full wp-image-801" title="arcpic7" src="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic7.png" alt="" width="961" height="409" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">注意类似下面的代码似乎是没有什么意义的：</p></p>
+
+<p><pre>__weak NSString *str = [[NSString alloc] initWithFormat:…]; 
+NSLog(@"%@",str); //输出是"(null)"</pre>
+<p style="text-align: justify;">由于str是weak，它不会持有alloc出来的NSString对象，因此这个对象由于没有有效的strong指针指向，所以在生成的同时就被销毁了。如果我们在Xcode中写了上面的代码，我们应该会得到一个警告，因为无论何时这种情况似乎都是不太可能出现的。你可以把<strong>weak换成</strong>strong来消除警告，或者直接前面什么都不写，因为ARC中默认的指针类型就是strong。</p>
+<p style="text-align: justify;">property也可以用strong或weak来标记，简单地把原来写retain和assign的地方替换成strong或者weak就可以了。</p></p>
+
+<p><pre>@property (nonatomic, strong) NSString *firstName; 
+@property (nonatomic, weak) id  delegate;</pre>
+<p style="text-align: justify;">ARC可以为开发者节省很多代码，使用ARC以后再也不需要关心什么时候retain，什么时候release，但是这并不意味你可以不思考内存管理，你可能需要经常性地问自己这个问题：谁持有这个对象？</p>
+<p style="text-align: justify;">比如下面的代码，假设array是一个NSMutableArray并且里面至少有一个对象：</p></p>
+
+<p><pre>id obj = [array objectAtIndex:0]; 
+[array removeObjectAtIndex:0]; 
+NSLog(@"%@",obj);</pre>
+<p style="text-align: justify;">在MRC时代这几行代码应该就挂掉了，因为array中0号对象被remove以后就被立即销毁了，因此obj指向了一个dealloced的对象，因此在NSLog的时候将出现EXC_BAD_ACCESS。而在ARC中由于obj是strong的，因此它持有了array中的首个对象，array不再是该对象的唯一持有者。即使我们从array中将obj移除了，它也依然被别的指针持有，因此不会被销毁。</p></p>
+
+<p><h3 style="text-align: justify;">一点提醒</h3>
+<p style="text-align: justify;">ARC也有一些缺点，对于初学者来说，可能仅只能将ARC用在objective-c对象上(也即继承自NSObject的对象)，但是如果涉及到较为底层的东西，比如Core Foundation中的malloc()或者free()等，ARC就鞭长莫及了，这时候还是需要自己手动进行内存管理。在之后我们会看到一些这方面的例子。另外为了确保ARC能正确的工作，有些语法规则也会因为ARC而变得稍微严格一些。</p>
+<p style="text-align: justify;">ARC确实可以在适当的地方为代码添加retain或者release，但是这并不意味着你可以完全忘记内存管理，因为你必须在合适的地方把strong指针手动设置到nil，否则app很可能会oom。简单说还是那句话，你必须时刻清醒谁持有了哪些对象，而这些持有者在什么时候应该变为指向nil。</p>
+<p style="text-align: justify;">ARC必然是Objective-C以及Apple开发的趋势，今后也会有越来越多的项目采用ARC(甚至不排除MRC在未来某个版本被弃用的可能)，Apple也一直鼓励开发者开始使用ARC，因为它确实可以简化代码并增强其稳定性。可以这么说，使用ARC之后，由于内存问题造成的crash基本就是过去式了(OOM除外 :P)</p>
+<p style="text-align: justify;">我们正处于由MRC向ARC转变的节点上，因此可能有时候我们需要在ARC和MRC的代码间来回切换和适配。Apple也想到了这一点，因此为开发这提供了一些ARC和非ARC代码混编的机制，这些也将在之后的例子中列出。另外ARC甚至可以用在C++的代码中，而通过遵守一些代码规则，iOS 4里也可以使用ARC(虽然我个人认为在现在iOS 6都呼之欲出的年代已经基本没有需要为iOS 4做适配的必要了)、</p>
+<p style="text-align: justify;">总之，聪明的开发者总会尝试尽可能的自动化流程，已减轻自己的工作负担，而ARC恰恰就为我们提供了这样的好处：自动帮我们完成了很多以前需要手动完成的工作，因此对我来说，转向ARC是一件不需要考虑的事情。</p></p>
+
+<p><hr /></p>
+
+<p><h2 style="text-align: justify;">具体操作</h2>
+<p style="text-align: justify;">说了这么多，终于可以实践一下了。在决定使用ARC后，很多开发者面临的首要问题是不知如何下手。因为可能手上的项目已经用MRC写了一部分，不想麻烦做转变；或者因为新项目里用ARC时遇到了奇怪的问题，从而放弃ARC退回MRC。这都是常见的问题，而在下面，将通过一个demo引导大家彻底转向ARC的世界。</p></p>
+
+<p><h3 style="text-align: justify;">Demo</h3>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic8.png"><img class="aligncenter size-medium wp-image-802" title="arcpic8" src="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic8-159x300.png" alt="" width="159" height="300" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">例子很简单，这是一个查找歌手的应用，包含一个简单的UITableView和一个搜索框，当用户在搜索框搜索时，调用<a href="http://musicbrainz.org/">MusicBrainz</a>的API完成名字搜索和匹配。MusicBrainz是一个开放的音乐信息平台，它提供了一个免费的XML网页服务，如果对MusicBrainz比较有兴趣的话，可以到它的官网逛一逛。</p>
+<p style="text-align: justify;">Demo的起始例子可以从<a href="http://www.onevcat.com/wp-content/uploads/2012/06/ArtistsStarter.zip">这里下载</a>，为了照顾新人，在这边进行简单说明。在Xcode中打开下载的例子，应该可以看到如下内容(Xcode和iOS开发熟练者请跳过此段)</p></p>
+
+<p><blockquote>AppDelegate.h/m 这是整个app的delegate，没什么特殊的，每个iOS/Mac程序在main函数以后的入口，由此进入app的生命周期。在这里加载了最初的viewController并将其放到Window中展示出来。另外appDelegate还负责处理程序开始退出等系统委托的事件</blockquote></p>
+
+<p>MainViewController.h/m/xib 这个demo最主要的ViewController，含有一个TableView和一个搜索条。 SoundEffect.h/m 简单的播放声音的类，在MusicBrainz搜索完毕时播放一个音效。 main.m 程序入口，所有c程序都从main函数开始执行</p>
+
+<p>AFHTTPRequestOperation.h/m 这是有名的网络框架AFNetworking的一部分，用来帮助等简单地处理web服务请求。这里只包含了这一个类而没有将全部的AFNetworking包括进来，因为我们只用了这一个类。完整的框架代码可以在github的相关页面上找到<a href="https://github.com/gowalla/AFNetworking">https://github.com/gowalla/AFNetworking</a></p>
+
+<p>SVProgresHUD.h/m/bundle 是一个常用的进度条指示，当搜索的时候出现以提示用户正在搜索请稍后。bundle是资源包，里面包含了几张该类用到的图片，打进bundle包的目的一方面是为了资源容易管理，另一方面也是主要方面时为了不和其他资源发生冲突(Xcode中资源名字是资源的唯一标识，同名字的资源只能出现一次，而放到bundle包里可以避免这个潜在的问题)。SVProgresHUD可以在这里找到<a href="https://github.com/samvermette/SVProgressHUD">https://github.com/samvermette/SVProgressHUD</a>
+<p style="text-align: justify;">快速过一遍这个应用吧：MainViewController是UIViewController的子类，对应的xib文件定义了对应的UITableView和UISearchBar。TableView中显示searchResult数组中的内容。当用户搜索时，用AFHTTPRequestOperation发一个HTTP请求，当从MusicBrainz得到回应后将结果放入searchResult数组中并用tableView显示，当返回结果是空时在tableView中显示没找到。主要的逻辑都在MainViewController.m中的-searchBarSearchButtonClicked:方法中，生成了用于查询的URL，根据MusicBrainz的需求替换了请求的header，并且完成了返回逻辑，然后在主线程中刷新UI。整个程序还是比较简单的～</p></p>
+
+<p><h3 style="text-align: justify;">MRC到ARC的自动转换</h3>
+<p style="text-align: justify;">回到正题，我们讨论的是ARC，关于REST API和XML解析的技术细节就暂时先忽略吧..整个程序都是用MRC来进行内存管理的，首先来让我们把这个demo转成ARC吧。基本上转换为ARC意味着把所有的retain,release和autorelease关键字去掉，在之前我们明确几件事情：<br />
+* Xcode提供了一个ARC自动转换工具，可以帮助你将源码转为ARC<br />
+* 当然你也可以自己动手完成ARC转换<br />
+* 同时你也可以指定对于某些你不想转换的代码禁用ARC，这对于很多庞大复杂的还没有转至ARC的第三方库帮助很大，因为不是你写的代码你想动手修改的话代码超级容易mess…</p>
+<p style="text-align: justify;">对于我们的demo，为了说明问题，这三种策略我们都将采用，注意这仅仅只是为了展示如何转换。实际操作中不需要这么麻烦，而且今后的绝大部分情况应该是从工程建立开始就是ARC的。</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic9.png"><img class="aligncenter size-full wp-image-803" title="arcpic9" src="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic9.png" alt="" width="721" height="252" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">首先，ARC是LLVM3.0编译器的特性，而老的工程特别是Xcode3时代的工程的默认编译器很可能是GCC或者LLVM-GCC，因此第一步就是确认编译器是否正确。<strong>在Project设置面板，选择target，在Build Settings中将Compiler for C/C++/Objective-C选为Apple LLVM compiler 3.0或以上。</strong>为了确保之后转换的顺利，在这里我个人建议最好把Treat Warnings as Errors和 Run Static Analyzer都打开，确保在改变编译器后代码依旧没有警告或者内存问题(虽然静态分析可能不太能保证这一点，但是聊胜于无)。好了～clean(Shift+Cmd+K)以后Bulid一下试试看，经过修改后的demo工程没有任何警告和错误，这是很好的开始。（对于存在警告的代码，这里是很好的修复的时机..请在转换前确保原来的代码没有内存问题）。</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic10.png"><img class="aligncenter size-full wp-image-804" title="arcpic10" src="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic10.png" alt="" width="721" height="272" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">接下来就是完成从MRC到ARC的伟大转换了。还是在Build Settings页面，把Objective-C Automatic Reference Counting改成YES(如果找不到的话请看一看搜索栏前面的小标签是不是调成All了..这个选项在Basic里是不出现的)，这样我们的工程就将在所有源代码中启用ARC了。然后…试着编译一下看看，嗯..无数的错误。</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic11.png"><img class="aligncenter size-full wp-image-805" title="arcpic11" src="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic11.png" alt="" width="496" height="351" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">这是很正常的，因为ARC里不允许出现retain,release之类的，而MRC的代码这些是肯定会有的东西。我们可以手动一个一个对应地去修复这些错误，但是这很麻烦。Xcode为我们提供了一个自动转换工具，可以帮助重写源代码，简单来说就是去掉多余的语句并且重写一些property关键字。</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic12.png"><img class="aligncenter size-full wp-image-806" title="arcpic12" src="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic12.png" alt="" width="743" height="516" data-pinit="registered" /></a></p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic13.png"><img class="aligncenter size-full wp-image-807" title="arcpic13" src="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic13.png" alt="" width="742" height="505" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">这个小工具是Edit-&gt;Refactor下的Convert to Objective-C ARC，点击后会让我们选择要转换哪几个文件，在这里为了说明除了自动转换外的方法，我们不全部转换，而只是选取其中几个转换(MainViewController.m和AFHTTPRequestOperation.m不做转换)。注意到这个对话框上有个警告标志告诉我们target已经是ARC了，这是由于之前我们在Build Settings里已经设置了启用ARC，其实直接在这里做转换后Xcode会自动帮我们开启ARC。点击检查后，Xcode告诉我们一个不幸的消息，不能转换，需要修复ARC readiness issues..后面还告诉我们要看到所有的所谓的ARC readiness issues，可以到设置的General里把Continue building after errors勾上…What the f**k…好吧～先乖乖听从Xcode的建议&#8221;Cmd+,“然后Continue building after errors打勾然后再build。</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic14.png"><img class="aligncenter size-full wp-image-808" title="arcpic14" src="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic14.png" alt="" width="434" height="204" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">问题依旧，不过在issue面板里应该可以看到所有出问题的代码了。在我们的例子里，问题出在SoundEffect.m里：</p></p>
+
+<p><pre>NSURL *fileURL = [[NSBundle mainBundle] URLForResource:filename withExtension:nil];
+if (fileURL != nil)
+{
+    SystemSoundID theSoundID;
+    OSStatus error = AudioServicesCreateSystemSoundID((CFURLRef)fileURL, &amp;theSoundID);
+    if (error == kAudioServicesNoError)
+        soundID = theSoundID;
+}</pre>
+<p style="text-align: justify;">这里代码尝试把一个NSURL指针强制转换为一个CFURLRef指针。这里涉及到一些Core Services特别是Core Foundation(CF)的东西，AudioServicesCreateSystemSoundID()函数接受CFURLRef为参数，这是一个CF的概念，但是我们在较高的抽象层级上所建立的是NSURL对象。在Cocoa框架中，有很多顶层对象对底层的抽象，而在使用中我们往往可以不加区别地对这两种对象进行同样的对待，这类对象即为可以&#8221;自由桥接&#8221;的对象(toll-free bridged)。NSURL和CFURLRef就是一对<del>好基友</del>好例子，在这里其实CFURLRef和NSURL是可以进行替换的。</p>
+<p style="text-align: justify;">通常来说为了代码在底层级上的正确，在iOS开发中对基于C的API的调用所传入的参数一般都是CF对象，而Objective-C的API调用都是传入NSObject对象。因此在采用自由桥接来调用C API的时候就需要进行转换。但是在使用ARC编译的时候，因为内存管理的原因，编译器需要知道对这些桥接对象要实行什么样的操作。如果一个NSURL对象替代了CFURLRef，那么在作用区域外，应该由谁来决定内存释放和对象销毁呢？为了解决这个问题，引入了<strong>bridge,</strong>bridge_transfer和__bridge_retained三个关键字。关于选取哪个关键字做转换，需要由实际的代码行为来决定。如果对于自由桥接机制感兴趣，大家可以自己找找的相关内容，比如<a href="http://developer.apple.com/library/mac/#documentation/CoreFoundation/Conceptual/CFDesignConcepts/Articles/tollFreeBridgedTypes.html#//apple_ref/doc/uid/20002401-767858">适用类型</a>、<a href="http://www.mikeash.com/pyblog/friday-qa-2010-01-22-toll-free-bridging-internals.html">内部机制</a>和<a href="http://ridiculousfish.com/blog/posts/bridge.html">一个简介</a>～之后我也会对这个问题做进一步说明</p>
+<p style="text-align: justify;">回到demo，我们现在在上面的代码中加上__bridge进行转换。然后再运行ARC转换工具，这时候检查应该没有其他问题了，那么让我们进行转换吧～当然在真正转换之前会有一个预览界面，在这里我们最好检查一下转换是不是都按照预想进行了..要是出现大面积错误又没有备份或者出现各种意外的话就可以哭了…</p>
+<p style="text-align: justify;">前后变化的话比较简单，基本就是去掉不需要的代码和改变property的类型而已，其实有信心的话不太需要每次都看，但是如果是第一次执行ARC转换的操作的话，我还是建议稍微看一下变化，这样能对ARC有个直观上的了解。检查一遍，应该没什么问题了..需要注意的是main.m里关于autoreleasepool的变化以及所有dealloc调用里的[super dealloc]的删除，它们同样是MRC到ARC的主要变化..</p>
+<p style="text-align: justify;">好了～转换完成以后我们再build看看..应该会有一些警告。对于原来retain的property，比较保险的做法是转为strong，在LLVM3.0中自动转换是这样做的，但是在3.1中property默认并不是strong，这样在使用property赋值时存在警告，我们在property声明里加上strong就好了～然后就是SVProgressHUD.m里可能存在问题，这是由于原作者把release的代码和其他代码写在一行了.导致自动转换时只删掉了部分，而留下了部分不应该存在的代码，删掉对变量的空调用就好了..</p></p>
+
+<p><h3 style="text-align: justify;">自动转换之后的故事</h3>
+<p style="text-align: justify;">然后再编译，没有任何错误和警告了，好棒～等等…我们刚才没有对MainViewController和AFHTTPRequestOperation进行处理吧，那么这两个文件里应该还存在release之类的东西吧..？看一看这两个文件，果然有各种release，但是为什么能编译通过呢？！明明刚才在自动转换前他们还有N多错的嘛…答案很简单，在自动转换的时候因为我们没有勾选这两个文件，因此编译器在自动转换过后为这两个文件标记了&#8221;不使用ARC编译&#8221;。可以看到在target的Building Phases下，MainViewController.m和AFHTTPRequestOperation.m两个文件后面被加上了-fno-objc-arc的编译标记，被加上该标记的文件将不使用ARC规则进行编译。</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic15.png"><img class="aligncenter size-full wp-image-809" title="arcpic15" src="http://www.onevcat.com/wp-content/uploads/2012/06/arcpic15.png" alt="" width="696" height="400" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">提供这样的编译标记的原因是显而易见的，因为总是有一部分的第三方代码并没有转换为ARC(可能是由于维护者犯懒或者已经终止维护)，所以对于这部分代码，为了迅速完成转换，最好是使用-fno-objc-arc标记来禁止在这些源码上使用ARC。</p>
+<p style="text-align: justify;">为了方便查找，再此列出一些在转换时可能出现的问题，当然在我们使用ARC时也需要注意避免代码中出现这些问题：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>“Cast … requires a bridged cast”</li>
+</ul>
+<blockquote>这是我们在demo中遇到的问题，不再赘述</blockquote>
+<ul style="text-align: justify;">
+	<li>Receiver type ‘X’ for instance message is a forward declaration</li>
+</ul>
+<blockquote>这往往是引用的问题。ARC要求完整的前向引用，也就是说在MRC时代可能只需要在.h中申明@class就可以，但是在ARC中如果调用某个子类中未覆盖的父类中的方法的话，必须对父类.h引用，否则无法编译。</blockquote>
+<ul style="text-align: justify;">
+	<li>Switch case is in protected scope</li>
+</ul>
+<blockquote>现在switch语句必须加上{}了，ARC需要知道局部变量的作用域，加上{}后switch语法更加严格，否则遇到没有break的分支的话内存管理会出现问题。</blockquote>
+<ul style="text-align: justify;">
+	<li>A name is referenced outside the NSAutoreleasePool scope that it was declared in</li>
+</ul>
+<blockquote>这是由于写了自己的autoreleasepool，而在转换时在原来的pool中申明的变量在新的@autoreleasepool中作用域将被局限。解决方法是把变量申明拿到pool的申请之前。</blockquote>
+<ul style="text-align: justify;">
+	<li>ARC forbids Objective-C objects in structs or unions</li>
+</ul>
+<blockquote>可以说ARC所引入的最严格的限制是不能在C结构体中放OC对象了..因此类似下面这样的代码是不可用的
+<pre>typedef struct { 
+    UIImage *selectedImage; 
+    UIImage *disabledImage; 
+} ButtonImages;</pre>
+这个问题只有乖乖想办法了..改变原来的结构什么的..</blockquote>
+<h3 style="text-align: justify;"></h3>
+<h3 style="text-align: justify;">手动转换</h3>
+<p style="text-align: justify;">刚才做了对demo的大部分转换，还剩下了MainViewController和AFHTTPRequestOperation是MRC。但是由于使用了-fno-objc-arc，因此现在编译和运行都没有问题了。下面我们看看如何手动把MainViewController转为ARC，这也有助于进一步理解ARC的规则。</p>
+<p style="text-align: justify;">首先，我们需要转变一下观念…对于MainViewController.h，在.h中申明了两个实例变量：</p></p>
+
+<p><pre>@interface MainViewController : UIViewController  
+{ 
+    NSOperationQueue *queue;
+    NSMutableString *currentStringValue; 
+}</pre>
+<p style="text-align: justify;">我们不妨仔细考虑一下，为什么在interface里出现了实例变量的申明？通常来说，实例变量只是在类的实例中被使用，而你所写的类的使用者并没有太多必要了解你的类中有哪些实例变量。而对于绝大部分的实例变量，应该都是protected或者private的，对它们的操作只应该用setter和getter，而这正是property所要做的工作。可以说，将实例变量写在头文件中是一种遗留的陋习。更好的写实例变量名字的地方应当与类实现关系更为密切，为了隐藏细节，我们应该考虑将它们写在@implementation里。好消息是，在LLVM3.0中，不论是否开启ARC，编译器是支持将实例变量写到实现文件中的。甚至如果没有特殊需要又用了property，我们都不应该写无意义的实例变量申明，因为在@synthesize中进行绑定时，我们就可以设置变量名字了，这样写的话可以让代码更加简洁。</p>
+<p style="text-align: justify;">在这里我们对着两个实例变量不需要property(外部成员不应当能访问到它们)，因此我们把申明移到.m里中。修改后的.h是这样的，十分简洁一看就懂～</p></p>
+
+<p><pre>#import 
+@interface MainViewController : UIViewController
+@property (nonatomic, retain) IBOutlet UITableView *tableView;  
+@property (nonatomic, retain) IBOutlet UISearchBar *searchBar; 
+@end</pre>
+<p style="text-align: justify;">然后.m的开头变成这样：</p></p>
+
+<p><pre>@implementation MainViewController 
+{ 
+    NSOperationQueue *queue;  
+    NSMutableString *currentStringValue;  
+}</pre>
+<p style="text-align: justify;">这样的写法让代码相当灵活，而且不得不承认.m确实是这些实例变量的应该在的地方…build一下，没问题..当然对于SoundEffect类也可以做相似的操作，这会让使用你的类的人很开心，因为.h越简单越好..P.S.另外一个好处可以减少.h里的引用，减少编译时间(虽然不明显=。=)</p>
+<p style="text-align: justify;">然后就可以在MainViewController里启用ARC了，方法很简单，删掉Build Phases里相关文件的-fno-objc-arc标记就可以了～然后..然后当然是一大堆错误啦。我们来手动一个个改吧，虽然谈不上乐趣，但是成功以后也会很有成就～(如果你不幸在启用ARC后build还是成功了，恭喜你遇到了Xcode的bug，请Cmd+Q然后重新打开Xcode把=_=)</p></p>
+
+<p><h4 style="text-align: justify;">dealloc</h4>
+<p style="text-align: justify;">红色最密集的地方是dealloc，因为每一行都是release。由于在这里dealloc并没有做除了release和super dealloc之外的任何事情，因此简单地把整个方法删掉就好了。当然，在对象被销毁时，dealloc还是会被调用的，因此我们在需要对非ARC管理的内存进行管理和必要的逻辑操作的时候，还是应该保留dealloc的，当然这涉及到CF以及以下层的东西：比如对于retain的CF对象要CFRelease()，对于malloc()到堆上的东西要free()掉，对于添加的observer可以在这里remove，schedule的timer在这里invalidate等等～[super dealloc]这个消息也不再需要发了，ARC会自动帮你搞定。</p>
+<p style="text-align: justify;">另外，在MRC时代一个常做的事情是在dealloc里把指向自己的delegate设成nil(否则就等着EXC_BAD_ACCESS吧 :P)，而现在一般delegate都是weak的，因此在self被销毁后这个指针自动被置成nil了，你不用再为之担心，好棒啊..</p></p>
+
+<p><h4 style="text-align: justify;">去掉各种release和autorelease</h4>
+<p style="text-align: justify;">这个很直接，没有任何问题。去掉就行了～不再多说</p></p>
+
+<p><h4 style="text-align: justify;">讨论一下Property</h4>
+<p style="text-align: justify;">在MainViewController.m里的类扩展中定义了两个property：</p></p>
+
+<p><pre>@interface MainViewController ()
+@property (nonatomic, retain) NSMutableArray *searchResults;
+@property (nonatomic, retain) SoundEffect *soundEffect; 
+@end</pre>
+<p style="text-align: justify;">申明的类型是retain，关于retain,assign和copy的讨论已经烂大街了，在此不再讨论。在MRC的年代使用property可以帮助我们使用dot notation的时候简化对象的retain和copy，而在ARC时代，这就显得比较多余了。在我看来，使用property和点方法来调用setter和getter是不必要的。property只在将需要的数据在.h中暴露给其他类时才需要，而在本类中，只需要用实例变量就可以。因此我们可以移去searchResults和soundEffect的@property和@synthesize，并将起移到实例变量申明中：</p></p>
+
+<p><pre>@implementation MainViewController
+{ 
+    NSOperationQueue *queue; 
+    NSMutableString *currentStringValue;
+    NSMutableArray *searchResults;
+    SoundEffect *soundEffect; 
+}</pre>
+<p style="text-align: justify;">相应地，我们需要将对应的self.searchResult和self.soundEffect的self.都去去掉。在这里需要注意的是，虽然我们去掉了soundEffect的property和synthesize，但是我们依然有一个lazy loading的方法- (SoundEffect *)soundEffect，神奇之处在于(可能你以前也不知道)，点方法并不需要@property关键字的支持，虽然大部分时间是这么用的..(property只是对setter或者getter的申明，而点方法是对其的调用，在这个例子的实现中我们事实上实现了-soundEffect这个getter方法，所以点方法在等号右边的getter调用是没有问题的)。为了避免误解，建议把self.soundEffect的getter调用改写成[self soundEffect]。</p>
+<p style="text-align: justify;">然后我们看看.h里的property～里面有两个retain的IBOutlet。retain关键字在ARC中是依旧可用的，它在ARC中所扮演的角色和strong完全一样。为了避免迷惑，最好在需要的时候将其写为strong，那样更符合ARC的规则。对于这两个property，我们将其申明为weak(事实上，如果没有特别意外，除了最顶层的IBOutlet意外，自己写的outlet都应该是weak)。通过加载xib得到的用户界面，在其从xib文件加载时，就已经是view hierarchy的一部分了，而view hierarchy中的指向都是strong的。因此outlet所指向的UI对象不应当再被hold一次了。将这些outlet写为weak的最显而易见的好处是你就不用再viewDidUnload方法中再将这些outlet设为nil了(否则就算view被摧毁了，但是由于这些UI对象还在被outlet指针指向而无法释放，代码简洁了很多啊..)。</p>
+<p style="text-align: justify;">在我们的demo中将IBOutlet的property改为weak并且删掉viewDidUnload中关于这两个IBOutlet的内容～</p>
+<p style="text-align: justify;">总结一下新加入的property的关键字类型：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>strong 和原来的retain比较相似，strong的property将对应__strong的指针，它将持有所指向的对象</li>
+	<li>weak 不持有所指向的对象，而且当所指对象销毁时能将自己置为nil，基本所有的outlet都应该用weak</li>
+	<li>unsafe_unretained 这就是原来的assign。当需要支持iOS4时需要用到这个关键字</li>
+	<li>copy 和原来基本一样..copy一个对象并且为其创建一个strong指针</li>
+	<li>assign 对于对象来说应该永远不用assign了，实在需要的话应该用unsafe_unretained代替(基本找不到这种时候，大部分assign应该都被weak替代)。但是对于基本类型比如int,float,BOOL这样的东西，还是要用assign。</li>
+</ul>
+<p style="text-align: justify;">特别地，对于NSString对象，在MRC时代很多人喜欢用copy，而ARC时代一般喜欢用strong…(我也不懂为什么..求指教)</p></p>
+
+<p><h4 style="text-align: justify;">自由桥接的细节</h4>
+<p style="text-align: justify;">MainViewController现在剩下的问题都是桥接转换问题了～有关桥接的部分有三处：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>(NSString *)CFURLCreateStringByAddingPercentEscapes(…)：CFStringRef至NSString *</li>
+	<li>(CFStringRef)text：NSString *至CFStringRef</li>
+	<li>(CFStringRef)@“!<em>‘();:@&amp;=+$,/?%#[]&#8221;：NSString </em>至CFStringRef</li>
+</ul>
+<p style="text-align: justify;">编译器对前两个进行了报错，最后一个是常量转换不涉及内存管理。</p>
+<p style="text-align: justify;">关于toll-free bridged，如果不进行细究，NSString和CFStringRef是一样的东西，新建一个CFStringRef可以这么做：</p></p>
+
+<p><pre>CFStringRef s1 = [[NSString alloc] initWithFormat:@"Hello, %@!",name];</pre>
+<p style="text-align: justify;">然后，这里alloc了而s1是一个CF指针，要释放的话，需要这样：</p></p>
+
+<p><pre>CFRelease(s1);</pre>
+<p style="text-align: justify;">相似地可以用CFStringRef来转成一个NSString对象(MRC)：</p></p>
+
+<p><pre>CFStringRef s2 = CFStringCreateWithCString(kCFAllocatorDefault,bytes, kCFStringEncodingMacRoman); 
+NSString *s3 = (NSString *)s2; </pre></p>
+
+<p>// release the object when you&#8217;re done <br />
+[s3 release];
+<p style="text-align: justify;">在ARC中，编译器需要知道这些指针应该由谁来负责释放，如果把一个NSObject看做是CF对象的话，那么ARC就不再负责它的释放工作(记住ARC是only for NSObject的)。对于不需要改变持有者的对象，直接用简单的<strong>bridge就可以了，比如之前在SoundEffect.m做的转换。在这里对于(CFStringRef)text这个转换，ARC已经负责了text这个NSObject的内存管理，因此这里我们需要一个简单的</strong>bridge。而对于CFURLCreateStringByAddingPercentEscapes方法，方法中的create暗示了这个方法将形成一个新的对象，如果我们不需要NSString转换，那么为了避免内存的问题，我们需要使用CFRelease来释放它。而这里我们需要一个NSString，因此我们需要告诉编译器接手它的内存管理工作。这里我们使用<strong>bridge_transfer关键字，将内存管理权由CF object移交给NSObject(或者说ARC)。如果这里我们只用</strong>bridge的话，内存管理的负责人没有改变，那么这里就会出现一个内存泄露。另外有时候会看到CFBridgingRelease()，这其实就是transfer cast的内联写法..是一样的东西。总之，需要记住的原则是，当在涉及CF层的东西时，如果函数名中有含有Create, Copy, 或者Retain之一，就表示返回的对象的retainCount+1了，对于这样的对象，最安全的做法是将其放在CFBridgingRelease()里，来平衡retain和release。</p>
+<p style="text-align: justify;">还有一种bridge方式，__bridge_retained。顾名思义，这种转换将在转换时将retainCount加1。和CFBridgingRelease()相似，也有一个内联方法CFBridgingRetain()来负责和CFRelease()进行平衡。</p>
+<p style="text-align: justify;">需要注意的是，并非所有的CF对象都是自由桥接的，比如Core Graphics中的所有对象都不是自由桥接的(如CGImage和UIImage，CGColor和UIColor)。另外也不是只有自由桥接对象才能用bridge来桥接，一个很好的特例是void <em>(指向任意对象的指针，类似id)，对于void </em>和任意对象的转换，一般使用_bridge。(这在将ARC运用在Cocos2D中很有用)</p></p>
+
+<p><h4 style="text-align: justify;">终于搞定了</h4>
+<p style="text-align: justify;">至此整个工程都ARC了～对于AFHTTPRequestOperation这样的不支持ARC的第三方代码，我们的选择一般都是就不使用ARC了(或者等开源社区的大大们更新ARC适配版本)。可以预见，在近期会有越来越多的代码转向ARC，但是也一定会有大量的代码暂时或者永远保持MRC等个，所以对于这些代码就不用太纠结了～</p></p>
+
+<p><hr /></p>
+
+<p><h2 style="text-align: justify;">写在最后</h2>
+<p style="text-align: justify;">写了那么多，希望你现在能对ARC有个比较全面的了解和认识了。ARC肯定是以后的趋势，也确实能让代码量大大降低，减少了很多无意义的重复工作，还提高了app的稳定性。但是凡事还是纸上得来终觉浅，希望作为开发者的你，在下一个工程中去尝试用用ARC～相信你会和我一样，马上爱上这种make life easier的方式的～</p><!--:--><!--:en-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[水清木华]]></title>
+    <link href="http://blog.onevcat.com/blog/2012/05/16/tsinghua-photos/"/>
+    <updated>2012-05-16T00:00:00+09:00</updated>
+    <id>http://blog.onevcat.com/blog/2012/05/16/tsinghua-photos</id>
+    <content type="html"><![CDATA[<p><!--:zh-->七年时光，匆匆飞逝。入学之日还历历在目，离别之时却已悄然而来。我希望自己能挥一挥衣袖，不带走这里的一片云彩，但却留下自己青春的回忆。在这个偌大的园子里，有我的欢笑，有我的泪水，有我的努力。我相信所有清华学子在离别母校时，必定是依依不舍。但是，孩子总有离家之日，外面的舞台也必会更加精彩。</p>
+
+<p>[simpleviewer gallery_id=&#8221;4&#8221;]<!--:--><!--:en-->&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+</feed>

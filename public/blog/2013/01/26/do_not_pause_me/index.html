@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Unity3D中暂停时的动画及粒子效果实现 - OneV's Den</title>
+  <meta name="author" content="onevcat">
+
+  
+  <meta name="description" content="暂停是游戏中经常出现的功能，而Unity3D中对于暂停的处理并不是很理想。一般的做法是将Time.timeScale设置为0。Unity的文档中对于这种情况有以下描述； The scale at which the time is passing. This can be used for &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.onevcat.com/blog/2013/01/26/do_not_pause_me">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="OneV's Den" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">OneV's Den</a></h1>
+  
+    <h2>thinking and recording</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.onevcat.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Unity3D中暂停时的动画及粒子效果实现</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-26T00:00:00+09:00" pubdate data-updated="true">Jan 26<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><!--:zh--><h2 style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2013/01/big副本.png"><img class="aligncenter size-full wp-image-1087" title="unpause" src="http://www.onevcat.com/wp-content/uploads/2013/01/big副本.png" alt="" width="500" height="200" data-pinit="registered" /></a></h2>
+<p style="text-align: justify;">暂停是游戏中经常出现的功能，而Unity3D中对于暂停的处理并不是很理想。一般的做法是将Time.timeScale设置为0。Unity的文档中对于这种情况有以下描述；</p></p>
+
+<p><blockquote>The scale at which the time is passing. This can be used for slow motion effects….When timeScale is set to zero the game is basically paused …</blockquote>
+<p style="text-align: justify;">timeScale表示游戏中时间流逝快慢的尺度。文档中明确表示，这个参数是用来做慢动作效果的。对于将timeScale设置为0的情况，仅只有一个补充说明。在实际使用中，通过设置timeScale来实现慢动作特效，是一种相当简洁且不带任何毒副作用的方法，但是当将timeScale设置为0来实现暂停时，<strong>由于时间不再流逝，所有和时间有关的功能痘将停止</strong>，有些时候这正是我们想要的，因为毕竟是暂停。但是副作用也随之而来，在暂停时各种动画和粒子效果都将无法播放（因为是时间相关的），FixedUpdate也将不再被调用。</p>
+<p style="text-align: justify;"><strong>换句话说，最大的影响是，在timeScale＝0的暂停情况下，你将无法实现暂停菜单的动画以及各种漂亮的点击效果。</strong></p>
+<p style="text-align: justify;">但是并非真的没办法，关于timeScale的文档下就有提示：</p></p>
+
+<p><blockquote>Except for realtimeSinceStartup, timeScale affects all the time and delta time measuring variables of the Time class.</blockquote>
+<p style="text-align: justify;">因为realtimeSinceStartup和timeScale无关，因此也就成了解决在暂停下的动画和粒子效果的救命稻草。对于Unity动画，在每一帧，根据实际时间寻找相应帧并采样显示的方法来模拟动画：</p></p>
+
+<p><pre class="lang:c# mark:19-21 decode:true" title="暂停时采样的核心代码">AnimationState _currState = animation[clipName];
+bool isPlaying = true;</pre></p>
+
+<p>float _progressTime = 0F;<br />
+float _timeAtLastFrame = 0F;<br />
+float _timeAtCurrentFrame = 0F;<br />
+bool _inReversePlaying = false;</p>
+
+<p>float _deltaTime = 0F;<br />
+animation.Play(clipName);<br />
+_timeAtLastFrame = Time.realtimeSinceStartup;</p>
+
+<p>while (isPlaying) {<br />
+    _timeAtCurrentFrame = Time.realtimeSinceStartup;<br />
+    _deltaTime = _timeAtCurrentFrame - _timeAtLastFrame;<br />
+    _timeAtLastFrame = _timeAtCurrentFrame; </p>
+
+<p>    _progressTime += _deltaTime;</p>
+
+<p>    _currState.normalizedTime = _inReversePlaying ? 1.0f - (_progressTime / _currState.length) : _progressTime / _currState.length; <br />
+    animation.Sample();</p>
+
+<p>    //&#8230;repeat or over by wrap mode <br />
+}
+<p style="text-align: justify;">对于粒子效果，同样进行计时，并通过粒子系统的Simulate方法来模拟对应时间的粒子状态来完成效果，比如对于Legacy粒子，使Emitter在timeScale＝0暂停时继续有效发射并显示效果：</p></p>
+
+<p><pre class="lang:c# mark:4-5 decode:true">_deltaTime = Time.realtimeSinceStartup - _timeAtLastFrame;
+_timeAtLastFrame = Time.realtimeSinceStartup;
+if (Time.timeScale == 0 ){
+	_emitter.Simulate(_deltaTime);
+	_emitter.emit = true;
+}</pre>
+<p style="text-align: justify;">核心的代码基本都在上面了，可以根据这个思路完成实现。<a href="https://github.com/onevcat/UnpauseMe">完整的代码和示例工程</a>我放到了github上，有需要的朋友可以去查看，也欢迎大家指正。</p><!--:--><!--:en-->&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p><!--:--></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">onevcat</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-26T00:00:00+09:00" pubdate data-updated="true">Jan 26<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.onevcat.com/blog/2013/01/26/do_not_pause_me/" data-via="" data-counturl="http://blog.onevcat.com/blog/2013/01/26/do_not_pause_me/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/12/18/xuporter/" title="Previous Post: Unity编译至Xcode工程后自动添加文件和库的方法">&laquo; Unity编译至Xcode工程后自动添加文件和库的方法</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/02/02/xcode-plugin/" title="Next Post: Xcode 4 插件制作入门">Xcode 4 插件制作入门 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/03/30/zombie-ninjas-attack-a-survivors-retrospective/">Zombie Ninjas Attack: A survivor's retrospective</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/24/mgtwitterengine%E4%B8%ADtwitter-api-1-1%E7%9A%84%E4%BD%BF%E7%94%A8/">MGTwitterEngine中Twitter API 1.1的使用</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/xcode-plugin/">Xcode 4 插件制作入门</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/26/do_not_pause_me/">Unity3D中暂停时的动画及粒子效果实现</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/18/xuporter/">Unity编译至Xcode工程后自动添加文件和库的方法</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - onevcat -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

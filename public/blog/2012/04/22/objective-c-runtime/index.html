@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>深入Objective-C的动态特性 - OneV's Den</title>
+  <meta name="author" content="onevcat">
+
+  
+  <meta name="description" content="Objective-C具有相当多的动态特性，基本的，也是经常被提到和用到的有动态类型（Dynamic typing），动态绑定（Dynamic binding）和动态加载（Dynamic loading）。 这些动态特性都是在Cocoa程序开发时非常常用的语言特性，而在这之后， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.onevcat.com/blog/2012/04/22/objective-c-runtime">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="OneV's Den" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">OneV's Den</a></h1>
+  
+    <h2>thinking and recording</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.onevcat.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">深入Objective-C的动态特性</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-22T00:00:00+09:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2012/04/1295091_135049048284_2.jpg"><img class="aligncenter size-full wp-image-736" title="1295091_135049048284_2" src="http://www.onevcat.com/wp-content/uploads/2012/04/1295091_135049048284_2.jpg" alt="" width="1024" height="256" data-pinit="registered" /></a></p>
+
+<p>Objective-C具有相当多的动态特性，基本的，也是经常被提到和用到的有动态类型（Dynamic typing），动态绑定（Dynamic binding）和动态加载（Dynamic loading）。</p>
+
+<p>这些动态特性都是在Cocoa程序开发时非常常用的语言特性，而在这之后，OC在底层也提供了相当丰富的运行时的特性，比如枚举类属性方法、获取方法实现等等。虽然在平常的Cocoa开发中这些较底层的运行特性基本用不着，但是在某些情况下如果你知道这些特性并合理加以运用的话，往往能事半功倍～
+<h3>动态特性基础</h3>
+<h4>1、动态类型</h4>
+即运行时再决定对象的类型。这类动态特性在日常应用中非常常见，简单说就是id类型。id类型即通用的对象类，任何对象都可以被id指针所指，而在实际使用中，往往使用introspection来确定该对象的实际所属类：</p>
+
+<p><!--:--><!--more--><!--:zh-->
+<pre class="lang:objc decode:true ">id obj = someInstance;
+if ([obj isKindOfClass:someClass])
+{
+    someClass *classSpecifiedInstance = (someClass *)obj;
+    // Do Something to classSpecifiedInstance which now is an instance of someClass
+    //...
+}</pre>
+&nbsp;</p>
+
+<p>-isKindOfClass:是NSObject的方法，用意确定某个NSObject对象是否是某个类的成员。与之相似的为-isMemberOfClass:，可以用以确定某个对象是否是某个类或其子类的成员。这两个方法为典型的introspection方法。在确定对象为某类成员后，可以安全地进行强制转换，继续之后的工作。
+<h4>2、动态绑定</h4>
+基于动态类型，在某个实例对象被确定后，其类型便被确定了。该对象对应的属性和响应的消息也被完全确定，这就是动态绑定。在继续之前，需要明确Objective-C中消息的概念。由于OC的动态特性，在OC中其实很少提及“函数”的概念，传统的函数一般在编译时就已经把参数信息和函数实现打包到编译后的源码中了，而在OC中最常使用的是消息机制。调用一个实例的方法，所做的是向该实例的指针发送消息，实例在收到消息后，从自身的实现中寻找响应这条消息的方法。</p>
+
+<p>动态绑定所做的，即是在实例所属类确定后，将某些属性和相应的方法绑定到实例上。这里所指的属性和方法当然包括了原来没有在类中实现的，而是在运行时才需要的新加入的实现。在Cocoa层，我们一般向一个NSObject对象发送-respondsToSelector:或者-instancesRespondToSelector:等来确定对象是否可以对某个SEL做出响应，而在OC消息转发机制被触发之前，对应的类的+resolveClassMethod:和+resolveInstanceMethod:将会被调用，在此时有机会动态地向类或者实例添加新的方法，也即类的实现是可以动态绑定的。一个例子：
+<pre class="lang:objc decode:true ">void dynamicMethodIMP(id self, SEL _cmd)
+{
+    // implementation ....
+}</pre></p>
+
+<p>//该方法在OC消息转发生效前被调用<br />
++ (BOOL) resolveInstanceMethod:(SEL)aSEL<br />
+{
+    if (aSEL == @selector(resolveThisMethodDynamically))<br />
+    {<br />
+          //向[self class]中新加入返回为void的实现，SEL名字为aSEL，实现的具体内容为dynamicMethodIMP<br />
+          class_addMethod([self class], aSEL, (IMP) dynamicMethodIMP, &#8220;v@:&#8221;);<br />
+          return YES;<br />
+    }<br />
+    return [super resolveInstanceMethod:aSel];<br />
+}
+&nbsp;</p>
+
+<p>当然也可以在任意需要的地方调用class_addMethod或者method_setImplementation（前者添加实现，后者替换实现），来完成动态绑定的需求。
+<h4>3、动态加载</h4>
+根据需求加载所需要的资源，这点很容易理解，对于iOS开发来说，基本就是根据不同的机型做适配。最经典的例子就是在Retina设备上加载@2x的图片，而在老一些的普通屏设备上加载原图。随着Retina iPad的推出，和之后可能的Retina Mac的出现，这个特性相信会被越来越多地使用。</p>
+
+<p><hr /></p>
+
+<p><h3>深入运行时特性</h3>
+基本的动态特性在常规的Cocoa开发中非常常用，特别是动态类型和动态绑定。由于Cocoa程序大量地使用Protocol-Delegate的设计模式，因此绝大部分的delegate指针类型必须是id，以满足运行时delegate的动态替换（在Java里这个设计模式被叫做Strategy？不是很懂Java，求纠正）。而Objective-C还有一些高级或者说更底层的运行时特性，在一般的Cocoa开发中较为少见，基本被运用与编写OC和其他语言的接口上。但是如果有所了解并使用得当的话，在Cocoa开发中往往可以轻易解决一些棘手问题。</p>
+
+<p>这类运行时特性大多由/usr/lib/libobjc.A.dylib这个动态库提供，里面包括了对于类、实例成员、成员方法和消息发送的很多API，包括获取类实例变量列表，替换类中的方法，为类成员添加变量，动态改变方法实现等，十分强大。完整的API列表和手册可以在<a href="http://developer.apple.com/library/mac/#documentation/Cocoa/Reference/ObjCRuntimeRef/Reference/reference.html">这里</a>找到。虽然文档开头表明是对于Mac OS X Objective-C 2.0适用，但是由于这些是OC的底层方法，因此对于iOS开发来说也是完全相同的。</p>
+
+<p>一个简单的例子，比如在开发Universal应用或者游戏时，如果使用IB构建了大量的自定义的UI，那么在由iPhone版转向iPad版的过程中所面临的一个重要问题就是如何从不同的nib中加载界面。在iOS5之前，所有的UIViewController在使用默认的界面加载时(init或者initWithNibName:bundle:)，都会走-loadNibNamed:owner:options:。而因为我们无法拿到-loadNibNamed:owner:options的实现，因此对其重载是比较困难而且存在风险的。因此在做iPad版本的nib时，一个简单的办法是将所有的nib的命名方式统一，然后使用自己实现的新的类似-loadNibNamed:owner:options的方法将原方法替换掉，同时保证非iPad的设备还走原来的loadNibNamed:owner:options方法。使用OC运行时特性可以较简单地完成这一任务。</p>
+
+<p>代码如下，在程序运行时调用+swizze，交换自己实现的loadPadNibNamed:owner:options和系统的loadNibNamed:owner:options，之后所有的loadNibNamed:owner:options消息都将会发为loadPadNibNamed:owner:options，由自己的代码进行处理。
+<pre class="lang:objc decode:true ">+(BOOL)swizze {
+    Method oldMethod = class_getInstanceMethod(self, @selector(loadNibNamed:owner:options:));
+    if (!oldMethod) {
+        return NO;
+    }</pre></p>
+
+<p>    Method newMethod = class_getInstanceMethod(self, @selector(loadPadNibNamed:owner:options:));<br />
+    if (!newMethod) {<br />
+        return NO;<br />
+    }</p>
+
+<p>    method_exchangeImplementations(oldMethod, newMethod);<br />
+    return YES;<br />
+}
+&nbsp;</p>
+
+<p>loadPadNibNamed:owner:options的实现如下，注意在其中的loadPadNibNamed:owner:options由于之前已经进行了交换，因此实际会发送为系统的loadNibNamed:owner:options。以此完成了对不同资源的加载。
+<pre class="lang:objc decode:true ">-(NSArray *)loadPadNibNamed:(NSString *)name owner:(id)owner options:(NSDictionary *)options {
+    NSString *newName = [name stringByReplacingOccurrencesOfString:@"@pad" withString:@""];
+    newName = [newName stringByAppendingFormat:@"@pad"];</pre></p>
+
+<p>    //判断是否存在<br />
+    NSFileManager *fm = [NSFileManager defaultManager];<br />
+    NSString* filepath = [[NSBundle mainBundle] pathForResource:newName ofType:@&#8221;nib&#8221;];</p>
+
+<p>    //这里调用的loadPadNibNamed:owner:options:实际为为交换后的方法，即loadNibNamed:owner:options:<br />
+    if ([fm fileExistsAtPath:filepath]) {<br />
+        return [self loadPadNibNamed:newName owner:owner options:options];<br />
+    } else {<br />
+        return [self loadPadNibNamed:name owner:owner options:options]; <br />
+    }<br />
+}
+&nbsp;</p>
+
+<p>当然这只是一个简单的例子，而且这个功能也可以通过别的方法来实现。比如添加UIViewController的类别来重载init，但是这样的重载会比较危险，因为你UIViewController的实现你无法完全知道，因此可能会由于重载导致某些本来应有的init代码没有覆盖，从而出现不可预测的错误。当然在上面这个例子中重载VC的init的话没有什么问题(因为对于VC，init的方法会被自动转发为loadNibNamed:owner:options，因此init方法并没有做其他更复杂的事情，因此只要初始化VC时使用的都是init的话就没有问题)。但是并不能保证这样的重载对于其他类也是可行的。因此对于实现未知的系统方法，使用上面的运行时交换方法会是一个不错的选择～<!--:--><!--:en-->&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p><!--:--></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">onevcat</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-22T00:00:00+09:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.onevcat.com/blog/2012/04/22/objective-c-runtime/" data-via="" data-counturl="http://blog.onevcat.com/blog/2012/04/22/objective-c-runtime/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/04/04/spring-in-thu/" title="Previous Post: 难得的假期">&laquo; 难得的假期</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/05/10/tools-for-color-picking/" title="Next Post: 颜色选取和转换小工具">颜色选取和转换小工具 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/03/30/zombie-ninjas-attack-a-survivors-retrospective/">Zombie Ninjas Attack: A survivor's retrospective</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/24/mgtwitterengine%E4%B8%ADtwitter-api-1-1%E7%9A%84%E4%BD%BF%E7%94%A8/">MGTwitterEngine中Twitter API 1.1的使用</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/xcode-plugin/">Xcode 4 插件制作入门</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/26/do_not_pause_me/">Unity3D中暂停时的动画及粒子效果实现</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/18/xuporter/">Unity编译至Xcode工程后自动添加文件和库的方法</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - onevcat -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

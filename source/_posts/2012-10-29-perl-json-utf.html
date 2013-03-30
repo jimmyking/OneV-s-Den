@@ -1,0 +1,39 @@
+---
+layout: post
+title: Perl中JSON的解析和utf-8乱码的解决
+categories: []
+tags: []
+published: true
+comments: true
+---
+<p><!--:zh--><p style="text-align: justify;">最近在做一个带有网络通讯和同步功能的app，需要自己写一些后台的东西。因为是半路入门，所以从事开发以来就没有做过后台相关的工作，属于绝对的小白菜鸟。而因为公司在入职前给新员工提过学习Perl的要求，所以还算是稍微看过一些。这次的后台也直接就用Perl来写了。</p></p>
+
+<p><h3 style="text-align: justify;">基本使用</h3>
+<p style="text-align: justify;">和app的通讯，很大程度上依赖了JSON，一来是熟悉，二来是iOS现在解析JSON也十分方便。iOS客户端的话JSON的解析和生成都是没什么问题的：iOS5中加入了<a href="http://developer.apple.com/library/ios/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html">NSJSONSerialization</a>类来提供相关功能，如果希望支持更早的系统版本的话，相关的开源代码也有很多，也简单易用，比如<a href="http://stig.github.com/json-framework/">SBJson</a>或者<a href="https://github.com/johnezang/JSONKit">JSONKit</a>。同样，在Perl里也有不少类似的JSON处理的模块，最有名最早的应该是<a href="http://search.cpan.org/~makamaka/JSON-2.53/lib/JSON.pm">JSON</a>模块了，同时也简单易用，应该可以满足大部分情况下的需求了。</p>
+<p style="text-align: justify;"><!--:--><!--more--><!--:zh--></p>
+<p style="text-align: justify;">使用也很简单，安装完模块后，use之后使用encode_json命令即可将perl的array或者dic转换为标准的JSON字符串了：</p>
+<p style="text-align: justify;">[gist id=3970516 file=Perl_JSON_encode.pl]</p>
+<p style="text-align: justify;">得到的字符串为</p></p>
+
+<p><blockquote>[{"name":"Ken","age":19},{"name":"Ken","age":25}]</blockquote>
+<p style="text-align: justify;">相对应地，解析也很容易</p>
+<p style="text-align: justify;">[gist id=3970516 file=Perl_JSON_decode.pl]</p></p>
+
+<p><div style="text-align: justify;">得到的$array是含有两个字典的数组的ref。</div>
+<div style="text-align: justify;"></div>
+<div style="text-align: justify;"></div>
+<h3 style="text-align: justify;">UTF-8乱码解决</h3>
+<p style="text-align: justify;">在数据中含有UTF-8字符的时候需要稍微注意，如果直接按照上面的方法将会出现乱码。JSON模块的encode_json和decode_json自身是支持UTF8编码的，但是perl为了简洁高效，默认是认为程序是非UTF8的，因此在程序开头处需要申明需要UTF8支持。另外，如果需要用到JSON编码的功能（即encode_json）的话，还需要加入Encode模块的支持。总之，在程序开始处加入以下：</p>
+<p style="text-align: justify;">[gist id=3970516 file=header.pl]</p>
+<p style="text-align: justify;">另外，如果使用非UTF8进行编码的内容的话，最好先使用Encode的from_to命令转换成UTF8，之后再进行JSON编码。比如使用GBK编码的简体字（一般来自比较早的Windows的文件等会偶尔变成非UTF8编码），先进性如下转换：</p>
+<p style="text-align: justify;">[crayon lang="perl" url = "https://gist.github.com/raw/3970516/47d582812cc8ad9658b7287c88ededaa07a22c76/from_to.pl" /]</p></p>
+
+<p><div style="text-align: justify;">其他的，如果追求更高的JSON转换性能的话，可以试试看<a href="http://search.cpan.org/~mlehmann/JSON-XS-2.33/XS.pm">JSON::XS</a>之类的附加模块～</div><!--:--><!--:en-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--></p>
