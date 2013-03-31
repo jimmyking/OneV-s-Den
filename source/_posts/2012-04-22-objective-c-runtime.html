@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 深入Objective-C的动态特性
-categories: []
+categories: [能工巧匠集]
 tags: []
 published: true
 comments: true
@@ -96,8 +96,5 @@ if ([obj isKindOfClass:someClass])
 }
 &nbsp;</p>
 
-<p>当然这只是一个简单的例子，而且这个功能也可以通过别的方法来实现。比如添加UIViewController的类别来重载init，但是这样的重载会比较危险，因为你UIViewController的实现你无法完全知道，因此可能会由于重载导致某些本来应有的init代码没有覆盖，从而出现不可预测的错误。当然在上面这个例子中重载VC的init的话没有什么问题(因为对于VC，init的方法会被自动转发为loadNibNamed:owner:options，因此init方法并没有做其他更复杂的事情，因此只要初始化VC时使用的都是init的话就没有问题)。但是并不能保证这样的重载对于其他类也是可行的。因此对于实现未知的系统方法，使用上面的运行时交换方法会是一个不错的选择～<!--:--><!--:en-->&nbsp;</p>
+<p>当然这只是一个简单的例子，而且这个功能也可以通过别的方法来实现。比如添加UIViewController的类别来重载init，但是这样的重载会比较危险，因为你UIViewController的实现你无法完全知道，因此可能会由于重载导致某些本来应有的init代码没有覆盖，从而出现不可预测的错误。当然在上面这个例子中重载VC的init的话没有什么问题(因为对于VC，init的方法会被自动转发为loadNibNamed:owner:options，因此init方法并没有做其他更复杂的事情，因此只要初始化VC时使用的都是init的话就没有问题)。但是并不能保证这样的重载对于其他类也是可行的。因此对于实现未知的系统方法，使用上面的运行时交换方法会是一个不错的选择～</p>
 
-<p><!--:--><!--:ja-->&nbsp;</p>
-
-<p><!--:--></p>

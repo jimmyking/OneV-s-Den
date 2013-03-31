@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 能工巧匠集 | OneV's Den]]></title>
+  <link href="http://onevcat.com/category/neng-gong-qiao-jiang-ji/atom.xml" rel="self"/>
+  <link href="http://onevcat.com/"/>
+  <updated>2013-03-31T22:17:34+09:00</updated>
+  <id>http://onevcat.com/</id>
+  <author>
+    <name><![CDATA[onevcat]]></name>
+    <email><![CDATA[onev@onevcat.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MGTwitterEngine中Twitter API 1.1的使用]]></title>
+    <link href="http://onevcat.com/2013/03/mgtwitterengine%E4%B8%ADtwitter-api-1-1%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <updated>2013-03-24T00:00:00+09:00</updated>
+    <id>http://onevcat.com/2013/03/mgtwitterengine中twitter-api-1-1的使用</id>
+    <content type="html"><![CDATA[<p>在iOS5中使用Twitter framework或者在iOS6中使用Social framework来完成Twitter的集成是非常简单和轻松的，但是如果应用要针对iOS5之前的系统版本，那么就不能使用iOS提供的框架了。一个比较常见也是使用最广泛的选择是<a href="https://github.com/mattgemmell/MGTwitterEngine">MGTwitterEngine</a>，比如<a href="http://www.onevcat.com/showcase/pomodoro_do/">PomodoroDo</a>选择使用的就是该框架。</p>
+
+<p>但是今天在对PomodoroDo作更新的时候，发现Twitter的分享无法使用了，在查阅Twitter文档说明之后，发现这是Twitter采用了新版API的原因。默认状况下MGTwitterEngine采用的是v1版的API，并且使用XML的版本进行请求，而在1.1中，将<a href="https://dev.twitter.com/docs/api/1.1/overview#JSON_support_only">只有JSON方式的API可以使用</a>。v1.0版本的API已经于2013年3月5日被完全废弃，因此想要继续使用MGTwitterEngine来适配iOS5之前的Twitter集成需求，就需要将MGTwitterEngine的请求改为JSON方式。MGTwitterEngine也考虑到了这一点，但是因为时间比较古老了，MGTwitterEngine使用了YAJL来作为JSON的Wrapper，因此还需要将YAJL集成进来。下午的时候尝试了一会儿，成功地让MGTwitterEngine用上了1.1的Twitter API，为了以防之后别人或是自己可能遇到同样的问题，将更新的方法在此留底备忘。</p>
+
+<ol>
+<li><p>导入YAJL Framework</p>
+
+<ul>
+<li>YAJL的OC实现，从如下地址下载该框架: <a href="https://github.com/gabriel/yajl-objc/download">https://github.com/gabriel/yajl-objc/download</a>s (2013年3月24日的最新版本为YAJL 0.3.1 for iOS)</li>
+<li>解压下载得到的zip，将解压后的YAJLiOS.framework加入项目工程</li>
+<li>在Xcode的Build Setting里在Other Linker Flags中添加-ObjC和-all_load标记</li>
+</ul>
+</li>
+<li><p>加入MGTwitterEngine的JSON相关代码</p>
+
+<ul>
+<li>从MGTwitterEngine的页面down下该项目: <a href="https://github.com/mattgemmell/MGTwitterEngine">https://github.com/mattgemmell/MGTwitterEngine</a>。当然如果有新版或者有别的branch可以用的话更省事儿，但是鉴于MGTwitterEngine现在的活跃度来说估计可能性不大，所以还是乖乖自己更新吧。</li>
+<li>解开下载的zip，用Xcode打开MGTwitterEngine.xcodeproj工程文件，将其中Twitter YAJL Parsers组下的所有文件copy到自己的项目中。</li>
+</ul>
+</li>
+<li><p>YAJL头文件集成</p>
+
+<ul>
+<li>接下来是C和OC接口头文件的导入，从下面下载YAJL库：<a href="https://github.com/thinglabs/yajl-objc">https://github.com/thinglabs/yajl-objc</a></li>
+<li>在下载得到的文件夹中，寻找并将以下h文件拷贝到自己的工程中：
+
+<ul>
+<li>yajl_common.h</li>
+<li>yajl_gen.h</li>
+<li>yajl_parse.h</li>
+<li>NSObject+YAJL.h</li>
+<li>YAJL.h</li>
+<li>YAJLDocument.h</li>
+<li>YAJLGen.h</li>
+<li>YAJLParser.h</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>最后是在MGTwitterEngine设定为使用v1.1 API以及JSON方式请求</p></li>
+</ol>
+
+
+<p>在MGTwitterEngine.m中，将对应代码修改为以下：</p>
+
+<p>```objc</p>
+
+<h1>define USE_LIBXML 0</h1>
+
+<h1>define TWITTER_DOMAIN @"api.twitter.com/1.1"</h1>
+
+<p>```</p>
+
+<p>在MGbTwitader.h，启用YAJL</p>
+
+<p>```objc</p>
+
+<h1>define define YAJL_AVAILABLE 1</h1>
+
+<p>```</p>
+
+<p>本文参考：</p>
+
+<p><a href="https://github.com/mattgemmell/MGTwitterEngine/issues/107">https://github.com/mattgemmell/MGTwitterEngine/issues/107</a>
+<a href="http://damienh.org/2009/06/20/setting-up-mgtwitterengine-with-yajl-106-for-iphone-development/">http://damienh.org/2009/06/20/setting-up-mgtwitterengine-with-yajl-106-for-iphone-development/</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Xcode 4 插件制作入门]]></title>
+    <link href="http://onevcat.com/2013/02/xcode-plugin/"/>
+    <updated>2013-02-02T00:00:00+09:00</updated>
+    <id>http://onevcat.com/2013/02/xcode-plugin</id>
+    <content type="html"><![CDATA[<p>{% img http://www.onevcat.com/wp-content/uploads/2013/02/QQ20130202-15.png %}</p>
+
+<p>本文欢迎转载，但烦请保留此行出处信息：<a href="http://www.onevcat.com/2013/02/xcode-plugin/">http://www.onevcat.com/2013/02/xcode-plugin/</a></p>
+
+<p>本文将介绍创建一个Xcode4插件所需要的基本步骤以及一些常用的方法。请注意为Xcode创建插件并没有任何的官方支持，因此本文所描述的方法和提供的信息可能会随Apple在Xcode上做的变化而失效。另外，由于创建插件会使用到私有API，因此Xcode插件也不可能被提交到Mac App Store上进行出售。</p>
+
+<p>本文内容是基于Xcode 4.6（4H127）完成的，但是应该可以适用于任意的Xcode 4.X版本。VVPlugInDemo的工程文件我放到了github上，有需要的话您可以从<a href="https://github.com/onevcat/VVPluginDemo">这里下载</a>并作为参考和起始来使用。</p>
+
+<h2>综述</h2>
+
+<p>Xcode本身作为一个IDE来说已经可以算上优秀，但是依然会有很多缺失的功能，另外在开发中针对自己的开发需求，创建一些便利的IDE插件，必定将大为加快开发速度。由于苹果官方并不对Xcode插件提供任何技术和文档支持，因此对于大部分开发者来说可能难于上手。虽然没有官方支持，但是在Xcode中开发并使用插件是可能的，并且也是被默许的。在Xcode启动的时候，Xcode将会寻找位于~/Library/Application Support/Developer/Shared/Xcode/Plug-ins文件夹中的后缀名为.xcplugin的bundle作为插件进行加载（运行其中的可执行文件），这就可以令我们光明正大合法合理地将我们的代码注入（虽然这个词有点不好听）Xcode，并得到运行。因此，想要创建Xcode插件，<strong>我们需要创建Bundle工程并将编译的bundle放到上面所说的插件目录中去</strong>，这就是Xcode插件的原理。</p>
+
+<p>需要特别说明的是，因为Xcode会在启动时加载你的插件，这样就相当于你的代码有机会注入Xcode。只要你的插件加载成功，那么它将和Xcode共用一个进程，也就是说当你的代码crash的时候，Xcode也会随之crash。同样的情况也可能在Xcode版本更新的时候，由于兼容性问题而出现（因为插件可能使用私有API，Apple没有义务去维护这些API的可用性）。在出现这种情况的时候，可以直接删除插件目录下的导致问题的xcplugin文件即可。</p>
+
+<!--more-->
+
+
+<h2>你的第一个插件</h2>
+
+<p>我将通过制作一个简单的demo插件来说明一般Xcode插件的编写方法，这个插件将在Xcode的Edit菜单中加入一个叫做“What is selected”的项目，当你点击这个菜单命令的时候，将弹出一个警告框，提示你现在在编辑器中所选中的内容。我相信这个例子能包含绝大部分在插件创建中所必须的步骤和一些有用的方法。由于我自己也只是个半吊子开发者，水平十分有限，因此错误和不当之处还恳请大家轻喷多原谅，并帮助我改正。那么开始..</p>
+
+<h3>创建Bundle工程</h3>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-1.png" alt="image" /> 创建工程，OSX，Framework &amp; Library，选择Bundle，点击Next。</p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-2.png" alt="image" /></p>
+
+<p>在Project信息页面中，填入插件名字，在这个例子里，就叫做DemoPlugin，Framework使用默认的Cocoa就行。另外一定记住将Use Automatic Reference Counting前的勾去掉，由于插件只能使用GC来进行内存管理，因此不需要使用ARC。</p>
+
+<h3>工程设置</h3>
+
+<p>插件工程有别于一般工程，需要进行一些特别的设置，以确保能正确编译插件bundle。</p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-3.png" alt="image" /></p>
+
+<p>首先，在编辑工程的Info.plist文件（直接编辑plist文件或者是修改TARGETS下对应target的Info都行），加入以下三个布尔值：</p>
+
+<p><code>
+XCGCReady = YES
+XCPluginHasUI = NO
+XC4Compatible = YES
+</code></p>
+
+<p>这将告诉编译器工程已经使用了GC，没有另外的UI并且是Xcode4适配的，否则你的插件将不会被加载。接下来，对Bundle Setting进行一些设置：</p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-4.png" alt="image" /></p>
+
+<ul>
+<li><p>Installation Build Products Location 设置为 ${HOME}</p>
+
+<ul>
+<li>Product的根目录</li>
+</ul>
+</li>
+<li><p>Installation Directory 设置为</p>
+
+<ul>
+<li>/Library/Application Support/Developer/Shared/Xcode/Plug-ins</li>
+<li>这里指定了插件安装的位置，这样build之后就会将插件直接扔到Plug-ins的目录了。当然不嫌麻烦的话也可以每次自己复制粘贴过去。注意这里不是绝对路径，而是基于上面的${HOME}的路径。</li>
+</ul>
+</li>
+<li><p>Deployment Location 设置为 YES</p>
+
+<ul>
+<li>告诉Xcode不要用设置里的build location，而是用Installation Directory来确定build后放哪儿</li>
+</ul>
+</li>
+<li><p>Wrapper extension 设置为 xcplugin</p>
+
+<ul>
+<li>把产品后缀名改为xcplugin，否则Xcode不会加载插件</li>
+</ul>
+</li>
+</ul>
+
+
+<p>如一开始说的那样，Xcode会在每次启动的时候搜索插件目录并进行加载，做如上设置的目的是每次build之后你只需要重新启动Xcode就能看到重新编译后的插件的效果，而避免了自己再去寻找Product然后copy&amp;paste的步骤。<br/>
+另外，还需要自己在User-Defined里添加一个键值对：</p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-5.png" alt="image" /></p>
+
+<ul>
+<li>GCC_ENABLE_OBJC_GC 设置为 supported</li>
+</ul>
+
+
+<p>至此所有配置工作完成，接下来终于可以开始实现插件了～</p>
+
+<h3>Hello World</h3>
+
+<p>新建一个类，取名叫做VVPluginDemo（当然只要不重，随便什么名字都是可以的），继承自NSObject（做iOS开发的童鞋请不要忘记现在是写Xcode插件，您需要通过OS X的Cocoa里的Objective-C class模版，而不要用Cocoa Touch的模版..）。打开VVPluginDemo.m，加入以下代码：</p>
+
+<p>```objc
++(void)pluginDidLoad:(NSBundle *)plugin {</p>
+
+<pre><code>NSLog(@"Hello World"); 
+</code></pre>
+
+<p>}
+```</p>
+
+<p>Build（对于OS X 10.8的SDK可能会有提示GC已经废弃的警告，不用管，Xcode本身是GC的，ARC的插件是无法load的），打开控制台（Control+空格 输入console），重新启动Xcode。应该能控制台中看到我们的插件的输出：</p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-6.png" alt="image" /></p>
+
+<p>太好了。有句话叫做，写出一个Hello World，就说明你已经掌握了一半…那么，剩下的一半内容，将对开发插件时可能面临的问题和一些常用的手段进行介绍。</p>
+
+<h3>创建插件单例，监听事件</h3>
+
+<p>继续我们的插件，还记得我们的目的么？在Xcode的Edit菜单中加入一个叫做“What is selected”的项目，当你点击这个菜单命令的时候，将弹出一个警告框，提示你现在在编辑器中所选中的内容。一般来说，我们希望插件能够在整个Xcode的生命周期中都存在（不要忘记其实用来写Cocoa的Xcode本身也是一个Cocoa程序）。最好的办法就是在+pluginDidLoad:中初始化单例，如下：</p>
+
+<p>```objc
++ (void) pluginDidLoad: (NSBundle*) plugin {</p>
+
+<pre><code>[self shared]; 
+</code></pre>
+
+<p>}</p>
+
+<p>+(id) shared {</p>
+
+<pre><code>static dispatch_once_t once;   
+static id instance = nil;   
+dispatch_once(&amp;once, ^{   
+    instance = [[self alloc] init];   
+});   
+return instance;   
+</code></pre>
+
+<p>}
+```</p>
+
+<p>这样，以后我们在别的类中，就可以简单地通过[VVPluginDemo shared]来访问到插件的实例了。</p>
+
+<p>在init中，加入一个程序启动完成的事件监听，并在程序完成启动后，在菜单栏的Edit中添加我们所需要的菜单项，这个操作最好是在Xcode完全启动以后再进行，以避免一些潜在的危险和冲突。另外，由于想要在按下按钮时显示编辑器中显示的内容，我们可能需要监听NSTextViewDidChangeSelectionNotification事件（WTF，你为什么会知道要监听什么。别着急，后面会再说，先做demo先做demo）</p>
+
+<p>```objc
+- (id)init {</p>
+
+<pre><code>if (self = [super init]) { 
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+            selector:@selector(applicationDidFinishLaunching:) 
+                name:NSApplicationDidFinishLaunchingNotification 
+              object:nil]; 
+} 
+return self; 
+</code></pre>
+
+<p>}</p>
+
+<ul>
+<li>(void) applicationDidFinishLaunching: (NSNotification*) noti { <br/>
+  [[NSNotificationCenter defaultCenter] addObserver:self
+
+<pre><code>      selector:@selector(selectionDidChange:)   
+          name:NSTextViewDidChangeSelectionNotification
+        object:nil];   
+</code></pre>
+
+  NSMenuItem *editMenuItem = [[NSApp mainMenu] itemWithTitle:@"Edit"]; <br/>
+  if (editMenuItem) {
+
+<pre><code>  [[editMenuItem submenu] addItem:[NSMenuItem separatorItem]];   
+  NSMenuItem *newMenuItem = [[NSMenuItem alloc] initWithTitle:@"What is selected" action:@selector(showSelected:) keyEquivalent:@""];
+  [newMenuItem setTarget:self];   
+  [newMenuItem setKeyEquivalentModifierMask: NSAlternateKeyMask];   
+  [[editMenuItem submenu] addItem:newMenuItem];   
+  [newMenuItem release];   
+</code></pre>
+
+<p>  } <br/>
+}</p></li>
+</ul>
+
+
+<p>-(void) selectionDidChange:(NSNotification *)noti {</p>
+
+<pre><code>//Nothing now. Just in case of crash.   
+</code></pre>
+
+<p>}</p>
+
+<p>-(void) showSelected:(NSNotification *)noti {</p>
+
+<pre><code>//Nothing now. Just in case of crash.   
+</code></pre>
+
+<p>}
+```</p>
+
+<p>现在build，重启Xcode，如果一切顺利的话，你应该能看到菜单栏上的变化了：</p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-8.png" alt="image" /></p>
+
+<h3>完成Demo插件</h3>
+
+<p>剩下的事情就很简单了，在接收到TextView的ChangeSelection通知后把现在选中的文本更新一下，在点击按钮时显示一个含有储存文字的对话框就行了。Let's do it~</p>
+
+<p>首先在.m文件中加上property声明（个人习惯，喜欢用ivar也可以）。在#import和@implementation之间加上：</p>
+
+<p><code>objc
+@interface VVPluginDemo()
+@property (nonatomic,copy) NSString *selectedText;
+@end
+</code></p>
+
+<p>得益于新的属性自动绑定，synthesis已经不需要写了（对此还不太了解的童鞋可以参看我的<a href="http://www.onevcat.com/2012/06/modern-objective-c/">这篇博文</a>）。然后完成- selectionDidChange:和-showSelected:如下：</p>
+
+<p>```objc
+-(void) selectionDidChange:(NSNotification *)noti {</p>
+
+<pre><code>if ([[noti object] isKindOfClass:[NSTextView class]]) {
+    NSTextView* textView = (NSTextView *)[noti object];
+
+    NSArray* selectedRanges = [textView selectedRanges];  
+    if (selectedRanges.count==0) {  
+        return;  
+    }
+
+    NSRange selectedRange = [[selectedRanges objectAtIndex:0] rangeValue];  
+    NSString* text = textView.textStorage.string;  
+    self.selectedText = [text substringWithRange:selectedRange];  
+}  
+//Hello, welcom to OneV's Den  
+</code></pre>
+
+<p>}</p>
+
+<p>-(void) showSelected:(NSNotification *)noti {</p>
+
+<pre><code>NSAlert *alert = [[[NSAlert alloc] init] autorelease];  
+[alert setMessageText: self.selectedText];  
+[alert runModal];  
+</code></pre>
+
+<p>}
+```</p>
+
+<p>Build，重启Xcode，随便选中一段文本，然后点击Edit中的What is selected。OY～完成～</p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-7.png" alt="image" /></p>
+
+<p>至此，您应该已经掌握了基本的Xcode插件制作方法了。接下来的就是根据您的需求实践了～但是在此之前，还有一些重要的技巧和常用方法可能您会有兴趣。</p>
+
+<h2>开发插件时有用的技巧</h2>
+
+<p>由于没有文档指导插件开发，调试也只能用打log的方式，因此会十分艰难。掌握一些常用的技巧和方法，将会很有帮助。</p>
+
+<h3>I Need All Notifications!</h3>
+
+<p>一种很好的方法是监听需要的消息，并针对消息作出反应。就像demo里的NSTextViewDidChangeSelectionNotification。对于熟悉iOS或者Mac开发的童鞋来说，应该在日常开发里也接触过很多类型的Notification了，而因为插件开发没有文档，因此我们需要自己去寻找想要监听和接收的Notification。<a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSNotificationCenter_Class/Reference/Reference.html">NSNotificationCenter文档</a>中，关于加入Observer的方法-addObserver:selector:name:object:，当给name参数赋值nil时，将可以监听到所有的notification：</p>
+
+<blockquote><p>notificationName: The name of the notification for which to register the observer; that is, only notifications with this name are delivered to the observer. If you pass nil, the notification center doesn’t use a notification’s name to decide whether to deliver it to the observer.</p></blockquote>
+
+<p>因此可以用它来监测所有的Notification，并从中找到自己所需要的来进行处理：</p>
+
+<p>```objc
+-(id)init {</p>
+
+<pre><code>if (self = [super init]) { 
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+        selector:@selector(notificationListener:) 
+            name:nil object:nil]; 
+} 
+return self; 
+</code></pre>
+
+<p>}</p>
+
+<p>-(void)notificationListener:(NSNotification *)noti {</p>
+
+<pre><code>NSLog(@" Notification: %@", [noti name]);   
+</code></pre>
+
+<p>}
+```</p>
+
+<p>编译重启后在控制台得到的输出：</p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-9.png" alt="image" /></p>
+
+<p>当然如果只是打印名字的话可能帮助不大，也许你需要从noti的object或者userinfo中获得更多的信息。按条件打印，配合控制台的搜索进行寻找会是一个不错的方法。</p>
+
+<h3>Hack私有API</h3>
+
+<p>用OC的动态特性可以做很多事，比如在运行时替换掉某个Xcode的方法。记住Xcode本身也是Cocoa程序，本质上和我们用Xcode所开发的程序没有太大区别。因此如果可以知道Xcode在进行某些操作时候的方法的话，就可以将该方法与我们自己实现的方法进行运行时调换，从而改为执行我们自己的方法。这便是运行时的Method Swizzling（或者叫Monkey patch，管他呢），这在smalltalk类语言中是一种很有趣和方便的做法，关于这方面更详细的，我以前写过一篇关于<a href="http://www.onevcat.com/2012/04/objective-c-runtime/">OC运行时特性的文章</a>。当时提到的method swizzling方法并没有对交换的函数进行检查等工作，通用性也比较差。现在针对OC已经有比较成熟的一套方法交换机制了，其中比较有名的有<a href="https://github.com/rentzsch/jrswizzle">rentzsch的jrswizzle</a>以及<a href="http://cocoadev.com/wiki/MethodSwizzling">OC社区的MethodSwizzling实现</a>。</p>
+
+<p>有了方法交换的办法，接下来需要寻找要交换的方法。Xcode所使用的所有库都包含在Xcode.app/Contents/的Frameworks，SharedFrameworks和OtherFrameworks三个文件夹下。其中和Xcode关系最为直接以及最为重要的是Frameworks中的IDEKit和IDEFoundation，以及SharedFrameworks中的DVTKit和DVTFoundation四个。其中DVT前缀表示Developer Toolkit，IDE和IDEFoundation中的类基本是DVT中类的子类。这四个framework将是我们在开发改变Xcode默认行为的Xcode插件时最主要要打交道的。另外如果想对IB进行注入，可能还需要用到Frameworks下的IBAutolayoutFoundation（待确定）。关于这些framework中的私有API，可以使用<a href="http://stevenygard.com/projects/class-dump/">class-dump</a>很简单地将头文件提取出来。当然，也有人为懒人们完成了这个工作，<a href="https://github.com/probablycorey/xcode-class-dump">probablycorey的xcode-class-dump</a>中有绝大部分类的头文件。</p>
+
+<p>作为Demo，我们将简单地完成一个方法交换：在补全代码时，我们简单地输出一句log。</p>
+
+<h4>MethodSwizzle</h4>
+
+<p>为了交换方法，可以直接用现成的MethodSwizzle实现。MethodSwizzle可以在<a href="https://gist.github.com/4696790">这里</a>找到。将.h和.m导入插件工程即可～</p>
+
+<h4>寻找对应API</h4>
+
+<p>通过搜索，补全代码的功能定义在DVKit中的DVTTextCompletionController类，其中有一个方法为- (BOOL)acceptCurrentCompletion，猜测返回的布尔值是否接受当前的补全结果。由于这些都是私有API，因此需要在我们的工程中自己进行声明。在新建文件中的C and C++中选Header File，为工程加入一个Header文件，并加入一下代码：</p>
+
+<p><code>objc
+@interface DVTTextCompletionController : NSObject
+- (BOOL)acceptCurrentCompletion;
+@end
+</code></p>
+
+<p>然后需要将DVKit.framework添加到工程中，在/Applications/Xcode.app/Contents/SharedFrameworks中找到DVTKit.framework，拷贝到任意正常能访问到的目录下，然后在插件工程的Build Phases中加入framework。嗯？你说找不到DVTKit.framework？亲，私有框架当然找不到，点击Add Other...然后去刚才copy出来的地方去找吧..</p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-10.png" alt="image" /></p>
+
+<p>最后便是加入方法交换了～新建一个DVTTextCompletionController的Category，命名为PluginDemo</p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-13.png" alt="image" /></p>
+
+<p>import之前定义的header和MethodSwizzle.h，在DVTTextCompletionController+PluginDemo.m中加入下面实现：</p>
+
+<p>```objc
++ (void)load
+{</p>
+
+<pre><code>MethodSwizzle(self,
+              @selector(acceptCurrentCompletion),
+              @selector(swizzledAcceptCurrentCompletion));
+</code></pre>
+
+<p>}</p>
+
+<ul>
+<li>(BOOL)swizzledAcceptCurrentCompletion {<br/>
+NSLog(@"acceptCurrentCompletion is called by %@", self);<br/>
+return [self swizzledAcceptCurrentCompletion];<br/>
+}</li>
+</ul>
+
+
+<p>```</p>
+
+<p>+load方法在每个NSObject类或子类被调用时都会被执行，可以用来在runtime配置当前类。这里交换了DVTTextCompletionController的acceptCurrentCompletion方法和我们自己实现的swizzledAcceptCurrentCompletion方法。在swizzledAcceptCurrentCompletion中，先打印了一句log，输出相应该方法的实例。接下来似乎是调用了自己，但是实际上swizzledAcceptCurrentCompletion的方法已经和原来的acceptCurrentCompletion交换，因此这里实际调用的将是原来的方法。那么这段代码所做的就是将Xcode想调用原来的acceptCurrentCompletion的行为，改变成了先打印一个log，之后再进行原来的acceptCurrentCompletion调用。</p>
+
+<p>编译，重启Xcode，打开一个工程随便输入点东西，让补全出现。控制台中的输出符合我们的预期：</p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-12.png" alt="image" /></p>
+
+<p>太棒了，有了对私有API的注入，能做的事情大为扩展了。</p>
+
+<h3>研究Xcode的View Hierarchy</h3>
+
+<p>另外一种常见的插件行为是修改某些界面。再一次说明，Xcode是一个标准Cocoa程序，一切都是那么熟悉（如果你为Cocoa或者CocoaTouch开发的话，应该是很熟悉）。拿到整个App的Window，然后依次递归打印subview。stackoverflow上有<a href="http://stackoverflow.com/questions/2715534/where-does-a-uialertview-live-while-not-dismissed/2715772#2715772">一个UIView的版本</a>，稍微改变一下就可以得到一个NSView版本。新建一个NSView的Dumping Category，加入如下实现：</p>
+
+<p>```objc
+-(void)dumpWithIndent:(NSString *)indent {</p>
+
+<pre><code>NSString *class = NSStringFromClass([self class]);
+NSString *info = @"";
+if ([self respondsToSelector:@selector(title)]) {
+    NSString *title = [self performSelector:@selector(title)];
+    if (title != nil &amp;&amp; [title length] &gt; 0) {
+        info = [info stringByAppendingFormat:@" title=%@", title];
+    }
+}
+if ([self respondsToSelector:@selector(stringValue)]) {
+    NSString *string = [self performSelector:@selector(stringValue)];
+    if (string != nil &amp;&amp; [string length] &gt; 0) {
+        info = [info stringByAppendingFormat:@" stringValue=%@", string];
+    }
+}
+NSString *tooltip = [self toolTip];
+if (tooltip != nil &amp;&amp; [tooltip length] &gt; 0) {
+    info = [info stringByAppendingFormat:@" tooltip=%@", tooltip];
+}
+
+NSLog(@"%@%@%@", indent, class, info);
+
+if ([[self subviews] count] &gt; 0) {  
+    NSString *subIndent = [NSString stringWithFormat:@"%@%@", indent, ([indent length]/2)%2==0 ? @"| " : @": "];  
+    for (NSView *subview in [self subviews]) {  
+        [subview dumpWithIndent:subIndent];  
+    }  
+}  
+</code></pre>
+
+<p>}
+```</p>
+
+<p>在合适的时候（比如点击某个按钮时），调用下面一句代码，便可以打印当前Xcode的结构，非常方便。这对了解Xcode的构成和如何搭建一个如Xcode般复杂的程序很有帮助～</p>
+
+<pre><code>[[[NSApp mainWindow] contentView] dumpWithIndent:@""];
+</code></pre>
+
+<p>在结果控制台中的输出结果类似这样：</p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/QQ20130202-14.png" alt="image" /></p>
+
+<p>根据自己需要去去相应的view吧～然后配合方法交换，基本可以做到尽情做想做的事情了。</p>
+
+<h2>最后的小bonus</h2>
+
+<p>/Applications/Xcode.app/Contents/Frameworks/IDEKit.framework/Versions/A/Resources中有不少Xcode界面用的图片，pdf，png和tiff格式都有，想要自定义run，stop按钮或者想要让断点标记从蓝色块变成机器猫头像什么的…应该是可能的～</p>
+
+<p>/Applications/Xcode.app/Contents/PlugIns目录里有很多Xcode自带的“官方版”外挂插件，显然通过class-dump和注入的方法，你可以为Xcode的插件写插件...嗯～比如改变debugger的行为或者让plist编辑器更聪明，就是这样的。</p>
+
+<p>希望Apple能提供为Xcode编写插件的支持，所有东西都需要摸索虽然很有趣，但是也比较花时间。</p>
+
+<p>另外，github等代码托管网站上有不少大神们写的插件，都开源放出。这些必须是学习插件编写的最优秀的教材和参考：</p>
+
+<ul>
+<li><a href="https://github.com/omz/ColorSense-for-Xcode">omz / ColorSense-for-Xcode</a> Plugin for Xcode to make working with colors more visual</li>
+<li><a href="https://github.com/omz/Dash-Plugin-for-Xcode">omz / Dash-Plugin-for-Xcode</a> Plugin for Xcode to integrate the Dash documentation viewer app</li>
+<li><a href="https://github.com/omz/MiniXcode">omz / MiniXcode</a> Xcode plugin for working without the main toolbar</li>
+<li><a href="https://github.com/ksuther/KSImageNamed-Xcode">ksuther / KSImageNamed-Xcode</a> Xcode plug-in that provides autocomplete for imageNamed: calls</li>
+<li><a href="https://github.com/JugglerShu/XVim">JugglerShu / XVim</a> Xcode plugin for Vim keybindings</li>
+<li><a href="https://github.com/davekeck/Xcode-4-Fixins">davekeck / Xcode-4-Fixins</a> Plugins for fixing Xcode 4 bugs and shortcomings</li>
+<li><a href="https://github.com/0xced/CLITool-InfoPlist">0xced / CLITool-InfoPlist</a> Xcode plugin to process Info.plist file for CLI Tool targets</li>
+<li><a href="https://github.com/questbeat/Lin">questbeat / Lin</a> Xcode4 plugin shows completion for NSLocalizedString</li>
+</ul>
+
+
+<p>好了，就到这里吧。VVPlugInDemo的工程文件我放到了github上，有需要的话您可以从<a href="https://github.com/onevcat/VVPluginDemo">这里下载</a>并作为参考和起始来使用。谢谢您看完这么长的文。正如一开始所说的，我自己水平十分有限，因此错误和不当之处还恳请大家轻喷多原谅，并帮助我改正，再次谢谢～</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Unity3D中暂停时的动画及粒子效果实现]]></title>
+    <link href="http://onevcat.com/2013/01/do_not_pause_me/"/>
+    <updated>2013-01-26T00:00:00+09:00</updated>
+    <id>http://onevcat.com/2013/01/do_not_pause_me</id>
+    <content type="html"><![CDATA[<p><!--:zh--><h2 style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2013/01/big副本.png"><img class="aligncenter size-full wp-image-1087" title="unpause" src="http://www.onevcat.com/wp-content/uploads/2013/01/big副本.png" alt="" width="500" height="200" data-pinit="registered" /></a></h2>
+<p style="text-align: justify;">暂停是游戏中经常出现的功能，而Unity3D中对于暂停的处理并不是很理想。一般的做法是将Time.timeScale设置为0。Unity的文档中对于这种情况有以下描述；</p></p>
+
+
+
+
+<p><blockquote>The scale at which the time is passing. This can be used for slow motion effects….When timeScale is set to zero the game is basically paused …</blockquote>
+<p style="text-align: justify;">timeScale表示游戏中时间流逝快慢的尺度。文档中明确表示，这个参数是用来做慢动作效果的。对于将timeScale设置为0的情况，仅只有一个补充说明。在实际使用中，通过设置timeScale来实现慢动作特效，是一种相当简洁且不带任何毒副作用的方法，但是当将timeScale设置为0来实现暂停时，<strong>由于时间不再流逝，所有和时间有关的功能痘将停止</strong>，有些时候这正是我们想要的，因为毕竟是暂停。但是副作用也随之而来，在暂停时各种动画和粒子效果都将无法播放（因为是时间相关的），FixedUpdate也将不再被调用。</p>
+<p style="text-align: justify;"><strong>换句话说，最大的影响是，在timeScale＝0的暂停情况下，你将无法实现暂停菜单的动画以及各种漂亮的点击效果。</strong></p>
+<p style="text-align: justify;">但是并非真的没办法，关于timeScale的文档下就有提示：</p></p>
+
+
+
+
+<p><blockquote>Except for realtimeSinceStartup, timeScale affects all the time and delta time measuring variables of the Time class.</blockquote>
+<p style="text-align: justify;">因为realtimeSinceStartup和timeScale无关，因此也就成了解决在暂停下的动画和粒子效果的救命稻草。对于Unity动画，在每一帧，根据实际时间寻找相应帧并采样显示的方法来模拟动画：</p></p>
+
+
+
+
+<p><pre class="lang:c# mark:19-21 decode:true" title="暂停时采样的核心代码">AnimationState _currState = animation[clipName];
+bool isPlaying = true;</pre></p>
+
+
+
+
+<p>float _progressTime = 0F;<br />
+float _timeAtLastFrame = 0F;<br />
+float _timeAtCurrentFrame = 0F;<br />
+bool _inReversePlaying = false;</p>
+
+
+
+
+<p>float _deltaTime = 0F;<br />
+animation.Play(clipName);<br />
+_timeAtLastFrame = Time.realtimeSinceStartup;</p>
+
+
+
+
+<p>while (isPlaying) {<br />
+    _timeAtCurrentFrame = Time.realtimeSinceStartup;<br />
+    _deltaTime = _timeAtCurrentFrame - _timeAtLastFrame;<br />
+    _timeAtLastFrame = _timeAtCurrentFrame; </p>
+
+
+
+
+<p>    _progressTime += _deltaTime;</p>
+
+
+
+
+<p>    _currState.normalizedTime = _inReversePlaying ? 1.0f - (_progressTime / _currState.length) : _progressTime / _currState.length; <br />
+    animation.Sample();</p>
+
+
+
+
+<p>    //...repeat or over by wrap mode <br />
+}
+<p style="text-align: justify;">对于粒子效果，同样进行计时，并通过粒子系统的Simulate方法来模拟对应时间的粒子状态来完成效果，比如对于Legacy粒子，使Emitter在timeScale＝0暂停时继续有效发射并显示效果：</p></p>
+
+
+
+
+<p><pre class="lang:c# mark:4-5 decode:true">_deltaTime = Time.realtimeSinceStartup - _timeAtLastFrame;
+_timeAtLastFrame = Time.realtimeSinceStartup;
+if (Time.timeScale == 0 ){
+    _emitter.Simulate(_deltaTime);
+    _emitter.emit = true;
+}</pre>
+<p style="text-align: justify;">核心的代码基本都在上面了，可以根据这个思路完成实现。<a href="https://github.com/onevcat/UnpauseMe">完整的代码和示例工程</a>我放到了github上，有需要的朋友可以去查看，也欢迎大家指正。</p><!--:--><!--:en-->&nbsp;</p>
+
+
+
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+
+
+
+<p><!--:--></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Unity编译至Xcode工程后自动添加文件和库的方法]]></title>
+    <link href="http://onevcat.com/2012/12/xuporter/"/>
+    <updated>2012-12-18T00:00:00+09:00</updated>
+    <id>http://onevcat.com/2012/12/xuporter</id>
+    <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/12/1.png"><img class="aligncenter size-full wp-image-1072" title="XUPorter" src="http://www.onevcat.com/wp-content/uploads/2012/12/1.png" alt="" width="763" height="256" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">废话之前</p>
+<p style="text-align: justify;"><a href="https://github.com/onevcat/XUPorter">XUPorter项目Github链接</a>
+<a href="http://www.onevcat.com/wp-content/uploads/2012/12/XUPorter.unitypackage.zip">Unity打包文件下载</a></p></p>
+
+
+
+
+<p><h3 style="text-align: justify;">为什么想要自动添加</h3>
+<p style="text-align: justify;">由于Unity是全平台的游戏开发环境，在开发中针对特定平台的特定功能时，很难避免根据对象平台的不同而引入不同的依赖。包括源码，需要的库和框架等。在使用各种插件后这种情况愈发严重：比如想加入内购功能，StroreKit.framework必不可少，而且也需要相应的处理代码。按照一般的Unity插件开发流程，在完成.cs的接口声明和Unity侧的调用实现后，最重要的当然是在iOS native侧完成实现。而在以前，包括依赖库和所有源码文件，都只有在Unity生成Xcode工程之后，再手动添加。如果工程小依赖少的话花不了太多时间，但是如果项目很大，很可能折腾一次就要十来分钟，严重影响了工作效率，必须加以解决。</p></p>
+
+
+
+
+<p><h3 style="text-align: justify;">怎么办</h3>
+<p style="text-align: justify;">Unity开发团队也意识到了这个问题，在Unity编译的最后加入了一个脚本调用的命令，会自动搜索Editor文件夹下的PostprocessBuildPlayer，并进行调用，在该文件中可以自己加入脚本来向Xcode中添加库和文件。关于PostprocessBuildPlayer的详细信息，可以参看<a href="http://docs.unity3d.com/Documentation/Manual/BuildPlayerPipeline.html">官方文档</a>，关于向Xcode中添加文件或库，gonzoua的<a href="https://github.com/gonzoua/xcs">xcs</a>也许是不错的选择。但是似乎xcs只能针对Xcode3来添加，在Xcode4中，主工程文件的结构发生了改变，导致xcs失效，而这个项目也迟迟没有更新（也许有时间我会考虑接手继续这个项目，但肯定不是现在...）。因此不得不打其他主意。</p>
+<p style="text-align: justify;"><!--:--><!--more--><!--:zh--></p>
+<p style="text-align: justify;">在Unity3.5中，加入了一个很棒的标签——<a href="http://docs.unity3d.com/Documentation/ScriptReference/PostProcessBuildAttribute.html">[PostProcessBuild]</a>，被该标签标注的函数将自动在build player后被调用，这为大家提供了一个不需要用脚本和命令行就能添加或修改编译得到的工程的绝好的入口。darktable用python实现了一个Xcode4工程文件读写的接口<a href="https://bitbucket.org/darktable/mod-pbxproj/overview">Mod PBXProj</a>，但是对于Unity来说，更需要的是C#的实现。Cariola完成了<a href="https://github.com/dcariola/XCodeEditor-for-Unity">一部分实现</a>，但是存在一些错误和不太好用的地方，代码也很乱。我在其基础上进行了一些改进和整理。但是因为变动的还是比较大，很难merge回去，所以决定自己开一个项目来继续推进这个项目。</p></p>
+
+
+
+
+<p><h3 style="text-align: justify;">XUPorter</h3>
+<p style="text-align: justify;">我把它叫做XUPorter，a dependency porter from Unity to Xcode。XUPorter可以读取Xcode工程文件并进行解析（再次感谢darktable的工作），之后在Unity工程的Assets目录下寻找所有的.projmods文件，并根据文件内容向工程中添加文件或库。</p></p>
+
+
+
+
+<p><h4 style="text-align: justify;">使用方法</h4>
+<p style="text-align: justify;">将Github项目中的所有文件copy到Unity工程文件夹下的/Assets/Editor目录中，XUPorter使用一个<a href="https://github.com/prime31/UIToolkit/blob/master/Assets/Plugins/MiniJSON.cs">改良版的MiniJSON</a>来进行。如果你的项目中已经在使用这个MiniJSON了的话，可以直接将XUPorter文件夹下的MiniJSON文件夹删掉；如果不一样的话，你可以选择其中一个重构一下或者加上命名空间来解决类名冲突。接下来，Mods文件夹下是示例文件以及需要导入Xcode的文件。在看完以后你需要把Mods文件夹下的所有.projmods文件以及Mods/iOS文件夹下的内容删除或者替换为你所需要的内容。</p>
+<p style="text-align: justify;">在<a href="http://d.pr/f/HAzc">这里</a>提供了.unitypackege格式文件的下载，你也可以选择下载打包好的文件并导入你的工程，之后的步骤和上面一样。</p>
+<p style="text-align: justify;">.projmods文件是一个JSON格式的配置patch文件，定义了要如何设置Xcode工程。举个基本的例子，比如KKKeychain.projmods：</p>
+<p style="text-align: justify;">各参数定义如下： * group：所有由该projmods添加的文件和文件夹所属的Xcode中的group名称 * libs：在Xcode Build Phases中需要添加的动态链接库的名称，比如libz.dylib * frameworks：在Xcode Build Phases中需要添加的框架的名称，比如Security.framework * headerpaths：Xcode中编译设置中的Header Search Paths路径 * files：加入工程的文件名 * folders：加入工程的文件夹，其中所有的文件和文件夹都将被加入工程中 * excludes：忽略的文件的正则表达式，匹配的文件将不会被加入工程中 更多的例子可以参看Mods文件夹中的其他projmods文件。所有的定义路径都是基于当前projmods文件位置的相对路径。 最后，在完成projmods后，Unity会在编译完成后，调用XCodePostProcess的OnPostProcessBuild来对编译得到的Xcode工程进行修改：</p></p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Unity 3D中的内存管理]]></title>
+    <link href="http://onevcat.com/2012/11/memory-in-unity3d/"/>
+    <updated>2012-11-16T00:00:00+09:00</updated>
+    <id>http://onevcat.com/2012/11/memory-in-unity3d</id>
+    <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/11/unity-technologies-870x531.jpg"><img class="aligncenter size-full wp-image-1043" title="unity-technologies-870x531" src="http://www.onevcat.com/wp-content/uploads/2012/11/unity-technologies-870x531.jpg" alt="" width="870" height="182" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">本文欢迎转载，但烦请保留此行出处信息：<a href="http://www.onevcat.com/2012/11/memory-in-unity3d/">http://www.onevcat.com/2012/11/memory-in-unity3d/</a></p>
+<p style="text-align: justify;">Unity3D在内存占用上一直被人诟病，特别是对于面向移动设备的游戏开发，动辄内存占用飙上一两百兆，导致内存资源耗尽，从而被系统强退造成极差的体验。类似这种情况并不少见，但是绝大部分都是可以避免的。虽然理论上Unity的内存管理系统应当为开发者分忧解难，让大家投身到更有意义的事情中去，但是对于Unity对内存的管理方式，官方文档中并没有太多的说明，基本需要依靠自己摸索。最近在接手的项目中存在严重的内存问题，在参照文档和Unity Answer众多猜测和证实之后，稍微总结了下Unity中的内存的分配和管理的基本方式，在此共享。</p>
+<p style="text-align: justify;">虽然Unity标榜自己的内存使用全都是“Managed Memory”，但是事实上你必须正确地使用内存，以保证回收机制正确运行。如果没有做应当做的事情，那么场景和代码很有可能造成很多非必要内存的占用，这也是很多Unity开发者抱怨内存占用太大的原因。接下来我会介绍Unity使用内存的种类，以及相应每个种类的优化和使用的技巧。遵循使用原则，可以让非必要资源尽快得到释放，从而降低内存占用。</p>
+<p style="text-align: justify;"><!--:--><!--more--><!--:zh--></p></p>
+
+
+
+
+<p><hr /></p>
+
+
+
+
+<p><h3 style="text-align: justify;">Unity中的内存种类</h3>
+<p style="text-align: justify;">实际上Unity游戏使用的内存一共有三种：程序代码、托管堆（Managed Heap）以及本机堆（Native Heap）。</p>
+<p style="text-align: justify;">程序代码包括了所有的Unity引擎，使用的库，以及你所写的所有的游戏代码。在编译后，得到的运行文件将会被加载到设备中执行，并占用一定内存。这部分内存实际上是没有办法去“管理”的，它们将在内存中从一开始到最后一直存在。一个空的Unity默认场景，什么代码都不放，在iOS设备上占用内存应该在17MB左右，而加上一些自己的代码很容易就飙到20MB左右。想要减少这部分内存的使用，能做的就是减少使用的库，稍后再说。</p>
+<p style="text-align: justify;">托管堆是被Mono使用的一部分内存。<a href="http://www.mono-project.com/Main_Page">Mono</a>项目一个开源的.net框架的一种实现，对于Unity开发，其实充当了基本类库的角色。托管堆用来存放类的实例（比如用new生成的列表，实例中的各种声明的变量等）。“托管”的意思是Mono“应该”自动地改变堆的大小来适应你所需要的内存，并且定时地使用垃圾回收（Garbage Collect）来释放已经不需要的内存。关键在于，有时候你会忘记清除对已经不需要再使用的内存的引用，从而导致Mono认为这块内存一直有用，而无法回收。</p>
+<p style="text-align: justify;">最后，本机堆是Unity引擎进行申请和操作的地方，比如贴图，音效，关卡数据等。Unity使用了自己的一套内存管理机制来使这块内存具有和托管堆类似的功能。基本理念是，如果在这个关卡里需要某个资源，那么在需要时就加载，之后在没有任何引用时进行卸载。听起来很美好也和托管堆一样，但是由于Unity有一套自动加载和卸载资源的机制，让两者变得差别很大。自动加载资源可以为开发者省不少事儿，但是同时也意味着开发者失去了手动管理所有加载资源的权力，这非常容易导致大量的内存占用（贴图什么的你懂的），也是Unity给人留下“吃内存”印象的罪魁祸首。</p></p>
+
+
+
+
+<p><hr /></p>
+
+
+
+
+<p><h3 style="text-align: justify;">优化程序代码的内存占用</h3>
+<p style="text-align: justify;">这部分的优化相对简单，因为能做的事情并不多：主要就是减少打包时的引用库，改一改build设置即可。对于一个新项目来说不会有太大问题，但是如果是已经存在的项目，可能改变会导致原来所需要的库的缺失（虽说一般来说这种可能性不大），因此有可能无法做到最优。</p>
+<p style="text-align: justify;"><img src="http://www.onevcat.com/wp-content/uploads/2012/11/unity-setting.png" alt="image" data-pinit="registered" /></p>
+<p style="text-align: justify;">当使用Unity开发时，默认的Mono包含库可以说大部分用不上，在Player Setting（Edit-&gt;Project Setting-&gt;Player或者Shift+Ctrl(Command)+B里的Player Setting按钮）面板里，将最下方的Optimization栏目中“Api Compatibility Level”选为.NET 2.0 Subset，表示你只会使用到部分的.NET 2.0 Subset，不需要Unity将全部.NET的Api包含进去。接下来的“Stripping Level”表示从build的库中剥离的力度，每一个剥离选项都将从打包好的库中去掉一部分内容。你需要保证你的代码没有用到这部分被剥离的功能，选为“Use micro mscorlib”的话将使用最小的库（一般来说也没啥问题，不行的话可以试试之前的两个）。库剥离可以极大地降低打包后的程序的尺寸以及程序代码的内存占用，唯一的缺点是这个功能只支持Pro版的Unity。</p>
+<p style="text-align: justify;">这部分优化的力度需要根据代码所用到的.NET的功能来进行调整，有可能不能使用Subset或者最大的剥离力度。如果超出了限度，很可能会在需要该功能时因为找不到相应的库而crash掉（iOS的话很可能在Xcode编译时就报错了）。比较好地解决方案是仍然用最强的剥离，并辅以较小的第三方的类库来完成所需功能。一个最常见问题是最大剥离时Sysytem.Xml是不被Subset和micro支持的，如果只是为了xml，完全可以导入一个轻量级的xml库来解决依赖（Unity官方推荐<a href="http://unity3d.com/support/documentation/Images/manual/Mono.Xml.zip">这个</a>）。</p>
+<p style="text-align: justify;">关于每个设定对应支持的库的详细列表，可以在<a href="http://docs.unity3d.com/Documentation/ScriptReference/MonoCompatibility.html">这里</a>找到。关于每个剥离级别到底做了什么，<a href="http://unity3d.com/support/documentation/Manual/iphone-playerSizeOptimization.html">Unity的文档</a>也有说明。实际上，在游戏开发中绝大多数被剥离的功能使用不上的，因此不管如何，库剥离的优化方法都值得一试。</p></p>
+
+
+
+
+<p><hr /></p>
+
+
+
+
+<p><h3 style="text-align: justify;">托管堆优化</h3>
+<p style="text-align: justify;">Unity有一篇不错的关于<a href="http://unity3d.com/support/documentation/Manual/Understanding%20Automatic%20Memory%20Management.html">托管堆代码如何写比较好</a>的说明，在此基础上我个人有一些补充。</p>
+<p style="text-align: justify;">首先需要明确，托管堆中存储的是你在你的代码中申请的内存（不论是用js，C#还是Boo写的）。一般来说，无非是new或者Instantiate两种生成object的方法（事实上Instantiate中也是调用了new）。在接收到alloc请求后，托管堆在其上为要新生成的对象实例以及其实例变量分配内存，如果可用空间不足，则向系统申请更多空间。</p>
+<p style="text-align: justify;">当你使用完一个实例对象之后，通常来说在脚本中就不会再有对该对象的引用了（这包括将变量设置为null或其他引用，超出了变量的作用域，或者对Unity对象发送Destory()）。在每隔一段时间，Mono的垃圾回收机制将检测内存，将没有再被引用的内存释放回收。总的来说，你要做的就是在尽可能早的时间将不需要的引用去除掉，这样回收机制才能正确地把不需要的内存清理出来。但是需要注意在内存清理时有可能造成游戏的短时间卡顿，这将会很影响游戏体验，因此如果有大量的内存回收工作要进行的话，需要尽量选择合适的时间。</p>
+<p style="text-align: justify;">如果在你的游戏里，有特别多的类似实例，并需要对它们经常发送Destroy()的话，游戏性能上会相当难看。比如<a href="http://www.onevcat.com/showcase/coinpush/">小熊推金币</a>中的金币实例，按理说每枚金币落下台子后都需要对其Destory()，然后新的金币进入台子时又需要Instantiate，这对性能是极大的浪费。一种通常的做法是在不需要时，不摧毁这个GameObject，而只是隐藏它，并将其放入一个重用数组中。之后需要时，再从重用数组中找到可用的实例并显示。这将极大地改善游戏的性能，相应的代价是消耗部分内存，一般来说这是可以接受的。关于对象重用，可以参考<a href="http://docs.unity3d.com/Documentation/Manual/UnderstandingAutomaticMemoryManagement.html">Unity关于内存方面的文档中Reusable Object Pools部分</a>，或者Prime31有一个是用Linq来建立重用池的视频教程（Youtube，需要翻墙，<a href="http://www.youtube.com/watch?v=IX041ZvgQKE">上</a>，<a href="http://www.youtube.com/watch?v=d9078u8ft58">下</a>）。</p>
+<p style="text-align: justify;">如果不是必要，应该在游戏进行的过程中尽量减少对GameObject的Instantiate()和Destroy()调用，因为对计算资源会有很大消耗。在便携设备上短时间大量生成和摧毁物体的话，很容易造成瞬时卡顿。如果内存没有问题的话，尽量选择先将他们收集起来，然后在合适的时候（比如按暂停键或者是关卡切换），将它们批量地销毁并且回收内存。Mono的内存回收会在后台自动进行，系统会选择合适的时间进行垃圾回收。在合适的时候，也可以手动地调用System.GC.Collect()来建议系统进行一次垃圾回收。要注意的是这里的调用真的仅仅只是建议，可能系统会在一段时间后在进行回收，也可能完全不理会这条请求，不过在大部分时间里，这个调用还是靠谱的。</p></p>
+
+
+
+
+<p><hr /></p>
+
+
+
+
+<p><h3 style="text-align: justify;">本机堆的优化</h3>
+<p style="text-align: justify;">当你加载完成一个Unity的scene的时候，scene中的所有用到的asset（包括Hierarchy中所有GameObject上以及脚本中赋值了的的材质，贴图，动画，声音等素材），都会被自动加载（这正是Unity的智能之处）。也就是说，当关卡呈现在用户面前的时候，所有Unity编辑器能认识的本关卡的资源都已经被预先加入内存了，这样在本关卡中，用户将有良好的体验，不论是更换贴图，声音，还是播放动画时，都不会有额外的加载，这样的代价是内存占用将变多。Unity最初的设计目的还是面向台式机，几乎无限的内存和虚拟内存使得这样的占用似乎不是问题，但是这样的内存策略在之后移动平台的兴起和大量移动设备游戏的制作中出现了弊端，因为移动设备能使用的资源始终非常有限。因此在面向移动设备游戏的制作时，尽量减少在Hierarchy对资源的直接引用，而是使用Resource.Load的方法，在需要的时候从硬盘中读取资源，在使用后用Resource.UnloadAsset()和Resources.UnloadUnusedAssets()尽快将其卸载掉。总之，这里是一个处理时间和占用内存空间的trade off，如何达到最好的效果没有标准答案，需要自己权衡。</p>
+<p style="text-align: justify;">在关卡结束的时候，这个关卡中所使用的所有资源将会被卸载掉（除非被标记了DontDestroyOnLoad）的资源。注意不仅是DontDestroyOnLoad的资源本身，其相关的所有资源在关卡切换时都不会被卸载。DontDestroyOnLoad一般被用来在关卡之间保存一些玩家的状态，比如分数，级别等偏向文本的信息。如果DontDestroyOnLoad了一个包含很多资源（比如大量贴图或者声音等大内存占用的东西）的话，这部分资源在场景切换时无法卸载，将一直占用内存，这种情况应该尽量避免。</p>
+<p style="text-align: justify;">另外一种需要注意的情况是脚本中对资源的引用。大部分脚本将在场景转换时随之失效并被回收，但是，在场景之间被保持的脚本不在此列（通常情况是被附着在DontDestroyOnLoad的GameObject上了）。而这些脚本很可能含有对其他物体的Component或者资源的引用，这样相关的资源就都得不到释放，这绝对是不想要的情况。另外，static的单例（singleton）在场景切换时也不会被摧毁，同样地，如果这种单例含有大量的对资源的引用，也会成为大问题。因此，尽量减少代码的耦合和对其他脚本的依赖是十分有必要的。如果确实无法避免这种情况，那应当手动地对这些不再使用的引用对象调用Destroy()或者将其设置为null。这样在垃圾回收的时候，这些内存将被认为已经无用而被回收。</p>
+<p style="text-align: justify;">需要注意的是，Unity在一个场景开始时，根据场景构成和引用关系所自动读取的资源，只有在读取一个新的场景或者reset当前场景时，才会得到清理。因此这部分内存占用是不可避免的。在小内存环境中，这部分初始内存的占用十分重要，因为它决定了你的关卡是否能够被正常加载。因此在计算资源充足或是关卡开始之后还有机会进行加载时，尽量减少Hierarchy中的引用，变为手动用Resource.Load，将大大减少内存占用。在Resource.UnloadAsset()和Resources.UnloadUnusedAssets()时，只有那些真正没有任何引用指向的资源会被回收，因此请确保在资源不再使用时，将所有对该资源的引用设置为null或者Destroy。同样需要注意，这两个Unload方法仅仅对Resource.Load拿到的资源有效，而不能回收任何场景开始时自动加载的资源。与此类似的还有AssetBundle的Load和Unload方法，灵活使用这些手动自愿加载和卸载的方法，是优化Unity内存占用的不二法则～</p></p>
+
+]]></content>
+  </entry>
+  
+</feed>

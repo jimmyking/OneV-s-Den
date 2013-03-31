@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://blog.onevcat.com/sitemap.xml 
+Sitemap: http://onevcat.com/sitemap.xml 

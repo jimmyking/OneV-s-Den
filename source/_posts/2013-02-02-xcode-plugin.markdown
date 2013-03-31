@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Xcode 4 插件制作入门
-categories: []
+categories: [能工巧匠集]
 tags: []
 published: true
 comments: true

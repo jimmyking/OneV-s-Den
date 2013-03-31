@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[OneV's Den]]></title>
-  <link href="http://blog.onevcat.com/atom.xml" rel="self"/>
-  <link href="http://blog.onevcat.com/"/>
-  <updated>2013-03-31T16:57:49+09:00</updated>
-  <id>http://blog.onevcat.com/</id>
+  <link href="http://onevcat.com/atom.xml" rel="self"/>
+  <link href="http://onevcat.com/"/>
+  <updated>2013-03-31T22:16:46+09:00</updated>
+  <id>http://onevcat.com/</id>
   <author>
     <name><![CDATA[onevcat]]></name>
     <email><![CDATA[onev@onevcat.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[MGTwitterEngine中Twitter API 1.1的使用]]></title>
-    <link href="http://blog.onevcat.com/2013/03/mgtwitterengine%E4%B8%ADtwitter-api-1-1%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <link href="http://onevcat.com/2013/03/mgtwitterengine%E4%B8%ADtwitter-api-1-1%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
     <updated>2013-03-24T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2013/03/mgtwitterengine中twitter-api-1-1的使用</id>
+    <id>http://onevcat.com/2013/03/mgtwitterengine中twitter-api-1-1的使用</id>
     <content type="html"><![CDATA[<p>在iOS5中使用Twitter framework或者在iOS6中使用Social framework来完成Twitter的集成是非常简单和轻松的，但是如果应用要针对iOS5之前的系统版本，那么就不能使用iOS提供的框架了。一个比较常见也是使用最广泛的选择是<a href="https://github.com/mattgemmell/MGTwitterEngine">MGTwitterEngine</a>，比如<a href="http://www.onevcat.com/showcase/pomodoro_do/">PomodoroDo</a>选择使用的就是该框架。</p>
 
 <p>但是今天在对PomodoroDo作更新的时候，发现Twitter的分享无法使用了，在查阅Twitter文档说明之后，发现这是Twitter采用了新版API的原因。默认状况下MGTwitterEngine采用的是v1版的API，并且使用XML的版本进行请求，而在1.1中，将<a href="https://dev.twitter.com/docs/api/1.1/overview#JSON_support_only">只有JSON方式的API可以使用</a>。v1.0版本的API已经于2013年3月5日被完全废弃，因此想要继续使用MGTwitterEngine来适配iOS5之前的Twitter集成需求，就需要将MGTwitterEngine的请求改为JSON方式。MGTwitterEngine也考虑到了这一点，但是因为时间比较古老了，MGTwitterEngine使用了YAJL来作为JSON的Wrapper，因此还需要将YAJL集成进来。下午的时候尝试了一会儿，成功地让MGTwitterEngine用上了1.1的Twitter API，为了以防之后别人或是自己可能遇到同样的问题，将更新的方法在此留底备忘。</p>
@@ -86,9 +86,9 @@
   
   <entry>
     <title type="html"><![CDATA[Xcode 4 插件制作入门]]></title>
-    <link href="http://blog.onevcat.com/2013/02/xcode-plugin/"/>
+    <link href="http://onevcat.com/2013/02/xcode-plugin/"/>
     <updated>2013-02-02T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2013/02/xcode-plugin</id>
+    <id>http://onevcat.com/2013/02/xcode-plugin</id>
     <content type="html"><![CDATA[<p><img src="http://www.onevcat.com/wp-content/uploads/2013/02/QQ20130202-15.png"></p>
 
 <p>本文欢迎转载，但烦请保留此行出处信息：<a href="http://www.onevcat.com/2013/02/xcode-plugin/">http://www.onevcat.com/2013/02/xcode-plugin/</a></p>
@@ -593,9 +593,9 @@
   
   <entry>
     <title type="html"><![CDATA[Unity3D中暂停时的动画及粒子效果实现]]></title>
-    <link href="http://blog.onevcat.com/2013/01/do_not_pause_me/"/>
+    <link href="http://onevcat.com/2013/01/do_not_pause_me/"/>
     <updated>2013-01-26T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2013/01/do_not_pause_me</id>
+    <id>http://onevcat.com/2013/01/do_not_pause_me</id>
     <content type="html"><![CDATA[<p><!--:zh--><h2 style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2013/01/big副本.png"><img class="aligncenter size-full wp-image-1087" title="unpause" src="http://www.onevcat.com/wp-content/uploads/2013/01/big副本.png" alt="" width="500" height="200" data-pinit="registered" /></a></h2>
 <p style="text-align: justify;">暂停是游戏中经常出现的功能，而Unity3D中对于暂停的处理并不是很理想。一般的做法是将Time.timeScale设置为0。Unity的文档中对于这种情况有以下描述；</p></p>
 
@@ -649,9 +649,9 @@ if (Time.timeScale == 0 ){
   
   <entry>
     <title type="html"><![CDATA[Unity编译至Xcode工程后自动添加文件和库的方法]]></title>
-    <link href="http://blog.onevcat.com/2012/12/xuporter/"/>
+    <link href="http://onevcat.com/2012/12/xuporter/"/>
     <updated>2012-12-18T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/12/xuporter</id>
+    <id>http://onevcat.com/2012/12/xuporter</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/12/1.png"><img class="aligncenter size-full wp-image-1072" title="XUPorter" src="http://www.onevcat.com/wp-content/uploads/2012/12/1.png" alt="" width="763" height="256" data-pinit="registered" /></a></p>
 <p style="text-align: justify;">废话之前</p>
 <p style="text-align: justify;"><a href="https://github.com/onevcat/XUPorter">XUPorter项目Github链接</a>
@@ -672,23 +672,16 @@ if (Time.timeScale == 0 ){
 <p style="text-align: justify;">将Github项目中的所有文件copy到Unity工程文件夹下的/Assets/Editor目录中，XUPorter使用一个<a href="https://github.com/prime31/UIToolkit/blob/master/Assets/Plugins/MiniJSON.cs">改良版的MiniJSON</a>来进行。如果你的项目中已经在使用这个MiniJSON了的话，可以直接将XUPorter文件夹下的MiniJSON文件夹删掉；如果不一样的话，你可以选择其中一个重构一下或者加上命名空间来解决类名冲突。接下来，Mods文件夹下是示例文件以及需要导入Xcode的文件。在看完以后你需要把Mods文件夹下的所有.projmods文件以及Mods/iOS文件夹下的内容删除或者替换为你所需要的内容。</p>
 <p style="text-align: justify;">在<a href="http://d.pr/f/HAzc">这里</a>提供了.unitypackege格式文件的下载，你也可以选择下载打包好的文件并导入你的工程，之后的步骤和上面一样。</p>
 <p style="text-align: justify;">.projmods文件是一个JSON格式的配置patch文件，定义了要如何设置Xcode工程。举个基本的例子，比如KKKeychain.projmods：</p>
-<p style="text-align: justify;">各参数定义如下： * group：所有由该projmods添加的文件和文件夹所属的Xcode中的group名称 * libs：在Xcode Build Phases中需要添加的动态链接库的名称，比如libz.dylib * frameworks：在Xcode Build Phases中需要添加的框架的名称，比如Security.framework * headerpaths：Xcode中编译设置中的Header Search Paths路径 * files：加入工程的文件名 * folders：加入工程的文件夹，其中所有的文件和文件夹都将被加入工程中 * excludes：忽略的文件的正则表达式，匹配的文件将不会被加入工程中 更多的例子可以参看Mods文件夹中的其他projmods文件。所有的定义路径都是基于当前projmods文件位置的相对路径。 最后，在完成projmods后，Unity会在编译完成后，调用XCodePostProcess的OnPostProcessBuild来对编译得到的Xcode工程进行修改：</p><!--:--><!--:en-->&nbsp;</p>
+<p style="text-align: justify;">各参数定义如下： * group：所有由该projmods添加的文件和文件夹所属的Xcode中的group名称 * libs：在Xcode Build Phases中需要添加的动态链接库的名称，比如libz.dylib * frameworks：在Xcode Build Phases中需要添加的框架的名称，比如Security.framework * headerpaths：Xcode中编译设置中的Header Search Paths路径 * files：加入工程的文件名 * folders：加入工程的文件夹，其中所有的文件和文件夹都将被加入工程中 * excludes：忽略的文件的正则表达式，匹配的文件将不会被加入工程中 更多的例子可以参看Mods文件夹中的其他projmods文件。所有的定义路径都是基于当前projmods文件位置的相对路径。 最后，在完成projmods后，Unity会在编译完成后，调用XCodePostProcess的OnPostProcessBuild来对编译得到的Xcode工程进行修改：</p></p>
 
-<p>&nbsp;</p>
-
-<p><!--:--><!--:ja-->&nbsp;</p>
-
-<p>&nbsp;</p>
-
-<p><!--:--></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Unity 3D中的内存管理]]></title>
-    <link href="http://blog.onevcat.com/2012/11/memory-in-unity3d/"/>
+    <link href="http://onevcat.com/2012/11/memory-in-unity3d/"/>
     <updated>2012-11-16T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/11/memory-in-unity3d</id>
+    <id>http://onevcat.com/2012/11/memory-in-unity3d</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/11/unity-technologies-870x531.jpg"><img class="aligncenter size-full wp-image-1043" title="unity-technologies-870x531" src="http://www.onevcat.com/wp-content/uploads/2012/11/unity-technologies-870x531.jpg" alt="" width="870" height="182" data-pinit="registered" /></a></p>
 <p style="text-align: justify;">本文欢迎转载，但烦请保留此行出处信息：<a href="http://www.onevcat.com/2012/11/memory-in-unity3d/">http://www.onevcat.com/2012/11/memory-in-unity3d/</a></p>
 <p style="text-align: justify;">Unity3D在内存占用上一直被人诟病，特别是对于面向移动设备的游戏开发，动辄内存占用飙上一两百兆，导致内存资源耗尽，从而被系统强退造成极差的体验。类似这种情况并不少见，但是绝大部分都是可以避免的。虽然理论上Unity的内存管理系统应当为开发者分忧解难，让大家投身到更有意义的事情中去，但是对于Unity对内存的管理方式，官方文档中并没有太多的说明，基本需要依靠自己摸索。最近在接手的项目中存在严重的内存问题，在参照文档和Unity Answer众多猜测和证实之后，稍微总结了下Unity中的内存的分配和管理的基本方式，在此共享。</p>
@@ -727,19 +720,15 @@ if (Time.timeScale == 0 ){
 <p style="text-align: justify;">当你加载完成一个Unity的scene的时候，scene中的所有用到的asset（包括Hierarchy中所有GameObject上以及脚本中赋值了的的材质，贴图，动画，声音等素材），都会被自动加载（这正是Unity的智能之处）。也就是说，当关卡呈现在用户面前的时候，所有Unity编辑器能认识的本关卡的资源都已经被预先加入内存了，这样在本关卡中，用户将有良好的体验，不论是更换贴图，声音，还是播放动画时，都不会有额外的加载，这样的代价是内存占用将变多。Unity最初的设计目的还是面向台式机，几乎无限的内存和虚拟内存使得这样的占用似乎不是问题，但是这样的内存策略在之后移动平台的兴起和大量移动设备游戏的制作中出现了弊端，因为移动设备能使用的资源始终非常有限。因此在面向移动设备游戏的制作时，尽量减少在Hierarchy对资源的直接引用，而是使用Resource.Load的方法，在需要的时候从硬盘中读取资源，在使用后用Resource.UnloadAsset()和Resources.UnloadUnusedAssets()尽快将其卸载掉。总之，这里是一个处理时间和占用内存空间的trade off，如何达到最好的效果没有标准答案，需要自己权衡。</p>
 <p style="text-align: justify;">在关卡结束的时候，这个关卡中所使用的所有资源将会被卸载掉（除非被标记了DontDestroyOnLoad）的资源。注意不仅是DontDestroyOnLoad的资源本身，其相关的所有资源在关卡切换时都不会被卸载。DontDestroyOnLoad一般被用来在关卡之间保存一些玩家的状态，比如分数，级别等偏向文本的信息。如果DontDestroyOnLoad了一个包含很多资源（比如大量贴图或者声音等大内存占用的东西）的话，这部分资源在场景切换时无法卸载，将一直占用内存，这种情况应该尽量避免。</p>
 <p style="text-align: justify;">另外一种需要注意的情况是脚本中对资源的引用。大部分脚本将在场景转换时随之失效并被回收，但是，在场景之间被保持的脚本不在此列（通常情况是被附着在DontDestroyOnLoad的GameObject上了）。而这些脚本很可能含有对其他物体的Component或者资源的引用，这样相关的资源就都得不到释放，这绝对是不想要的情况。另外，static的单例（singleton）在场景切换时也不会被摧毁，同样地，如果这种单例含有大量的对资源的引用，也会成为大问题。因此，尽量减少代码的耦合和对其他脚本的依赖是十分有必要的。如果确实无法避免这种情况，那应当手动地对这些不再使用的引用对象调用Destroy()或者将其设置为null。这样在垃圾回收的时候，这些内存将被认为已经无用而被回收。</p>
-<p style="text-align: justify;">需要注意的是，Unity在一个场景开始时，根据场景构成和引用关系所自动读取的资源，只有在读取一个新的场景或者reset当前场景时，才会得到清理。因此这部分内存占用是不可避免的。在小内存环境中，这部分初始内存的占用十分重要，因为它决定了你的关卡是否能够被正常加载。因此在计算资源充足或是关卡开始之后还有机会进行加载时，尽量减少Hierarchy中的引用，变为手动用Resource.Load，将大大减少内存占用。在Resource.UnloadAsset()和Resources.UnloadUnusedAssets()时，只有那些真正没有任何引用指向的资源会被回收，因此请确保在资源不再使用时，将所有对该资源的引用设置为null或者Destroy。同样需要注意，这两个Unload方法仅仅对Resource.Load拿到的资源有效，而不能回收任何场景开始时自动加载的资源。与此类似的还有AssetBundle的Load和Unload方法，灵活使用这些手动自愿加载和卸载的方法，是优化Unity内存占用的不二法则～</p><!--:--><!--:en-->&nbsp;</p>
-
-<p><!--:--><!--:ja-->&nbsp;</p>
-
-<p><!--:--></p>
+<p style="text-align: justify;">需要注意的是，Unity在一个场景开始时，根据场景构成和引用关系所自动读取的资源，只有在读取一个新的场景或者reset当前场景时，才会得到清理。因此这部分内存占用是不可避免的。在小内存环境中，这部分初始内存的占用十分重要，因为它决定了你的关卡是否能够被正常加载。因此在计算资源充足或是关卡开始之后还有机会进行加载时，尽量减少Hierarchy中的引用，变为手动用Resource.Load，将大大减少内存占用。在Resource.UnloadAsset()和Resources.UnloadUnusedAssets()时，只有那些真正没有任何引用指向的资源会被回收，因此请确保在资源不再使用时，将所有对该资源的引用设置为null或者Destroy。同样需要注意，这两个Unload方法仅仅对Resource.Load拿到的资源有效，而不能回收任何场景开始时自动加载的资源。与此类似的还有AssetBundle的Load和Unload方法，灵活使用这些手动自愿加载和卸载的方法，是优化Unity内存占用的不二法则～</p></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Perl中JSON的解析和utf-8乱码的解决]]></title>
-    <link href="http://blog.onevcat.com/2012/10/perl-json-utf/"/>
+    <link href="http://onevcat.com/2012/10/perl-json-utf/"/>
     <updated>2012-10-29T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/10/perl-json-utf</id>
+    <id>http://onevcat.com/2012/10/perl-json-utf</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;">最近在做一个带有网络通讯和同步功能的app，需要自己写一些后台的东西。因为是半路入门，所以从事开发以来就没有做过后台相关的工作，属于绝对的小白菜鸟。而因为公司在入职前给新员工提过学习Perl的要求，所以还算是稍微看过一些。这次的后台也直接就用Perl来写了。</p></p>
 
 <p><h3 style="text-align: justify;">基本使用</h3>
@@ -776,9 +765,9 @@ if (Time.timeScale == 0 ){
   
   <entry>
     <title type="html"><![CDATA[再见，祖国]]></title>
-    <link href="http://blog.onevcat.com/2012/09/see-you-my-country/"/>
+    <link href="http://onevcat.com/2012/09/see-you-my-country/"/>
     <updated>2012-09-27T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/09/see-you-my-country</id>
+    <id>http://onevcat.com/2012/09/see-you-my-country</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;">这篇日志发送的时候，我应该已经在离开中国的飞机上了，也有可能已经到达异国他乡了。这是一次不知道归期的旅途，也是一次充满未知的探索，从现在开始，祝自己好运。</p>
 <p style="text-align: justify;">我在中国待了二十六载春秋，对这片土地有着深厚的感情。无论何时何地，无论此去经年，这个经历了太多磨难和挫折并且面临着巨大挑战的国家，始终是我魂牵梦萦的地方。虽然还有各种问题，虽然不足和缺点明显到让人无力吐槽，但是这个国家是我的祖国。对于自己的国家，一个人是没有任何理由和立场去厌恶的。</p>
 <p style="text-align: justify;">记得本科入学式的时候，校长有这样一句话：“你们来到这里，是因为祖国选择了你们”。而讽刺的是，在四年或者七年后，我们中有一大批人选择了离开祖国，而且可能永远不会再回来。学校很尴尬的恢复成了最初成立时的“留美预备学校”的性质。确实，在这100年的时间里，似乎很多东西都回到了起点…</p>
@@ -793,9 +782,9 @@ if (Time.timeScale == 0 ){
   
   <entry>
     <title type="html"><![CDATA[WWDC 2012 Session笔记——202, 228, 232 AutoLayout（自动布局）入门]]></title>
-    <link href="http://blog.onevcat.com/2012/09/autoayout/"/>
+    <link href="http://onevcat.com/2012/09/autoayout/"/>
     <updated>2012-09-20T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/09/autoayout</id>
+    <id>http://onevcat.com/2012/09/autoayout</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/09/QQ20120920-8.png"><img class="aligncenter size-full wp-image-1017" title="QQ20120920-8" src="http://www.onevcat.com/wp-content/uploads/2012/09/QQ20120920-8.png" alt="" width="651" height="262" data-pinit="registered" /></a></p>
 <p style="text-align: justify;">这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
 <p style="text-align: justify;">AutoLayout在去年的WWDC上被引入Cocoa，而在今年的WWDC上，Apple不惜花费了三个Session的前所未见的篇幅来详细地向开发者讲解AutoLayout在iOS上的应用，是由起原因的：iPhone5的屏幕将变为4寸，开发者即将面临为不同尺寸屏幕进行应用适配的工作。Android平台开发中最令人诟病的适配工作的厄运现在似乎也将降临在iOS开发者的头上。基于这样的情况，Apple大力推广使用AutoLayout的方法来进行UI布局，以一举消除适配的烦恼。AutoLayout将是自Interface Builder和StoryBoard之后UI制作上又一次重要的变化，也必然是之后iOS开发的趋势，因此这个专题很值得学习。</p></p>
@@ -990,9 +979,9 @@ viewsDictionary = NSDictionaryOfVariableBindings(cancelButton,acceptButton);</pr
   
   <entry>
     <title type="html"><![CDATA[WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts]]></title>
-    <link href="http://blog.onevcat.com/2012/08/advanced-collection-view/"/>
+    <link href="http://onevcat.com/2012/08/advanced-collection-view/"/>
     <updated>2012-08-28T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/08/advanced-collection-view</id>
+    <id>http://onevcat.com/2012/08/advanced-collection-view</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/08/QQ20120828-3.png"><img class="aligncenter size-full wp-image-984" title="uicollectionview-struct" src="http://www.onevcat.com/wp-content/uploads/2012/08/QQ20120828-3.png" alt="" width="983" height="251" data-pinit="registered" /></a></p>
 <p style="text-align: justify;">这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
 <p style="text-align: justify;">在上一篇<a href="http://www.onevcat.com/2012/06/introducing-collection-views/">UICollectionView的入门介绍</a>中，大概地对iOS6新加入的强大的UICollectionView进行了一些说明。在这篇博文中，将结合WWDC2012 Session219：Advanced Collection View的内容，对Collection View进行一个深入的使用探讨，并给出一个自定义的Demo。</p></p>
@@ -1264,9 +1253,9 @@ viewsDictionary = NSDictionaryOfVariableBindings(cancelButton,acceptButton);</pr
   
   <entry>
     <title type="html"><![CDATA[学生时代的终焉]]></title>
-    <link href="http://blog.onevcat.com/2012/08/not-a-studen/"/>
+    <link href="http://onevcat.com/2012/08/not-a-studen/"/>
     <updated>2012-08-11T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/08/not-a-studen</id>
+    <id>http://onevcat.com/2012/08/not-a-studen</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/08/me.jpg"><img class="aligncenter size-full wp-image-973" title="student" src="http://www.onevcat.com/wp-content/uploads/2012/08/me.jpg" alt="" width="838" height="256" data-pinit="registered" /></a></p>
 <p style="text-align: justify;">距离研究生毕业，已经过去一个月了。在毕业季的离愁和从学生身份的转变的怅惘渐渐淡去时，大概是时候对我的整个的大学生涯做一个小结了。很多事情的记忆已经在时间的冲蚀中变得模糊了，但是也有一些事情比其他的琐事更深地印刻在了记忆之中，也许简单的梳理和回忆，无法把这七年刻画的细致入微，但是作为轮廓的勾勒和回顾，却已然绰绰有余了。（写完之后终于发现又被写成标准流水账了，这个从小学开始的写作文的毛病在不写博客两个月之后再次复发了哎…）</p></p>
 
@@ -1309,9 +1298,9 @@ viewsDictionary = NSDictionaryOfVariableBindings(cancelButton,acceptButton);</pr
   
   <entry>
     <title type="html"><![CDATA[Pomodoro Do - 拖延症患者的福音]]></title>
-    <link href="http://blog.onevcat.com/2012/07/pomodoro-do-%E6%8B%96%E5%BB%B6%E7%97%87%E6%82%A3%E8%80%85%E7%9A%84%E7%A6%8F%E9%9F%B3/"/>
+    <link href="http://onevcat.com/2012/07/pomodoro-do-%E6%8B%96%E5%BB%B6%E7%97%87%E6%82%A3%E8%80%85%E7%9A%84%E7%A6%8F%E9%9F%B3/"/>
     <updated>2012-07-25T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/07/pomodoro-do-拖延症患者的福音</id>
+    <id>http://onevcat.com/2012/07/pomodoro-do-拖延症患者的福音</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: center;"><img title="PomodoroDo Logo" src="http://pomo.onevcat.com/img/Icon-50.png" alt="" width="282" height="141" data-pinit="registered" /></p>
 <p style="text-align: justify;"><span style="color: #ff0000;"><em>由于完全是自己完成的应用啦，所以详细介绍就写的偏向广告一点吧～欢迎大家购买使用，并给我提意见哦～我会不断完善这款app的。</em></span></p></p>
 
@@ -1386,9 +1375,9 @@ AppStore上也有不少番茄工作法的应用。相比起来，Pomodoro Do的�
   
   <entry>
     <title type="html"><![CDATA[日语学习中...顺便宣传我的新app]]></title>
-    <link href="http://blog.onevcat.com/2012/07/japanese-learin/"/>
+    <link href="http://onevcat.com/2012/07/japanese-learin/"/>
     <updated>2012-07-09T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/07/japanese-learin</id>
+    <id>http://onevcat.com/2012/07/japanese-learin</id>
     <content type="html"><![CDATA[<p><!--:zh-->如题，被房东赶出来了，现在住到了北语的临时宿舍，网络情况很不乐观&#8230;可能会有一段时间无法更新博客了&#8230;</p>
 
 <p>不过还好在之前完成了Pomodoro Do的所有开发和上传工作，接下来不出大的意外的话审核什么的应该不会有太大问题，再之后就可以上架了&#8230;还是可以期待一下的，毕竟是自己完全独立制作和拥有的第一个app。虽然可能很简陋功能也比较简单，但是还是比较用心了的&#8230;</p>
@@ -1397,19 +1386,16 @@ AppStore上也有不少番茄工作法的应用。相比起来，Pomodoro Do的�
 
 <p>如果想了解一些如何提高效率的小tip以及这个app的最新情况，可以在新浪微博上关注<a href="http://weibo.com/pomodorodo">@PomodoroDo</a>，我会抽空进行一些更新的。</p>
 
-<p>谢谢支持～8月22号日语培训结束，到时候再进行大规模更新了～<!--:--><!--:en-->&nbsp;</p>
+<p>谢谢支持～8月22号日语培训结束，到时候再进行大规模更新了～</p>
 
-<p><!--:--><!--:ja-->&nbsp;</p>
-
-<p><!--:--></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[WWDC 2012 Session笔记——205 Introducing Collection Views]]></title>
-    <link href="http://blog.onevcat.com/2012/06/introducing-collection-views/"/>
+    <link href="http://onevcat.com/2012/06/introducing-collection-views/"/>
     <updated>2012-06-30T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/06/introducing-collection-views</id>
+    <id>http://onevcat.com/2012/06/introducing-collection-views</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-7.png"><img class="aligncenter size-full wp-image-943" title="QQ20120630-7" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-7.png" alt="" width="732" height="113" data-pinit="registered" /></a></p>
 <p style="text-align: justify;">这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
 <p style="text-align: justify;">在之前的<a href="http://www.onevcat.com/2012/06/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%80%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84ios6-sdk%E6%96%B0%E7%89%B9%E6%80%A7/">iOS6 SDK新特性前瞻</a>中我曾经提到过UICollectionView，当时只把CollectionView当作是一个现在已有的开源GridView，仔细研究了下WWDC2012相关的Session后发现并不是那么简单。Apple这次真的给广大开发者带来了一个非常powerful的view，其强大程度可以说远超UITableView。接下来的这篇笔记将对应Session 205，作为使用UICollectionView的入门，之后还将完成一篇关于深入使用UICollectionView以及相应的Layout的笔记。</p>
@@ -1580,9 +1566,9 @@ return cell;</pre>
   
   <entry>
     <title type="html"><![CDATA[WWDC 2012 Session笔记——405 Modern Objective-C]]></title>
-    <link href="http://blog.onevcat.com/2012/06/modern-objective-c/"/>
+    <link href="http://onevcat.com/2012/06/modern-objective-c/"/>
     <updated>2012-06-24T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/06/modern-objective-c</id>
+    <id>http://onevcat.com/2012/06/modern-objective-c</id>
     <content type="html"><![CDATA[<p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120624-1.png"><img class="aligncenter size-full wp-image-912" title="QQ20120624-1" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120624-1.png" alt="" width="600" height="112" data-pinit="registered" /></a></p>
 
 <p>这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
@@ -1731,19 +1717,15 @@ dict = [NSDictionary dictionaryWithObjects:objects forKeys:keys count:count];</p
 
 <p><hr /></p>
 
-<p>Objective-C确实是一门正在高速变化的语言。一方面，它的动态特性和small talk的烙印深深不去，另一方面，它又正积极朝着各种简单语言的语法方向靠近。各类的自动化处理虽然有些让人不放心，但是事实证明了它们工作良好，而且也确实为开发者节省了时间。尽快努力去拥抱新的变化吧～<!--:--><!--:en-->&nbsp;</p>
-
-<p><!--:--><!--:ja-->&nbsp;</p>
-
-<p><!--:--></p>
+<p>Objective-C确实是一门正在高速变化的语言。一方面，它的动态特性和small talk的烙印深深不去，另一方面，它又正积极朝着各种简单语言的语法方向靠近。各类的自动化处理虽然有些让人不放心，但是事实证明了它们工作良好，而且也确实为开发者节省了时间。尽快努力去拥抱新的变化吧～</p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[WWDC 2012 Session笔记——200 What is new in Cocoa Touch]]></title>
-    <link href="http://blog.onevcat.com/2012/06/what-is-new-in-cocoa-touch/"/>
+    <link href="http://onevcat.com/2012/06/what-is-new-in-cocoa-touch/"/>
     <updated>2012-06-20T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/06/what-is-new-in-cocoa-touch</id>
+    <id>http://onevcat.com/2012/06/what-is-new-in-cocoa-touch</id>
     <content type="html"><![CDATA[<p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120620-1.png"><img class="aligncenter size-full wp-image-892" title="what-is-new-in-cocoa-touch" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120620-1.png" alt="" width="748" height="141" data-pinit="registered" /></a></p>
 
 <p>这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
@@ -1892,19 +1874,14 @@ UITableView就不多介绍了，基础中的基础…在iOS5引入StoryBoard之�
 <p><h3>总结</h3>
 其他的很多新特性，包括社交网络，GameCenter和PassKit等也会在之后逐渐深入WWDC 2012 Session的时候进行笔记..</p>
 
-<p>作为开篇，就这样吧。<!--:--><!--:en-->&nbsp;</p>
-
-<p><!--:--><!--:ja-->&nbsp;</p>
-
-<p><!--:--></p>
-]]></content>
+<p>作为开篇，就这样吧。</p>]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[开发者所需要知道的iOS6 SDK新特性]]></title>
-    <link href="http://blog.onevcat.com/2012/06/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%80%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84ios6-sdk%E6%96%B0%E7%89%B9%E6%80%A7/"/>
+    <link href="http://onevcat.com/2012/06/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%80%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84ios6-sdk%E6%96%B0%E7%89%B9%E6%80%A7/"/>
     <updated>2012-06-12T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/06/开发者所需要知道的ios6-sdk新特性</id>
+    <id>http://onevcat.com/2012/06/开发者所需要知道的ios6-sdk新特性</id>
     <content type="html"><![CDATA[<p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/ios6.png"><img class="aligncenter size-full wp-image-859" title="ios6" src="http://www.onevcat.com/wp-content/uploads/2012/06/ios6.png" alt="" width="766" height="238" data-pinit="registered" /></a></p>
 
 <p>欢迎转载本文，但是转载请注明本文出处： <strong><a href="http://2.gy/erSp" target="_blank">http://2.gy/erSp</a></strong></p>
@@ -2069,15 +2046,15 @@ Apple希望用户关闭app，然后下一次打开时能保持关闭时的界面
 
 <p><hr /></p>
 
-<p>按照以往WWDC的惯例，之后几天的开发者Session会对这些变化以及之前就存在在iOS里的一些issues和tips做解释和交流。在session公布之后我会挑选一些自己感兴趣并且可能比较实用的部分再进行整理～尽情期待～<sup>O</sup>^<!--:--></p>
+<p>按照以往WWDC的惯例，之后几天的开发者Session会对这些变化以及之前就存在在iOS里的一些issues和tips做解释和交流。在session公布之后我会挑选一些自己感兴趣并且可能比较实用的部分再进行整理～尽情期待～</p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[EURO 2012]]></title>
-    <link href="http://blog.onevcat.com/2012/06/euro2012/"/>
+    <link href="http://onevcat.com/2012/06/euro2012/"/>
     <updated>2012-06-11T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/06/euro2012</id>
+    <id>http://onevcat.com/2012/06/euro2012</id>
     <content type="html"><![CDATA[<p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/euro2012.png"><img class="aligncenter size-full wp-image-853" title="euro2012" src="http://www.onevcat.com/wp-content/uploads/2012/06/euro2012.png" alt="" width="1024" height="256" data-pinit="registered" /></a></p>
 
 <p>又是一届欧洲杯。</p>
@@ -2102,19 +2079,16 @@ Apple希望用户关闭app，然后下一次打开时能保持关闭时的界面
 
 <p>可以说，足球，陪伴我长大。关于足球的这些记忆，可能永远也无法抹去了。</p>
 
-<p>而现在，在同样这块七千平米的草地上，又会演绎出什么样的故事呢…？<!--:--><!--:en-->&nbsp;</p>
+<p>而现在，在同样这块七千平米的草地上，又会演绎出什么样的故事呢…？</p>
 
-<p><!--:--><!--:ja-->&nbsp;</p>
-
-<p><!--:--></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[手把手教你ARC——iOS/Mac开发ARC入门和使用]]></title>
-    <link href="http://blog.onevcat.com/2012/06/arc-hand-by-hand/"/>
+    <link href="http://onevcat.com/2012/06/arc-hand-by-hand/"/>
     <updated>2012-06-04T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/06/arc-hand-by-hand</id>
+    <id>http://onevcat.com/2012/06/arc-hand-by-hand</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120604-1.png"><img class="size-full wp-image-810" title="ARC" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120604-1.png" alt="" width="1069" height="265" data-pinit="registered" /></a></p>
 <p style="text-align: justify;">本文部分实例取自iOS 5 Toturail一书中关于ARC的教程和公开内容，仅用于技术交流和讨论。请不要将本文的部分或全部内容用于商用，谢谢合作。</p>
 <p style="text-align: justify;">欢迎转载本文，但是转载请注明本文出处：<a href="http://www.onevcat.com/2012/06/arc-hand-by-hand/">http://www.onevcat.com/2012/06/arc-hand-by-hand/</a></p>
@@ -2365,38 +2339,79 @@ NSString *s3 = (NSString *)s2; </pre></p>
 <p><hr /></p>
 
 <p><h2 style="text-align: justify;">写在最后</h2>
-<p style="text-align: justify;">写了那么多，希望你现在能对ARC有个比较全面的了解和认识了。ARC肯定是以后的趋势，也确实能让代码量大大降低，减少了很多无意义的重复工作，还提高了app的稳定性。但是凡事还是纸上得来终觉浅，希望作为开发者的你，在下一个工程中去尝试用用ARC～相信你会和我一样，马上爱上这种make life easier的方式的～</p><!--:--><!--:en-->&nbsp;</p>
-
-<p>&nbsp;</p>
-
-<p><!--:--><!--:ja-->&nbsp;</p>
-
-<p>&nbsp;</p>
-
-<p><!--:--></p>
+<p style="text-align: justify;">写了那么多，希望你现在能对ARC有个比较全面的了解和认识了。ARC肯定是以后的趋势，也确实能让代码量大大降低，减少了很多无意义的重复工作，还提高了app的稳定性。但是凡事还是纸上得来终觉浅，希望作为开发者的你，在下一个工程中去尝试用用ARC～相信你会和我一样，马上爱上这种make life easier的方式的～</p></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[水清木华]]></title>
-    <link href="http://blog.onevcat.com/2012/05/tsinghua-photos/"/>
+    <link href="http://onevcat.com/2012/05/tsinghua-photos/"/>
     <updated>2012-05-16T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/05/tsinghua-photos</id>
-    <content type="html"><![CDATA[<p><!--:zh-->七年时光，匆匆飞逝。入学之日还历历在目，离别之时却已悄然而来。我希望自己能挥一挥衣袖，不带走这里的一片云彩，但却留下自己青春的回忆。在这个偌大的园子里，有我的欢笑，有我的泪水，有我的努力。我相信所有清华学子在离别母校时，必定是依依不舍。但是，孩子总有离家之日，外面的舞台也必会更加精彩。</p>
+    <id>http://onevcat.com/2012/05/tsinghua-photos</id>
+    <content type="html"><![CDATA[<p>七年时光，匆匆飞逝。入学之日还历历在目，离别之时却已悄然而来。我希望自己能挥一挥衣袖，不带走这里的一片云彩，但却留下自己青春的回忆。在这个偌大的园子里，有我的欢笑，有我的泪水，有我的努力。我相信所有清华学子在离别母校时，必定是依依不舍。但是，孩子总有离家之日，外面的舞台也必会更加精彩。</p>
 
-<p>[simpleviewer gallery_id=&#8221;4&#8221;]<!--:--><!--:en-->&nbsp;</p>
+<p>在毕业之际，载着园园骑车逛了一圈校园，再次好好地看了看这个生活了七年的地方，于是有了下面这一组照片。</p>
 
-<p><!--:--><!--:ja-->&nbsp;</p>
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-095032-1.jpg" alt="清华园这三个字让多少人魂牵梦萦，而在这个园子里待了七年之后，我终将告别这里，踏上新的征途" /></p>
 
-<p><!--:--></p>
+<!-- more -->
+
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-101924_Snapseed.jpg" alt="图书馆老馆。虽然由于年代的问题，不如科技图书馆和人文图书馆那般受欢迎，但是却不可能丢失古朴严谨的氛围，大通桌依然是最受欢迎的～" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-112316_Snapseed.jpg" alt="清华八斋之一，明斋。取自“大学之道，在明明德”" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-112502_Snapseed.jpg" alt="清华八斋之一，新斋。取自“在新民”" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-110352_Snapseed.jpg" alt="工字厅，也许在校外不出名，但是这确实是白宫之于美国，唐宁10号之于英国，中南海之于中国的地方，是清华的校长办公室;不过令人遗憾的是继承了中国政府部门的一贯传统，闲人免进" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-105459_Snapseed.jpg" alt="从二教外看大礼堂，这里算是清华老一代建筑中最为中心的地域了吧" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-111736_Snapseed.jpg" alt="清华日晷，行胜于言，此诺必守一生。" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-113516_Snapseed.jpg" alt="日晷和大礼堂，都是清华早期标志性建筑" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-113128-1_Snapseed.jpg" alt="西区体育场观礼台，观礼台侧的字母依稀可见。鄙人才识浅薄，求问高人刻字内容.." /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-112913-1_Snapseed.jpg" alt="清华八斋之一，善斋。取自“在止于至善”" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-111833-1_Snapseed.jpg" alt="一圈，一圈，记录的是时光荏苒和历史沧桑。日晷见证了清华一步一步走到如今的所有时光。" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-111202-1_Snapseed.jpg" alt="大礼堂门外雕花，不由感叹现今的新建筑已经失去了当时的那一份精雕细琢.." /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-111144-1_Snapseed.jpg" alt="大礼堂正门的门雕，圆形图案的精致的雕花守候了一代有一代的清华人" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-110955-1_Snapseed.jpg" alt="同方部，取自《礼记》“儒有合志同方，营道同术，并立则乐，相下不厌”，是清华最早的一批建筑之一，现为校友会之所在" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-105754_Snapseed.jpg" alt="二校门外东侧热能系系馆..一直觉得这个系馆位置相当黄金.." /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-102721-1_Snapseed.jpg" alt="逸夫馆书架，TP类的部分馆藏.." /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-102532-1.jpg" alt="纯粹觉得好看..." /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-102233-1.jpg" alt="逸夫馆前的喷泉，终于换了新的..不容易呢" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-101609-1.jpg" alt="西阶梯教室，优雅的小楼，随没有什么特点，但是给人感觉却很亲切。" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-101430-1_Snapseed.jpg" alt="重新修葺的科学馆的门牌，很遗憾没有见到过从前的科学馆" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-101159-1_Snapseed.jpg" alt="二教永远是我的伤心地..不提也罢" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-095746_Snapseed.jpg" alt="远观大礼堂，夏季和秋初礼堂前的草坪茵茵正胜，富有层次的绿色给校园填满了活力" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-094554-1.jpg" alt="新清华学堂和人文图书馆等百年时的新一代标志性建筑都采用了棱锥形状，算是一大特色" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-094337-1.jpg" alt="新清华学堂外的台阶" /></p>
+
+<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-093943-1.jpg" alt="伫立的主楼，坚实的建筑风格和气势让人起敬，但是单看外表却很难让人相信这是五十年前清华人的杰作" /></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[颜色选取和转换小工具]]></title>
-    <link href="http://blog.onevcat.com/2012/05/tools-for-color-picking/"/>
+    <link href="http://onevcat.com/2012/05/tools-for-color-picking/"/>
     <updated>2012-05-10T00:00:00+09:00</updated>
-    <id>http://blog.onevcat.com/2012/05/tools-for-color-picking</id>
+    <id>http://onevcat.com/2012/05/tools-for-color-picking</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/05/2007106112356379_2.jpg"><img class="aligncenter size-full wp-image-741" title="2007106112356379_2" src="http://www.onevcat.com/wp-content/uploads/2012/05/2007106112356379_2.jpg" alt="" width="1024" height="256" data-pinit="registered" /></a></p>
 <p style="text-align: justify;">iOS的app中，交互设计永远是重点中的重点，为用户界面选择合适的配色方法不仅对app整体美观有重要意义，同时也对用户体验的提升至关重要。但是在iOS开发中对于颜色的选取，转换和设定并不十分方便。通过配合使用下面的小工具可以提升颜色选取和转换的效率～</p>
 <p style="text-align: justify;">1、颜色选择器</p>
@@ -2416,11 +2431,6 @@ NSString *s3 = (NSString *)s2; </pre></p>
                             blue:((float)  (colorInHex &amp; 0xFF))            / 0xFF
                            alpha:1.0];
 }</pre>
-&nbsp;<!--:--><!--:en-->&nbsp;</p>
-
-<p><!--:--><!--:ja-->&nbsp;</p>
-
-<p><!--:--></p>
 ]]></content>
   </entry>
   

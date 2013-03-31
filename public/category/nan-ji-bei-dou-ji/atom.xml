@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 南箕北斗集 | OneV's Den]]></title>
+  <link href="http://onevcat.com/category/nan-ji-bei-dou-ji/atom.xml" rel="self"/>
+  <link href="http://onevcat.com/"/>
+  <updated>2013-03-31T22:17:34+09:00</updated>
+  <id>http://onevcat.com/</id>
+  <author>
+    <name><![CDATA[onevcat]]></name>
+    <email><![CDATA[onev@onevcat.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[AppCode，Objective-C IDE的另一选择]]></title>
+    <link href="http://onevcat.com/2012/03/appcode/"/>
+    <updated>2012-03-24T00:00:00+09:00</updated>
+    <id>http://onevcat.com/2012/03/appcode</id>
+    <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/03/logo_appcode.gif"><img class="aligncenter size-full wp-image-710" title="logo_appcode" src="http://www.onevcat.com/wp-content/uploads/2012/03/logo_appcode.gif" alt="" width="720" height="167" data-pinit="registered" /></a></p></p>
+
+
+
+
+<p><h3 style="text-align: justify;">Xcode or AppCode</h3>
+<p style="text-align: justify;">近年来随着iOS设备和Mac发展，Objective-C（以下简写为OC）进步神速，但是这个世界上并没有多少OC的IDE。要说集成了Mac和iOS SDK的OC开发套件，最为常用和普及的一定是Apple自家的Xcode了。真心说来Xcode是一个很棒的IDE，它具备了作为一个优秀IDE所应该拥有的一切要素。其他的OC IDE环境从来不是主流，但是其中却也不乏优秀者，<a href="http://www.jetbrains.com/objc/">JetBrains的AppCode</a>便是佼佼者之一。</p>
+<p style="text-align: justify;">说到JetBrains可能最为人熟知的是它旗下的另一款Java IDE——<a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a>。而JetBrains也还同时有PHP，Python，Ruby等语言的专用IDE，可以说JetBrains就是以IDE为主要产品的公司。作为一家专业的IDE解决方案提供商，它的产品自然也能符合绝大多数用户的需求。而AppCode是JetBrains为Mac和iOS下app开发所推出的IDE产品。如果你想要更effective和elegant的coding，那确实应该尝试AppCode；或者只是单单看腻了Xcode，也可以尝尝鲜～<!--:--><!--:en--></p>
+
+<p><!--:--><!--more--><!--:zh--></p></p>
+
+
+
+
+<p><hr /></p>
+
+
+
+
+<p><h3 style="text-align: justify;">列举AppCode的几个好用特性</h3>
+<h4 style="text-align: justify;">代码补全</h4>
+<p style="text-align: justify;">这是最最基本的特性，我想也是一个合格的IDE及编辑器应该完成的最基本的功能。AppCode的代码补全不仅限于类、方法或者变量名字这样的基本自动完成，它还具备了根据上下文推测的能力，并且推测算法十分可靠。</p>
+<p style="text-align: justify;">甚至如果你写了一个从未出现过的变量或者方法，AppCode都会询问你是否想要添加这个方法。开发者将有机会避免一切可能的无意义的来回跳转，而专注于有效代码的编写。</p></p>
+
+
+
+
+<p><h4 style="text-align: justify;">快速跳转</h4>
+<p style="text-align: justify;">Xcode的最大确定之一就是难以定位文件和类。想找一个文件的话，基本上不可能完全用键盘实现。而如果遵循效率至上的原则的话，手指离开键盘就意味着效率下降。Sublime Text提供了一种很优秀的寻找和跳转的方法，而AppCode中也有类似的导航方式（我不确定是谁先提出的）。配合类似微博的特定符号，可以完成从文件到类乃至到方法和符号的快速跳转，避免了所有可能的鼠标操作。</p></p>
+
+
+
+
+<p><h4 style="text-align: justify;">代码分析和修改意见</h4>
+<p style="text-align: justify;">虽然Xcode也有代码分析的功能(Shift+Cmd+B in Xcode 4)，但是大部分情况下是会望了用的，而且Xcode的分析基本只能找到内存上的潜在问题，随着ARC的逐渐普及，相信内存上的issue会在开发过程中越来越少。AppCode的代码分析是实时进行的，在代码完成之前，你就可以看到存在的问题。分析和监测的问题包括且不限于代码内存管理、从未调用的方法、不可到达的代码段等。</p>
+<p style="text-align: justify;">关于警告或错误代码的修改可以说是AppCode的强项，自动帮助添加release/autorelease，优化头文件引用（去掉多余头文件以及自动添加需要的头文件），自动帮助完成强制转换等。</p>
+<p style="text-align: justify;">代码分析和修正共有超过60种监视的错误，遵循AppCode的建议可以保证代码的整洁。</p></p>
+
+
+
+
+<p><h4 style="text-align: justify;">代码格式修正</h4>
+<p style="text-align: justify;">每个人都有自己喜欢和习惯的代码格式，比如{}的位置，缩进和隔行的形式等等。阅读符合自己风格的代码时，往往效率能有大幅提升。AppCode提供了高度可自定制的代码风格模版，并可以很简单地将其套用到任何代码上。这样，不论写代码时多么没有注意格式，最后产生的代码都是完全符合风格的漂亮优雅的代码。这不仅可以为自己之后的维护和修改打下基础，也能在团队合作中快速将自己的代码的风格改为和团队统一。这也是我个人最喜欢的AppCode的一个功能。</p></p>
+
+
+
+
+<p><h4 style="text-align: justify;">iOS环境</h4>
+<p style="text-align: justify;">既然是for OC的IDE，那基本上绝大部分时间都是在为iOS或者Mac开发而工作了。AppCode虽然不是Apple的亲儿子，但是不管是设备调试还是模拟器运行也都是没有问题的。而且AppCode也集成了GDB和LLDB，其Debug工具的界面总体上说比Xcode更灵活。另外，单元测试和文档功能也深度集成到了AppCode中，可以随时方便地运行和调用。</p></p>
+
+
+
+
+<p><h4 style="text-align: justify;">插件</h4>
+<p style="text-align: justify;">插件这种东西，为一个应用提供了无限的可能（关于插件这种东西的登峰造极的应用，可以参考VIM或者魔兽世界）。可以说使用插件或者自己编写插件来使用，完全可以将AppCode二次开发为一个完全符合自己需求和习惯的IDE。Xcode虽然也提供插件功能，但是Xcode的插件开发相当繁琐，而且成功的Xcode插件也基本不存在与这个世界之上。而AppCode现在已经有50+的插件存在于插件仓库中，已经可以满足大部分开发者的需求了（比如存在把编辑器VIM化的强力插件）。</p></p>
+
+
+
+
+<p><hr /></p>
+
+
+
+
+<p><h3 style="text-align: justify;">AppCode的不足</h3>
+<p style="text-align: justify;">金无足赤，AppCode也有一些不足之处。比如需要依赖Xcode，没有集成nib编辑器，在打开nib文件时会自动去开Xcode，Instrument工具也要调用Xcode等。但是这并不妨碍AppCode成为一款伟大的IDE，在通过一段时间的对AppCode的使用后，我已经成为了AppCode的忠实拥趸～这款IDE对于开发效率的提高和开发心情的调节可谓是相当成功。</p></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Apple与教育界]]></title>
+    <link href="http://onevcat.com/2012/01/apple%E4%B8%8E%E6%95%99%E8%82%B2%E7%95%8C/"/>
+    <updated>2012-01-19T00:00:00+09:00</updated>
+    <id>http://onevcat.com/2012/01/apple与教育界</id>
+    <content type="html"><![CDATA[<p><!--:zh-->iBooks 2，iBooks Author，TextBook Store，iTunes U for iPad。Apple确实是伟大的公司，深知从小培养自己的用户和形成生态圈...不得不佩服。</p>
+
+
+
+
+<p><a href="http://itunes.apple.com/us/app/ibooks-author/id490152466?mt=12" target="_blank">http://itunes.apple.com/us/app/ibooks-author/id490152466?mt=12</a>，发布会还没结束iBooks Author就已经可以下载了...Cook是个行动派，大赞...<!--:--></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[TestFlight——完美的iOS app测试方案]]></title>
+    <link href="http://onevcat.com/2012/01/testflight/"/>
+    <updated>2012-01-17T00:00:00+09:00</updated>
+    <id>http://onevcat.com/2012/01/testflight</id>
+    <content type="html"><![CDATA[<p><img src="http://www.onevcat.com/wp-content/uploads/2012/01/TestFlightLOGO.chickenhawk324.png" alt="TestFlight Logo" /></p>
+
+<p>转载本文请保留以下原作者信息:<br/>
+原作：onevcat [http://www.onevcat.com/2012/01/testflight/][http://www.onevcat.com/2012/01/testflight/]</p>
+
+<h2>2013.3.31补充</h2>
+
+<p>在整理以前写的内容，想不到还有机会再对这篇帖子进行一些更新。当时写这篇帖子的时候，app内部测试以及对应的crash报告类的服务相对很少，而且并不成熟。TestFlight算是在这一领域的先行者，而随着app市场的不断膨胀，相应的类似服务也逐渐增多，比较常用的有：</p>
+
+<p>崩溃报告类：</p>
+
+<ul>
+<li><a href="https://www.crittercism.com/">Crittercism</a> 个人用了一段时间，表现很稳定，但是版本更新时设置比较麻烦</li>
+<li><a href="https://www.crashlytics.com/">Crashlytics</a> 相当优雅方便，最近被Twitter收购。十分推荐</li>
+</ul>
+
+
+<p>用户行为统计类：</p>
+
+<ul>
+<li><a href="http://www.flurry.com/">Flurry</a> 这个太有名了，不多说了</li>
+<li><a href="http://count.ly/">Countly</a> 好处是轻量开源，数据可以自己掌控</li>
+</ul>
+
+
+<p>但是在“发布前”测试分发这个环节上，基本还没有出现能与TestFlight相匹敌的服务出现，因此如果有这方面的测试需求的话，TF依然是开发人员的首选。</p>
+
+<p>当然，这一年多来，TF也进步了很多。从整个队伍建立和开发者添加开始，到桌面客户端的出现以及打包上传的简化，可以说TF也逐渐向着一个更成熟易用的方向发展。本文虽然写的时间比较早，但是整个TF的基本流程并没有发生变化，依然可以作为入门的参考。</p>
+
+<h2>前言</h2>
+
+<p>iOS开发的测试一直是令人头疼的问题。app开发的短周期和高效率的要求注定了一款app，特别是小公司的app，不会留给开发人员很多测试的时间。而在测试时往往又遇到crash报告提交困难，测试人员与开发人员沟通不便等等问题，极大延缓了测试进度。TestFlight即是为了解决iOS开发时测试的种种困难而生的服务，使用TestFlight可以十分便利地完成版本部署，测试用户Log提交，收集Carsh Log和收集用户反馈等工作，而这一切居然连一个iDP账号都不需要！</p>
+
+<h2>基本使用</h2>
+
+<h3>注册</h3>
+
+<p>TestFlight界面友好，文档齐全，开发者在使用上不会遇到很多问题。到<a href="https://testflightapp.com/">TestFlight官网</a>注册账号即可开始使用。</p>
+
+<p><img src="http://www.onevcat.com/wp-content/uploads/2012/01/TestFlight-»-iOS-beta-testing-on-the-fly-2.jpg" alt="注册账号" /></p>
+
+<p>注册时记得勾选I am a developer，之后便可以以开发者身份管理开发和测试团队，提交测试版本和查看报告等，若没有勾选则是以测试者身份注册。若在注册时没有选上，之后在帐号设置中也可以进行更改。</p>
+
+<p><img src="http://www.onevcat.com/wp-content/uploads/2012/01/signdetail.jpg" alt="勾选开发者" /></p>
+
+<h3>确认</h3>
+
+<p>注册完成以后会在注册邮箱中收到确认邮件。使用你的iDevice用邮件内的帐号登陆，并且完成设备注册，加入TestFlight的描述文件。关于设备注册和可能遇到的问题，可以参看<a href="http://liucheng.easymorse.com/?tag=testflight">这篇帖子</a>。</p>
+
+<h3>创建团队</h3>
+
+<p>登陆TestFlight后在自己的Dashboard可以新建一个团队。团队包括了开发者、测试者和相应的测试版本。创建团队后可以通过选择团队来查看团队的信息等情况。</p>
+
+<p><img src="http://www.onevcat.com/wp-content/uploads/2012/01/addteam1.jpg" alt="建立团队" /></p>
+
+<h3>添加测试者</h3>
+
+<p>在团队管理界面可以为团队添加成员。填写受邀者的邮件和简单的说明，一封包含注册链接的邮件将被发送到指定邮箱。受邀者通过类似的注册和确认流程即可加入团队，参与共同开发和测试。</p>
+
+<p><img src="http://www.onevcat.com/wp-content/uploads/2012/01/addteammate.jpg" alt="添加测试者" /></p>
+
+<h3>上传测试版本</h3>
+
+<p>上传的版本必须是包含签名的ipa，成功上传版本后即可选择给团队内的成员发邮件或推送邀请他们进行新版本的安装和测试。之后在版本管理中即可看到关于该版本的测试信息。该部分具体内容参看本文最后。</p>
+
+<h3>收集测试信息</h3>
+
+<p>在build界面中选择需要查看的版本的对应按钮即可看到收集到的测试信息，包括一般的session信息，设备使用TFLog进行的输出(需要TestFlight SDK)，crash报告，是否通过了预先设定的检查点，测试人员的安装情况等信息。</p>
+
+<p>结合SDK来使用，一切测试机仿佛都变成了你自己的终端，所有的Log和设备的状态尽在掌握，而这样的便利仅仅需要点击下鼠标和写几行代码，这便是TestFlight的强大之处。</p>
+
+<p><img src="http://www.onevcat.com/wp-content/uploads/2012/01/tfinfo-1024x484.jpg" alt="收集信息" /></p>
+
+<h2>TestFlight SDK使用</h2>
+
+<h3>下载</h3>
+
+<p>不使用TestFlight的SDK的话，可以说就连这个强大的平台的一成功力都发挥不出来。点击<a href="https://d3fqheiq7nlyrx.cloudfront.net/sdk-downloads/TestFlightSDK0.8.2.zip">这里</a>从官方网站下载SDK，<a href="https://testflightapp.com/sdk/doc/0.8.2/">官方文档</a>提供了关于SDK的很全面的说明，在<a href="http://support.testflightapp.com/">支持页面</a>也能找到很多有用的信息。</p>
+
+<p>之后将以Xcode4为例，简介SDK的使用，更多信息可以参考TestFlight官网。</p>
+
+<h3>配置</h3>
+
+<ul>
+<li><p>将头文件加入工程：File->Add Files to</p>
+
+<ul>
+<li>找到包含SDK的文件夹</li>
+<li>勾选"Copy items into destination folder (if needed)"</li>
+<li>选择"Create groups for any added folders"</li>
+<li>勾上想要使用TestFlight SDK的Target</li>
+</ul>
+</li>
+<li><p>验证libTestFlight.a是否被加到link部件中</p>
+
+<ul>
+<li>在Project Navigation里选中工程文件</li>
+<li>选中想要应用SDK的Target</li>
+<li>选择Build Phase栏</li>
+<li>打开Link Binary With Libraries Phase</li>
+<li>如果libTestFlight.a不在栏内，从Project Navigation里将其拖到栏内</li>
+</ul>
+</li>
+<li><p>开始使用</p>
+
+<ul>
+<li>在需要用到TestFlight SDK的文件中引入头文件：<em>#import “TestFlight.h”</em>，方便起见，您也可以在工程的预编译文件中的<em>#ifdef <strong>OBJC</strong></em>块中引入</li>
+<li>获取团队token：在<a href="http://testflightapp.com/dashboard/team/">这个页面</a>中对应的团队下选取TeamInfo，获取团队的token。</li>
+<li>在AppDelegate中启动TestFlight<br/>
+<code>objc
+–(BOOL)application:(UIApplication *_)application didFinishLaunchingWithOptions:(NSDictionary  _*)launchOptions {  
+// start of your application:didFinishLaunchingWithOptions  
+// …  
+[TestFlight takeOff:@“团队Token”];  
+// The rest of your application:didFinishLaunchingWithOptions method  
+// …  
+}
+</code></li>
+</ul>
+</li>
+</ul>
+
+
+<p>为了能得到有用的crash log(挂载过的)，必须在生成ipa的时候不剥离.dSYM文件。在Project Navigation里选中工程文件，选中需要使用TestFlight SDK的Target，在Building Setting的Deployment块下，将以下三项设为NO</p>
+
+<ul>
+<li>Deployment Post Processing</li>
+<li>Strip Debug Symbols During Copy</li>
+<li>Strip Linked Product</li>
+</ul>
+
+
+<h3>检查点</h3>
+
+<p>开发者可以在代码的任意位置设置检查点，当测试者通过检查点时，session里将会对此记录。比如测试者通过了某个关卡，或者提交了某个分数，或者向数据库加入了某条信息等。通过验证检查点，一方面可以检测代码是否正确，另一方面也可以作为游戏的平衡性调整和测试，用来检测用户的普遍水平。</p>
+
+<p><img src="http://www.onevcat.com/wp-content/uploads/2012/01/checkpoints.jpg" alt="加入检查点" /></p>
+
+<p><code>objc
+[TestFlight passCheckpoint:@“CHECKPOINT_NAME”];  
+</code></p>
+
+<h3>检查点问题</h3>
+
+<p>配合检查点可以向测试者提出问题，比如“是否正确地通过了演示界面？”或者“分数榜的提交正常吗？”这样的问题。在build management下可以找到Question选项，为检查点添加问题。问题的回答分为多选，是/否以及任意回答，如果选择多选的话，还需要指出问题的可能的选项。<br/>
+当测试者通过问题所对应的检查点时，一个modalViewController形式的问题和选项列表会出现供测试者选择。开发者可以在build的Question选项卡中看到反馈。</p>
+
+<h3>反馈</h3>
+
+<p>TestFlight提供了一个默认的反馈界面，测试者可以填写他们想写的任何内容并将这个反馈发送给你。调用一个反馈：</p>
+
+<p>```objc
+–(IBAction)launchFeedback {</p>
+
+<pre><code>[TestFlight openFeedbackView];  
+</code></pre>
+
+<p>}
+```</p>
+
+<p>一般来说可以在主界面或者最常见的界面上设置一个“反馈”按钮，这样测试者可以很方便地将他们的感受和意见发送给你。</p>
+
+<h3>远程Log</h3>
+
+<p>太棒了…配合TestFlight，现在开发者可以拿到远程客户端的Log。使用<strong>TFLog</strong>代替NSLog即可，任何TFLog的输出将被上传到TestFlight的服务器。如果需要详细一些的输出信息，可以用内建的<strong>参数</strong>的方式输出信息，比如：</p>
+
+<p>```objc</p>
+
+<h1>define NSLog(<strong>FORMAT</strong>, ...) TFLog((@"%s [Line %d] " <strong>FORMAT</strong>), <strong>PRETTY_FUNCTION</strong>, <strong>LINE</strong>, ##<strong>VA_ARGS</strong>)</h1>
+
+<p>```</p>
+
+<p>将会得到类似这样的输出</p>
+
+<p><code>objc
+-[HTFCheckpointsController showYesNoQuestion:] [Line 45] Pressed YES/NO
+</code></p>
+
+<p>所有的TFLog都不会阻塞主线程，所有的TFLog都将完成以下三种Logger工作</p>
+
+<ul>
+<li>TestFlight logger</li>
+<li>Apple System Log logger</li>
+<li>STDERR logger</li>
+</ul>
+
+
+<p>配合以前介绍过的NSLogger(参见<a href="http://www.onevcat.com/2011/12/nslogger/">这篇文章</a>)，将Log发挥到极致，让你永远掌控自己的代码吧～</p>
+
+<p>Log将会在客户端进入后台或者被退出的时候上传到服务器，如果没有看到应该有的Log的话，很有可能是还在上传中。视Log文件大小而定，一般这个过程需要若干分钟。当然，巨量上几M甚至10+M的Log可能会被TestFlight拒绝哦..毕竟没有那么多存储空间..</p>
+
+<p>当然，客户端必须有可用的网络环境这个功能才会启用。得到的Log会存储在Session下。</p>
+
+<p><img src="http://www.onevcat.com/wp-content/uploads/2012/01/Log.jpg" alt="Session页面" /></p>
+
+<h2>生成和上传测试版本</h2>
+
+<h3>打包ipa</h3>
+
+<p>..做过部署的童鞋对这个应该很熟了，官方也有一个详细的guide，总之照着做就没错了</p>
+
+<ul>
+<li><a href="http://support.testflightapp.com/kb/tutorials/how-to-create-an-ipa-xcode-3">XCode3如何生成ipa</a></li>
+<li><a href="http://support.testflightapp.com/kb/tutorials/how-to-create-an-ipa-xcode-4">Xcode4如何生成ipa</a></li>
+</ul>
+
+
+<h3>上传测试版本</h3>
+
+<p>打包好ipa后就到版本上传界面，把做好的ipa拖过去就万事大吉了。</p>
+
+<p><img src="http://www.onevcat.com/wp-content/uploads/2012/01/ipa.jpg" alt="上传ipa包" /></p>
+
+<p>最后一步是邀请团队内的测试者进行测试。把你想邀请的测试者打上勾然后OK，包含链接的邀请邮件将会发到他们的邮箱。然后～等待测试结果和大家的反馈，并且根据反馈完善app吧～</p>
+
+<h2>写在最后</h2>
+
+<p>TestFlight是一个很棒的工具，而且关键，它现在还是免费的～</p>
+
+<p>虽然有趋势以后将会收费，但是这套方案确实是方便易用..希望多支持吧～</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[凑热闹，谈密码，Challenge-Response密码验证]]></title>
+    <link href="http://onevcat.com/2011/12/password/"/>
+    <updated>2011-12-22T00:00:00+09:00</updated>
+    <id>http://onevcat.com/2011/12/password</id>
+    <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2011/12/6593637_190517116457_2.jpg"><img class="aligncenter size-full wp-image-434" title="6593637_190517116457_2" src="http://www.onevcat.com/wp-content/uploads/2011/12/6593637_190517116457_2-e1324556385859.jpg" alt="" width="1024" height="256" /></a><a href="http://news.csdn.net/a/20111221/309505.html">CSDN的密码事件</a>闹得沸沸扬扬，600万用户数据的泄露应该是中国互联网历史上最严重的帐号信息泄露事件。让人不可思议的是，2009年4月之前的用户密码居然是以明文存储。使用明文存储密码本身就是一件相当扯淡的事情，而当这种事情发生在以程序员为主要客户的大型网站上，真是让人哭笑不得。</p>
+<p style="text-align: justify;"><!--:--><!--more--><!--:zh-->之后又陆续爆出人人、多玩以及各种知名网站的账户信息泄露的消息，虽然还未确知真伪，但也很是让人揪心。而“不能明文保存密码”这一个初级中的初级的错误之所以会在中国这篇神奇的土地上一次又一次的出现，我认为是与中国的网络审查制度和相关法制不全造成的（其实就算法令全了我估计在特权之下也只是一纸空文）。负责网络审查的大大们往往一个电话过来指明要XXX的密码，而在天朝这样的地方如果你拿不出这个密码的话，基本就被扣上了政治不合作和给领导难看的大帽子，很多时候程序员被逼无奈只能明文存储。而像这次CSDN这样的由于系统升级而遗留下的历史问题，可以相信溯其根源也或多或少会与这样的特权有关吧...</p>
+<p style="text-align: justify;">扯远了扯远了...作为有良知的程序员，绝不能用明文存储密码，而作为简单的密码存放验证解决方案，MD5的Challenge-Response验证方法可以满足绝大部分非机密级别的应用了。使用MD5存储密码在验证中是很常见的做法，虽然<a href="http://baike.baidu.com/view/350813.htm#2">王小云</a>教授提出了有效的MD5强无碰撞算法，但是作为民用级别的网站认证，简单的散列MD5的方便快速简单易用的特性还是相当吸引人。为了防止截取MD5伪造身份完成认证，再加入一个Challenge-Response机制，客户端请求验证时，由服务器随机一个串给客户端进行挑战，客户端使用密码的散列值与从服务器取得的串组合得到新的散列值，将此散列值提交给服务器生成的散列值进行应答验证，若两个散列一致则通过，否则失效。如果希望能够得到更加安全的散列算法，可以选择SHA-256，SHA-384或者SHA-512等还未被攻破的散列（仅限民用..我猜政府军事部门不太可能用散列这种悲剧又简单的摘要算法）。对于iPhone SDK来说，常用的散列算法都在&lt;CommonCrypto/CommonDigest.h&gt;头文件中均有说明。而libcommonCrypto.dylib和Security.framework中也都提供了相当多的安全方法，涉及网络应用的app开发的话，不论是作为自身修养的提升还是对自己的代码负责，都应当对安全问题有基本的认识和思索...</p><!--:--></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[XCode4.2，想说爱你不容易]]></title>
+    <link href="http://onevcat.com/2011/10/xcode4/"/>
+    <updated>2011-10-27T00:00:00+09:00</updated>
+    <id>http://onevcat.com/2011/10/xcode4</id>
+    <content type="html"><![CDATA[<p><a href="http://www.onevcat.com/wp-content/uploads/2011/10/Xcode-1.jpg"><img class="aligncenter size-full wp-image-247" title="Xcode" src="http://www.onevcat.com/wp-content/uploads/2011/10/Xcode-1-e1319647071157.jpg" alt="" width="1096" height="254" /></a>随着iOS5，最终还是在一个项目结束之前就被迫换到XCode4.2了。XCode4初出的时候就有无数先辈惨死在无尽的bug和极度不适中，而我选择了在一段时间的4.1和3.2.6共存的过渡期后再完全转到新版本下继续工作，现在看来是非常明智的。</p>
+
+
+
+
+<p>GCC在4.2彻底再见了，同样标着4.2，但是想在XCode4.2上弄个GCC4.2的编译器还真是费力。还好LLVM还不错，就是可怜了那些写了N多GCC only的stand-alone的苦逼程序员了。LLVM最终还是暴露了了Apple想要脱离GNU的目标，<!--more-->不过新的编译环境给人的感受确实很棒。得益于LLVM，coding的时候实时能看到代码错误，ARC的引入彻底让人可以忘掉繁琐又无聊的GC策略，从而可以专注于内容实现。这在以前的IDE中是难以想象的。</p>
+
+
+
+
+<p>功能的整合与集成也很方便，Interface Builder终于内嵌了，IBOutlet和IBAction前面也加上了小圆圈，这样一来很不容易再出现忘了拉线这样尴尬的失误了。不知道什么时候能把Instrument也整合到XCode里来，那样生活会更美好=。=</p>
+
+
+
+
+<p>当然也有让人不满的地方，或者说是我还不懂的地方。为什么新工程的默认设置是禁用C和Objective-C的异常捕捉呢...拖别人的代码的时候基本都会有try..catch，于是每次都要去手动改..满讨厌，不知道是不是有什么新的异常处理的机制？另外iOS5的SDK还是有些问题，segment的property设置不再调用change方法把我坑了一个下午，ASI的一个消息也会莫名中断...完美的iOS5 SDK和相应的开源库毕竟还需要时间。嗯...还有一点就是我的机子跑XCode4真的好慢！</p>
+
+
+
+
+<p>最后抱怨下...习惯了写release以后现在在ARC的光芒下写release就被打红叉，每次都苦笑..看来习惯它还真的是需要一定时间呢～</p>
+
+]]></content>
+  </entry>
+  
+</feed>

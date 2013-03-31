@@ -20,7 +20,7 @@ Unity打包文件下载 为什么想要自动添加
 
 	<link href="/atom.xml" rel="alternate" title="OneV's Den" type="application/atom+xml">
 	
-	<link rel="canonical" href="http://blog.onevcat.com/2012/12/xuporter/">
+	<link rel="canonical" href="http://onevcat.com/2012/12/xuporter/">
 	<link href="/favicon.png" rel="shortcut icon">
 	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -73,8 +73,6 @@ Unity打包文件下载 为什么想要自动添加
 		<a class="github" href="https://github.com/onevcat" title="GitHub">GitHub</a>
 		
 		
-		<a class="linkedin" href="http://www.linkedin.com/in/onevcat">LinkedIn</a>
-		
 		
 		<a class="pinterest" href="https://pinterest.com/onevcat" title="Pinterest">Pinterest</a>
 		
@@ -85,7 +83,7 @@ Unity打包文件下载 为什么想要自动添加
 		
 	</div>
 </nav>
-<script type="text/javascript" language="JavaScript" src="http://onevcat.us5.list-manage.com/subscriber-count?b=32&u=3244d6df-04b2-4c3b-bfb2-06ac1dd40a00&id=cfde66e507"></script>
+<a href="http://eepurl.com/wNSkj"><script type="text/javascript" language="JavaScript" src="http://onevcat.us5.list-manage.com/subscriber-count?b=32&u=3244d6df-04b2-4c3b-bfb2-06ac1dd40a00&id=cfde66e507"></script></a>
 </header>				
 			</div>
 		</div>	
@@ -116,15 +114,8 @@ Unity打包文件下载 为什么想要自动添加
 <p style="text-align: justify;">将Github项目中的所有文件copy到Unity工程文件夹下的/Assets/Editor目录中，XUPorter使用一个<a href="https://github.com/prime31/UIToolkit/blob/master/Assets/Plugins/MiniJSON.cs">改良版的MiniJSON</a>来进行。如果你的项目中已经在使用这个MiniJSON了的话，可以直接将XUPorter文件夹下的MiniJSON文件夹删掉；如果不一样的话，你可以选择其中一个重构一下或者加上命名空间来解决类名冲突。接下来，Mods文件夹下是示例文件以及需要导入Xcode的文件。在看完以后你需要把Mods文件夹下的所有.projmods文件以及Mods/iOS文件夹下的内容删除或者替换为你所需要的内容。</p>
 <p style="text-align: justify;">在<a href="http://d.pr/f/HAzc">这里</a>提供了.unitypackege格式文件的下载，你也可以选择下载打包好的文件并导入你的工程，之后的步骤和上面一样。</p>
 <p style="text-align: justify;">.projmods文件是一个JSON格式的配置patch文件，定义了要如何设置Xcode工程。举个基本的例子，比如KKKeychain.projmods：</p>
-<p style="text-align: justify;">各参数定义如下： * group：所有由该projmods添加的文件和文件夹所属的Xcode中的group名称 * libs：在Xcode Build Phases中需要添加的动态链接库的名称，比如libz.dylib * frameworks：在Xcode Build Phases中需要添加的框架的名称，比如Security.framework * headerpaths：Xcode中编译设置中的Header Search Paths路径 * files：加入工程的文件名 * folders：加入工程的文件夹，其中所有的文件和文件夹都将被加入工程中 * excludes：忽略的文件的正则表达式，匹配的文件将不会被加入工程中 更多的例子可以参看Mods文件夹中的其他projmods文件。所有的定义路径都是基于当前projmods文件位置的相对路径。 最后，在完成projmods后，Unity会在编译完成后，调用XCodePostProcess的OnPostProcessBuild来对编译得到的Xcode工程进行修改：</p><!--:--><!--:en-->&nbsp;</p>
+<p style="text-align: justify;">各参数定义如下： * group：所有由该projmods添加的文件和文件夹所属的Xcode中的group名称 * libs：在Xcode Build Phases中需要添加的动态链接库的名称，比如libz.dylib * frameworks：在Xcode Build Phases中需要添加的框架的名称，比如Security.framework * headerpaths：Xcode中编译设置中的Header Search Paths路径 * files：加入工程的文件名 * folders：加入工程的文件夹，其中所有的文件和文件夹都将被加入工程中 * excludes：忽略的文件的正则表达式，匹配的文件将不会被加入工程中 更多的例子可以参看Mods文件夹中的其他projmods文件。所有的定义路径都是基于当前projmods文件位置的相对路径。 最后，在完成projmods后，Unity会在编译完成后，调用XCodePostProcess的OnPostProcessBuild来对编译得到的Xcode工程进行修改：</p></p>
 
-<p>&nbsp;</p>
-
-<p><!--:--><!--:ja-->&nbsp;</p>
-
-<p>&nbsp;</p>
-
-<p><!--:--></p>
 </div>
 
 </article>
@@ -167,8 +158,8 @@ Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Sha
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://blog.onevcat.com/2012/12/xuporter/';
-        var disqus_url = 'http://blog.onevcat.com/2012/12/xuporter/';
+        var disqus_identifier = 'http://onevcat.com/2012/12/xuporter/';
+        var disqus_url = 'http://onevcat.com/2012/12/xuporter/';
         var disqus_script = 'embed.js';
       
     (function () {
@@ -179,6 +170,18 @@ Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Sha
 </script>
 
 
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-25719337-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
 
 
 
