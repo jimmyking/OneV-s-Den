@@ -27,6 +27,9 @@
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
+<script type="text/javascript">var switchTo5x=false;</script>
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "496dac80-40ba-487b-b557-af2d3629eb28", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
 </head>
 
 
@@ -41,19 +44,36 @@
 	</script>
 </div>
 <h1><a href="/">OneV's Den</a></h1>
-<p class="subtitle">thinking and recording</p>
+<p class="subtitle">上善若水，人淡如菊</p>
+<p class="subtitle">iOS/Mac，Unity3D开发者，现就职于日本创意公司Kayac，正在修行，探求创意之源</p>
 <nav id="main-nav"><ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">关于我</a></li>
+  <li><a href="/blog/archives">全部文章</a></li>
+  <li><a href="/showcase">我的项目</a></li>
+  <li><a href="http://pomo.onevcat.com">	Pomo Do - 番茄工作法工具</a></li>
+  <li><a href="http://ourmoney.onevcat.com">	Our Money - 多人同步记账</a></li>
 </ul>
 </nav>
 <nav id="sub-nav">
 	<div class="social">
 		
+		<a class="weibo" href="http://www.weibo.com/onevcat" title="Sina Weibo">Weibo</a>
+		
+		
+		<a class="facebook" href="http://www.facebook.com/onevcat" title="Facebook">Facebook</a>
 		
 		
 		
+		<a class="twitter" href="http://twitter.com/onevcat" title="Twitter">Twitter</a>
 		
+		
+		<a class="github" href="https://github.com/onevcat" title="GitHub">GitHub</a>
+		
+		
+		<a class="linkedin" href="http://www.linkedin.com/in/onevcat">LinkedIn</a>
+		
+		
+		<a class="pinterest" href="https://pinterest.com/onevcat" title="Pinterest">Pinterest</a>
 		
 		
 		
@@ -62,13 +82,7 @@
 		
 	</div>
 </nav>
-<hgroup>
-  <h1><a href="/">OneV's Den</a></h1>
-  
-    <h2>thinking and recording</h2>
-  
-</hgroup>
-
+<script type="text/javascript" language="JavaScript" src="http://onevcat.us5.list-manage.com/subscriber-count?b=32&u=3244d6df-04b2-4c3b-bfb2-06ac1dd40a00&id=cfde66e507"></script>
 </header>				
 			</div>
 		</div>	
@@ -79,77 +93,89 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 	<h1 class="title" itemprop="name">MGTwitterEngine中Twitter API 1.1的使用</h1>
-	<div class="entry-content" itemprop="articleBody"><p><!--:zh--><h2><span style="font-size: 13px; font-weight: normal;">在iOS5中使用Twitter framework或者在iOS6中使用Social framework来完成Twitter的集成是非常简单和轻松的，但是如果应用要针对iOS5之前的系统版本，那么就不能使用iOS提供的框架了。一个比较常见也是使用最广泛的选择是</span><a style="font-size: 13px; font-weight: normal;" href="https://github.com/mattgemmell/MGTwitterEngine">MGTwitterEngine</a><span style="font-size: 13px; font-weight: normal;">，比如</span><a style="font-size: 13px; font-weight: normal;" href="http://www.onevcat.com/showcase/pomodoro_do/">PomodoroDo</a><span style="font-size: 13px; font-weight: normal;">选择使用的就是该框架。</span></h2>
-但是今天在对PomodoroDo作更新的时候，发现Twitter的分享无法使用了，在查阅Twitter文档说明之后，发现这是Twitter采用了新版API的原因。默认状况下MGTwitterEngine采用的是v1版的API，并且使用XML的版本进行请求，而在1.1中，将<a href="https://dev.twitter.com/docs/api/1.1/overview#JSON_support_only">只有JSON方式的API可以使用</a>。v1.0版本的API已经于2013年3月5日被完全废弃，因此想要继续使用MGTwitterEngine来适配iOS5之前的Twitter集成需求，就需要将MGTwitterEngine的请求改为JSON方式。MGTwitterEngine也考虑到了这一点，但是因为时间比较古老了，MGTwitterEngine使用了YAJL来作为JSON的Wrapper，因此还需要将YAJL集成进来。下午的时候尝试了一会儿，成功地让MGTwitterEngine用上了1.1的Twitter API，为了以防之后别人或是自己可能遇到同样的问题，将更新的方法在此留底备忘。
+	<div class="entry-content" itemprop="articleBody"><p>在iOS5中使用Twitter framework或者在iOS6中使用Social framework来完成Twitter的集成是非常简单和轻松的，但是如果应用要针对iOS5之前的系统版本，那么就不能使用iOS提供的框架了。一个比较常见也是使用最广泛的选择是<a href="https://github.com/mattgemmell/MGTwitterEngine">MGTwitterEngine</a>，比如<a href="http://www.onevcat.com/showcase/pomodoro_do/">PomodoroDo</a>选择使用的就是该框架。</p>
+
+<p>但是今天在对PomodoroDo作更新的时候，发现Twitter的分享无法使用了，在查阅Twitter文档说明之后，发现这是Twitter采用了新版API的原因。默认状况下MGTwitterEngine采用的是v1版的API，并且使用XML的版本进行请求，而在1.1中，将<a href="https://dev.twitter.com/docs/api/1.1/overview#JSON_support_only">只有JSON方式的API可以使用</a>。v1.0版本的API已经于2013年3月5日被完全废弃，因此想要继续使用MGTwitterEngine来适配iOS5之前的Twitter集成需求，就需要将MGTwitterEngine的请求改为JSON方式。MGTwitterEngine也考虑到了这一点，但是因为时间比较古老了，MGTwitterEngine使用了YAJL来作为JSON的Wrapper，因此还需要将YAJL集成进来。下午的时候尝试了一会儿，成功地让MGTwitterEngine用上了1.1的Twitter API，为了以防之后别人或是自己可能遇到同样的问题，将更新的方法在此留底备忘。</p>
+
 <ol>
-	<li>导入YAJL Framework
+<li><p>导入YAJL Framework</p>
+
 <ul>
-	<li>YAJL的OC实现，从如下地址下载该框架: <a href="https://github.com/gabriel/yajl-objc/download">https://github.com/gabriel/yajl-objc/download</a>s (2013年3月24日的最新版本为YAJL 0.3.1 for iOS)</li>
-	<li>解压下载得到的zip，将解压后的YAJLiOS.framework加入项目工程</li>
-	<li>在Xcode的Build Setting里在Other Linker Flags中添加-ObjC和-all_load标记</li>
+<li>YAJL的OC实现，从如下地址下载该框架: <a href="https://github.com/gabriel/yajl-objc/download">https://github.com/gabriel/yajl-objc/download</a>s (2013年3月24日的最新版本为YAJL 0.3.1 for iOS)</li>
+<li>解压下载得到的zip，将解压后的YAJLiOS.framework加入项目工程</li>
+<li>在Xcode的Build Setting里在Other Linker Flags中添加-ObjC和-all_load标记</li>
 </ul>
 </li>
-	<li>加入MGTwitterEngine的JSON相关代码
+<li><p>加入MGTwitterEngine的JSON相关代码</p>
+
 <ul>
-	<li>从MGTwitterEngine的页面down下该项目: <a href="https://github.com/mattgemmell/MGTwitterEngine">https://github.com/mattgemmell/MGTwitterEngine</a>。当然如果有新版或者有别的branch可以用的话更省事儿，但是鉴于MGTwitterEngine现在的活跃度来说估计可能性不大，所以还是乖乖自己更新吧。</li>
-	<li>解开下载的zip，用Xcode打开MGTwitterEngine.xcodeproj工程文件，将其中Twitter YAJL Parsers组下的所有文件copy到自己的项目中。</li>
+<li>从MGTwitterEngine的页面down下该项目: <a href="https://github.com/mattgemmell/MGTwitterEngine">https://github.com/mattgemmell/MGTwitterEngine</a>。当然如果有新版或者有别的branch可以用的话更省事儿，但是鉴于MGTwitterEngine现在的活跃度来说估计可能性不大，所以还是乖乖自己更新吧。</li>
+<li>解开下载的zip，用Xcode打开MGTwitterEngine.xcodeproj工程文件，将其中Twitter YAJL Parsers组下的所有文件copy到自己的项目中。</li>
 </ul>
 </li>
-	<li>YAJL头文件集成
+<li><p>YAJL头文件集成</p>
+
 <ul>
-	<li>接下来是C和OC接口头文件的导入，从下面下载YAJL库：<a href="https://github.com/thinglabs/yajl-objc">https://github.com/thinglabs/yajl-objc</a></li>
-	<li>在下载得到的文件夹中，寻找并将以下h文件拷贝到自己的工程中：
+<li>接下来是C和OC接口头文件的导入，从下面下载YAJL库：<a href="https://github.com/thinglabs/yajl-objc">https://github.com/thinglabs/yajl-objc</a></li>
+<li>在下载得到的文件夹中，寻找并将以下h文件拷贝到自己的工程中：
+
 <ul>
-	<li>yajl_common.h</li>
-	<li>yajl_gen.h</li>
-	<li>yajl_parse.h</li>
-	<li>NSObject+YAJL.h</li>
-	<li>YAJL.h</li>
-	<li>YAJLDocument.h</li>
-	<li>YAJLGen.h</li>
-	<li>YAJLParser.h</li>
+<li>yajl_common.h</li>
+<li>yajl_gen.h</li>
+<li>yajl_parse.h</li>
+<li>NSObject+YAJL.h</li>
+<li>YAJL.h</li>
+<li>YAJLDocument.h</li>
+<li>YAJLGen.h</li>
+<li>YAJLParser.h</li>
 </ul>
-</li>
-</ul>
-</li>
-	<li>最后是在MGTwitterEngine设定为使用v1.1 API以及JSON方式请求
-<ul>
-	<li>在MGTwitterEngine.m中，将对应代码修改为以下：
-<pre>#define USE_LIBXML 0</pre>
-<pre>#define TWITTER_DOMAIN @"api.twitter.com/1.1"</pre>
-</li>
-	<li>在MGTwitterEngineGlobalHeader.h，启用YAJL
-<pre>#define YAJL_AVAILABLE 1</pre>
 </li>
 </ul>
 </li>
+<li><p>最后是在MGTwitterEngine设定为使用v1.1 API以及JSON方式请求</p></li>
 </ol>
-本文参考：</p>
 
-<p><a href="https://github.com/mattgemmell/MGTwitterEngine/issues/107">https://github.com/mattgemmell/MGTwitterEngine/issues/107</a></p>
 
-<p><a href="http://damienh.org/2009/06/20/setting-up-mgtwitterengine-with-yajl-106-for-iphone-development/">http://damienh.org/2009/06/20/setting-up-mgtwitterengine-with-yajl-106-for-iphone-development/</a><!--:--><!--:en-->&nbsp;</p>
+<p>在MGTwitterEngine.m中，将对应代码修改为以下：</p>
 
-<p><!--:--><!--:ja-->&nbsp;</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#define USE_LIBXML 0</span>
+</span><span class='line'><span class="cp">#define TWITTER_DOMAIN @&quot;api.twitter.com/1.1&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p><!--:--></p>
+
+<p>在MGbTwitader.h，启用YAJL</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#define define YAJL_AVAILABLE 1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>本文参考：</p>
+
+<p><a href="https://github.com/mattgemmell/MGTwitterEngine/issues/107">https://github.com/mattgemmell/MGTwitterEngine/issues/107</a>
+<a href="http://damienh.org/2009/06/20/setting-up-mgtwitterengine-with-yajl-106-for-iphone-development/">http://damienh.org/2009/06/20/setting-up-mgtwitterengine-with-yajl-106-for-iphone-development/</a></p>
 </div>
 
 </article>
 
 	<div class="share">
-	<div class="addthis_toolbox addthis_default_style ">
-	
-	
-	<a class="addthis_button_tweet"></a>
-	
-	
-	<a class="addthis_counter addthis_pill_style"></a>
-	</div>
-  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+	如果您觉得这篇文章对您有帮助，请不吝分享让更多人知道 :)
+	<span class='st_sina_large' displayText='Sina'></span>
+	<span class='st_facebook_large' displayText='Facebook'></span>
+	<span class='st_twitter_large' displayText='Tweet'></span>
+	<span class='st_email_large' displayText='Email'></span>
+	<span class='st_sharethis_large' displayText='ShareThis'></span>
 </div>
 
 
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
 </div>
 			</div>
 			<footer id="footer" class="inner"><p>
@@ -166,6 +192,22 @@ Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Sha
 })(jQuery);
 </script> <!-- Delete or comment this line to disable Fancybox -->
 
+
+<script type="text/javascript">
+      var disqus_shortname = 'onevcat';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.onevcat.com/2013/03/mgtwitterengine%E4%B8%ADtwitter-api-1-1%E7%9A%84%E4%BD%BF%E7%94%A8/';
+        var disqus_url = 'http://blog.onevcat.com/2013/03/mgtwitterengine%E4%B8%ADtwitter-api-1-1%E7%9A%84%E4%BD%BF%E7%94%A8/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 

@@ -278,24 +278,56 @@
     </url>
     <url>
         <loc>http://blog.onevcat.com/2013/02/xcode-plugin/</loc>
-        <lastmod>2013-03-31T01:45:01+09:00</lastmod>
+        <lastmod>2013-03-31T16:03:57+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://blog.onevcat.com/2013/03/mgtwitterengine%E4%B8%ADtwitter-api-1-1%E7%9A%84%E4%BD%BF%E7%94%A8/
         </loc>
-        <lastmod>2013-03-31T01:45:01+09:00</lastmod>
+        <lastmod>2013-03-31T15:24:16+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.onevcat.com/about/</loc>
+        <lastmod>2013-03-31T11:40:56+09:00</lastmod>
     </url>
     <url>
         <loc>http://blog.onevcat.com/blog/archives/</loc>
-        <lastmod>2013-03-31T01:45:01+09:00</lastmod>
+        <lastmod>2013-03-31T16:03:57+09:00</lastmod>
     </url>
     <url>
         <loc>http://blog.onevcat.com/</loc>
-        <lastmod>2013-03-31T01:45:01+09:00</lastmod>
+        <lastmod>2013-03-31T16:03:57+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.onevcat.com/new-page/</loc>
+        <lastmod>2013-03-31T11:14:35+09:00</lastmod>
     </url>
     <url>
         <loc>http://blog.onevcat.com/robots.txt</loc>
         <lastmod>2013-03-31T00:50:50+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.onevcat.com/showcase/coinpush/</loc>
+        <lastmod>2013-03-31T16:03:57+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.onevcat.com/showcase/</loc>
+        <lastmod>2013-03-31T16:03:57+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.onevcat.com/showcase/pomodoro_do/</loc>
+        <lastmod>2013-03-31T16:03:57+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.onevcat.com/showcase/quizkingdom/</loc>
+        <lastmod>2013-03-31T16:03:57+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.onevcat.com/showcase/texaspokerking/</loc>
+        <lastmod>2013-03-31T16:03:57+09:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.onevcat.com/showcase/vvbordertimer/</loc>
+        <lastmod>2013-03-31T16:03:57+09:00</lastmod>
     </url>
 </urlset>

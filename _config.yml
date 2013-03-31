@@ -4,10 +4,10 @@
 
 url: http://blog.onevcat.com
 title: OneV's Den
-subtitle: thinking and recording
+subtitle: 上善若水，人淡如菊
 author: onevcat
 simple_search: http://google.com/search
-description: A blog maintenanced by onevcat. I am an Unity and iOS developer from China and working in Japan
+description: iOS/Mac，Unity3D开发者，现就职于日本创意公司Kayac，正在修行，探求创意之源
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -58,13 +58,13 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
 # ----------------------- #
 
 # Github repositories
-github_user:
-github_repo_count: 0
+github_user: onevcat
+github_repo_count: 10
 github_show_profile_link: true
 github_skip_forks: true
 
 # Twitter
-twitter_user:
+twitter_user: onevcat
 twitter_tweet_button: true
 
 # Google +1
@@ -85,11 +85,27 @@ delicious_user:
 delicious_count: 3
 
 # Disqus Comments
-disqus_short_name:
-disqus_show_comment_count: false
+disqus_short_name: onevcat
+disqus_show_comment_count: true
 
 # Google Analytics
 google_analytics_tracking_id:
 
 # Facebook Like
 facebook_like: false
+
+# Facebook link
+facebook_user: onevcat
+
+# Weibo link
+weibo_user: onevcat
+
+# LinkedIn
+linkedin_user: onevcat
+
+# Pinterest
+pinterest_user: onevcat
+
+
+
+
