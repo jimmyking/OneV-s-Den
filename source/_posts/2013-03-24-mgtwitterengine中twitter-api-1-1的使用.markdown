@@ -48,6 +48,7 @@ comments: true
 
 本文参考：
 
-[https://github.com/mattgemmell/MGTwitterEngine/issues/107](https://github.com/mattgemmell/MGTwitterEngine/issues/107)
+
+[MGTwitterEngine issues 107](https://github.com/mattgemmell/MGTwitterEngine/issues/107)
 
 [http://damienh.org/2009/06/20/setting-up-mgtwitterengine-with-yajl-106-for-iphone-development/](http://damienh.org/2009/06/20/setting-up-mgtwitterengine-with-yajl-106-for-iphone-development/)
