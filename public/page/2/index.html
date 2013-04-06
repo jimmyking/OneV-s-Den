@@ -7,7 +7,7 @@
 	<meta name="author" content="onevcat">
 
 	
-	<meta name="description" content="Aug 11th, 2012 胡言乱语集 学生时代的终焉 距离研究生毕业，已经过去一个月了。在毕业季的离愁和从学生身份的转变的怅惘渐渐淡去时，大概是时候对我的整个的大学生涯做一个小结了。很多事情的记忆已经在时间的冲蚀中变得模糊了，但是也有一些事情比其他的琐事更深地印刻在了记忆之中， &hellip;">
+	<meta name="description" content="Aug 28th, 2012 能工巧匠集 WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts 这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看这里。如果您是首次来到本站， &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -89,6 +89,54 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-28T00:00:00+09:00" data-updated="true" itemprop="datePublished">Aug 28<span>th</span>, 2012</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/2012/08/advanced-collection-view/" itemprop="url">WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/08/QQ20120828-3.png"><img class="aligncenter size-full wp-image-984" title="uicollectionview-struct" src="http://www.onevcat.com/wp-content/uploads/2012/08/QQ20120828-3.png" alt="" width="983" height="251" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
+<p style="text-align: justify;">在上一篇<a href="http://www.onevcat.com/2012/06/introducing-collection-views/">UICollectionView的入门介绍</a>中，大概地对iOS6新加入的强大的UICollectionView进行了一些说明。在这篇博文中，将结合WWDC2012 Session219：Advanced Collection View的内容，对Collection View进行一个深入的使用探讨，并给出一个自定义的Demo。</p></p>
+
+<p><h2 style="text-align: justify;">UICollectionView的结构回顾</h2>
+<p style="text-align: justify;">首先回顾一下Collection View的构成，我们能看到的有三个部分：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>Cells</li>
+	<li>Supplementary Views 追加视图 （类似Header或者Footer）</li>
+	<li>Decoration Views 装饰视图 （用作背景展示）</li>
+</ul>
+<p style="text-align: justify;">而在表面下，由两个方面对UICollectionView进行支持。其中之一和tableView一样，即提供数据的UICollectionViewDataSource以及处理用户交互的UICollectionViewDelegate。另一方面，对于cell的样式和组织方式，由于collectionView比tableView要复杂得多，因此没有按照类似于tableView的style的方式来定义，而是专门使用了一个类来对collectionView的布局和行为进行描述，这就是UICollectionViewLayout。</p>
+<p style="text-align: justify;">这次的笔记将把重点放在UICollectionViewLayout上，因为这不仅是collectionView和tableView的最重要求的区别，也是整个UICollectionView的精髓所在。</p>
+<p style="text-align: justify;"><!--:-->
+		
+		<a href="/2012/08/advanced-collection-view/" class="more-link">继续阅读</a>
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -531,46 +579,6 @@ iOS6抛弃了一直用的google map，而使用了自家的地图服务。相应
 <p style="text-align: justify;"><!--:-->
 		
 		<a href="/2012/06/arc-hand-by-hand/" class="more-link">继续阅读</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-16T00:00:00+09:00" data-updated="true" itemprop="datePublished">May 16<span>th</span>, 2012</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/category/bu-xing-chun-se-ji/'>不醒春色集</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/2012/05/tsinghua-photos/" itemprop="url">水清木华</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>七年时光，匆匆飞逝。入学之日还历历在目，离别之时却已悄然而来。我希望自己能挥一挥衣袖，不带走这里的一片云彩，但却留下自己青春的回忆。在这个偌大的园子里，有我的欢笑，有我的泪水，有我的努力。我相信所有清华学子在离别母校时，必定是依依不舍。但是，孩子总有离家之日，外面的舞台也必会更加精彩。</p>
-
-<p>在毕业之际，载着园园骑车逛了一圈校园，再次好好地看了看这个生活了七年的地方，于是有了下面这一组照片。</p>
-
-<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/tsinghua-photos/2012-05-16-095032-1.jpg" alt="清华园这三个字让多少人魂牵梦萦，而在这个园子里待了七年之后，我终将告别这里，踏上新的征途" /></p>
-
-
-		
-		<a href="/2012/05/tsinghua-photos/" class="more-link">继续阅读</a>
 	</div>
 
 </article>
