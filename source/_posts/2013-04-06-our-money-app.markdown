@@ -35,6 +35,8 @@ Our Money是一款能够协助多人在云端记账的iOS应用，可以帮助�
 
 在消费和记账时难免会出现没有网络的尴尬时候，这时候Our Money还能正常工作么？当然，Our Money具有完善的离线模式处理，没有网络时照常使用，当之后连上网络的时候会自动为您完成所有同步，完全不用自己操心。
 
+![Our Money方便的离线模式](http://img.onevcat.com/2013/6-ourmoney-offline.png)
+
 总的来说Our Money是一款功能强大但又简单高效的记账软件，其云端记账和共同记账的理念很符合当今多人记账的需求。从今天开始就和家人朋友用Our Money一起记账吧～
 
 您可以从[App Store中下载Our Money](https://itunes.apple.com/cn/app/our-money/id562520527?ls=1&mt=8)，还可以进一步通过应用内的赠送系统将您的记账和心得分享给家人朋友。
