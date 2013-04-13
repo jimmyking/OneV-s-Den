@@ -7,7 +7,7 @@
 	<meta name="author" content="onevcat">
 
 	
-	<meta name="description" content="Aug 28th, 2012 能工巧匠集 WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts 这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看这里。如果您是首次来到本站， &hellip;">
+	<meta name="description" content="Sep 20th, 2012 能工巧匠集 WWDC 2012 Session笔记——202, 228, 232 AutoLayout（自动布局）入门 这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看这里。如果您是首次来到本站，也许您会有兴趣通过RSS， &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -89,6 +89,59 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-20T00:00:00+09:00" data-updated="true" itemprop="datePublished">Sep 20<span>th</span>, 2012</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/2012/09/autoayout/" itemprop="url">WWDC 2012 Session笔记——202, 228, 232 AutoLayout（自动布局）入门</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/09/QQ20120920-8.png"><img class="aligncenter size-full wp-image-1017" title="QQ20120920-8" src="http://www.onevcat.com/wp-content/uploads/2012/09/QQ20120920-8.png" alt="" width="651" height="262" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
+<p style="text-align: justify;">AutoLayout在去年的WWDC上被引入Cocoa，而在今年的WWDC上，Apple不惜花费了三个Session的前所未见的篇幅来详细地向开发者讲解AutoLayout在iOS上的应用，是由起原因的：iPhone5的屏幕将变为4寸，开发者即将面临为不同尺寸屏幕进行应用适配的工作。Android平台开发中最令人诟病的适配工作的厄运现在似乎也将降临在iOS开发者的头上。基于这样的情况，Apple大力推广使用AutoLayout的方法来进行UI布局，以一举消除适配的烦恼。AutoLayout将是自Interface Builder和StoryBoard之后UI制作上又一次重要的变化，也必然是之后iOS开发的趋势，因此这个专题很值得学习。</p></p>
+
+<p><h2 style="text-align: justify;">AutoLayout是什么？</h2>
+<p style="text-align: justify;">使用一句Apple的官方定义的话</p></p>
+
+<p><blockquote>AutoLayout是一种基于约束的，描述性的布局系统。</blockquote></p>
+
+<p>Auto Layout Is a Constraint-Based, Descriptive Layout System.
+<p style="text-align: justify;">关键词：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>基于约束 － 和以往定义frame的位置和尺寸不同，AutoLayout的位置确定是以所谓相对位置的约束来定义的，比如<em>x坐标为superView的中心，y坐标为屏幕底部上方10像素</em>等</li>
+	<li>描述性 － 约束的定义和各个view的关系使用接近自然语言或者可视化语言（稍后会提到）的方法来进行描述</li>
+	<li>布局系统 － 即字面意思，用来负责界面的各个元素的位置。</li>
+</ul>
+<div style="text-align: justify;"><!--:--><!--:en-->&nbsp;</div></p>
+
+<p><!--:-->
+		
+		<a href="/2012/09/autoayout/" class="more-link">继续阅读</a>
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -531,54 +584,6 @@ iOS6抛弃了一直用的google map，而使用了自家的地图服务。相应
 
 		
 		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-04T00:00:00+09:00" data-updated="true" itemprop="datePublished">Jun 4<span>th</span>, 2012</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/2012/06/arc-hand-by-hand/" itemprop="url">手把手教你ARC——iOS/Mac开发ARC入门和使用</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120604-1.png"><img class="size-full wp-image-810" title="ARC" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120604-1.png" alt="" width="1069" height="265" data-pinit="registered" /></a></p>
-<p style="text-align: justify;">本文部分实例取自iOS 5 Toturail一书中关于ARC的教程和公开内容，仅用于技术交流和讨论。请不要将本文的部分或全部内容用于商用，谢谢合作。</p>
-<p style="text-align: justify;">欢迎转载本文，但是转载请注明本文出处：<a href="http://www.onevcat.com/2012/06/arc-hand-by-hand/">http://www.onevcat.com/2012/06/arc-hand-by-hand/</a></p>
-<p style="text-align: justify;">本文适合人群：对iOS开发有一定基础，熟悉iOS开发中内存管理的Reference Counting机制，对ARC机制有听闻很向往但是一直由于种种原因没有使用的童鞋。本文将从ARC机理入手对这个解放广大iOS开发者的伟大机制进行一个剖析，并逐步引导你开始使用ARC。一旦习惯ARC，你一定会被它的简洁高效所征服。</p></p>
-
-<p><h2 style="text-align: justify;">写在开头</h2>
-<p style="text-align: justify;">虽然距离WWDC2011和iOS 5已经快一年时间，但是很多开发者并没有利用新方法来提高自己的水平，这点在ARC的使用上非常明显(特别是国内，基本很少见到同行转向ARC)。我曾经询问过一些同行为什么不转向使用ARC，很多人的回答是担心内存管理不受自己控制..其实我个人认为这是对于ARC机制了解不足从而不自信，所导致的对新事物的恐惧。而作为最需要“追赶时髦”的职业，这样的心态将相当不利。谨以此文希望能清楚表述ARC的机理和用法，也希望能够成为现在中文入门教学缺失的补充。</p></p>
-
-<p><hr /></p>
-
-<p><h2 style="text-align: justify;">什么是ARC</h2>
-<p style="text-align: justify;">Automatic Reference Counting，自动引用计数，即ARC，可以说是WWDC2011和iOS5所引入的最大的变革和最激动人心的变化。ARC是新的LLVM 3.0编译器的一项特性，使用ARC，可以说一举解决了广大iOS开发者所憎恨的手动内存管理的麻烦。</p>
-<p style="text-align: justify;">在工程中使用ARC非常简单：只需要像往常那样编写代码，只不过永远不写retain,release和autorelease三个关键字就好～这是ARC的基本原则。当ARC开启时，编译器将自动在代码合适的地方插入retain, release和autorelease，而作为开发者，完全不需要担心编译器会做错（除非开发者自己错用ARC了）。好了，ARC相当简单吧～到此为止，本教程结束。</p>
-<p style="text-align: justify;">等等…也许还有其他问题，最严重的问题是“我怎么确定让ARC来管理不会出问题？”或者“用ARC会让程序性能下降吧”。对于ARC不能正处理内存管理的质疑自从ARC出生以来就一直存在，而现在越来越多的代码转向ARC并取得了很好的效果，这证明了ARC是一套有效的简化开发复杂程度的机制，另外通过研究ARC的原理，可以知道使用ARC甚至能提高程序的效率。在接下来将详细解释ARC的运行机理并且提供了一个step-by-step的教程，将非ARC的程序转换为ARC。</p>
-<p style="text-align: justify;"><!--:-->
-		
-		<a href="/2012/06/arc-hand-by-hand/" class="more-link">继续阅读</a>
 	</div>
 
 </article>

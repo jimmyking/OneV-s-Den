@@ -7,7 +7,8 @@
 	<meta name="author" content="onevcat">
 
 	
-	<meta name="description" content="May 16th, 2012 不醒春色集 水清木华 七年时光，匆匆飞逝。入学之日还历历在目，离别之时却已悄然而来。我希望自己能挥一挥衣袖，不带走这里的一片云彩，但却留下自己青春的回忆。在这个偌大的园子里，有我的欢笑，有我的泪水，有我的努力。我相信所有清华学子在离别母校时，必定是依依不舍。但是， &hellip;">
+	<meta name="description" content="Jun 4th, 2012 能工巧匠集 手把手教你ARC——iOS/Mac开发ARC入门和使用 本文部分实例取自iOS 5 Toturail一书中关于ARC的教程和公开内容，仅用于技术交流和讨论。请不要将本文的部分或全部内容用于商用，谢谢合作。
+欢迎转载本文，但是转载请注明本文出处：http &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -89,6 +90,54 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-04T00:00:00+09:00" data-updated="true" itemprop="datePublished">Jun 4<span>th</span>, 2012</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/2012/06/arc-hand-by-hand/" itemprop="url">手把手教你ARC——iOS/Mac开发ARC入门和使用</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120604-1.png"><img class="size-full wp-image-810" title="ARC" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120604-1.png" alt="" width="1069" height="265" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">本文部分实例取自iOS 5 Toturail一书中关于ARC的教程和公开内容，仅用于技术交流和讨论。请不要将本文的部分或全部内容用于商用，谢谢合作。</p>
+<p style="text-align: justify;">欢迎转载本文，但是转载请注明本文出处：<a href="http://www.onevcat.com/2012/06/arc-hand-by-hand/">http://www.onevcat.com/2012/06/arc-hand-by-hand/</a></p>
+<p style="text-align: justify;">本文适合人群：对iOS开发有一定基础，熟悉iOS开发中内存管理的Reference Counting机制，对ARC机制有听闻很向往但是一直由于种种原因没有使用的童鞋。本文将从ARC机理入手对这个解放广大iOS开发者的伟大机制进行一个剖析，并逐步引导你开始使用ARC。一旦习惯ARC，你一定会被它的简洁高效所征服。</p></p>
+
+<p><h2 style="text-align: justify;">写在开头</h2>
+<p style="text-align: justify;">虽然距离WWDC2011和iOS 5已经快一年时间，但是很多开发者并没有利用新方法来提高自己的水平，这点在ARC的使用上非常明显(特别是国内，基本很少见到同行转向ARC)。我曾经询问过一些同行为什么不转向使用ARC，很多人的回答是担心内存管理不受自己控制..其实我个人认为这是对于ARC机制了解不足从而不自信，所导致的对新事物的恐惧。而作为最需要“追赶时髦”的职业，这样的心态将相当不利。谨以此文希望能清楚表述ARC的机理和用法，也希望能够成为现在中文入门教学缺失的补充。</p></p>
+
+<p><hr /></p>
+
+<p><h2 style="text-align: justify;">什么是ARC</h2>
+<p style="text-align: justify;">Automatic Reference Counting，自动引用计数，即ARC，可以说是WWDC2011和iOS5所引入的最大的变革和最激动人心的变化。ARC是新的LLVM 3.0编译器的一项特性，使用ARC，可以说一举解决了广大iOS开发者所憎恨的手动内存管理的麻烦。</p>
+<p style="text-align: justify;">在工程中使用ARC非常简单：只需要像往常那样编写代码，只不过永远不写retain,release和autorelease三个关键字就好～这是ARC的基本原则。当ARC开启时，编译器将自动在代码合适的地方插入retain, release和autorelease，而作为开发者，完全不需要担心编译器会做错（除非开发者自己错用ARC了）。好了，ARC相当简单吧～到此为止，本教程结束。</p>
+<p style="text-align: justify;">等等…也许还有其他问题，最严重的问题是“我怎么确定让ARC来管理不会出问题？”或者“用ARC会让程序性能下降吧”。对于ARC不能正处理内存管理的质疑自从ARC出生以来就一直存在，而现在越来越多的代码转向ARC并取得了很好的效果，这证明了ARC是一套有效的简化开发复杂程度的机制，另外通过研究ARC的原理，可以知道使用ARC甚至能提高程序的效率。在接下来将详细解释ARC的运行机理并且提供了一个step-by-step的教程，将非ARC的程序转换为ARC。</p>
+<p style="text-align: justify;"><!--:-->
+		
+		<a href="/2012/06/arc-hand-by-hand/" class="more-link">继续阅读</a>
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -486,45 +535,6 @@ iOS好很多，因为iPhone和iTouch的分辨率完全一致(就算retina也有A
 <p><!--:-->
 		
 		<a href="/2012/02/iosversion/" class="more-link">继续阅读</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-20T00:00:00+09:00" data-updated="true" itemprop="datePublished">Feb 20<span>th</span>, 2012</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/category/hu-yan-luan-yu-ji/'>胡言乱语集</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/2012/02/done/" itemprop="url">搬家完成</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><!--:zh-->历经一周的风风雨雨，总算是把原来的免费空间商pia飞了，然后顺便也把域名从国内转了出来。趁机换了主题和风格，不知道会不会被K站～不过总之，相信今后的宕机的情况会少很多了，cheers～</p>
-
-<p>今后尽量保持更新，浏览本站的最佳方式其实应该是<a href="http://www.onevcat.com/feed/">订阅RSS</a>，不会的同学可以参考这里的<a href="http://baike.baidu.com/view/736401.htm">简介</a>，个人强烈推荐<a href="http://www.google.com/reader/">Google Reader</a>作为RSS阅读器，改版以后的符合Google统一风格的小清新界面很是让人喜欢。</p>
-
-<p>继续埋头写论文，耽误了不少时间了..要是写不完不让毕业可就惨咯..<!--:--></p>
-
-		
-		
 	</div>
 
 </article>

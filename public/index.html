@@ -7,8 +7,7 @@
 	<meta name="author" content="onevcat">
 
 	
-	<meta name="description" content="Apr 6th, 2013 能工巧匠集 两个人一起记账吧～ Our Money Our Money是一款能够协助多人在云端记账的iOS应用，可以帮助您简单地记录和整理日常开销，您可以邀请您的朋友和家人与您一起记账，免去每日汇报总结之苦。 App Store地址
-Our Money app的首页 &hellip;">
+	<meta name="description" content="Apr 13th, 2013 胡言乱语集 上级向的十个iOS面试问题 不管对于招聘和应聘来说，面试都是很重要的一个环节，特别对于开发者来说，面试中的技术问题环节不仅是企业对应聘者技能和积累的考察，也是一个开发者自我检验的好机会。对于iOS和Mac开发来说，因为本事还算比较新， &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +89,65 @@ Our Money app的首页 &hellip;">
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-13T01:22:00+09:00" data-updated="true" itemprop="datePublished">Apr 13<span>th</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/category/hu-yan-luan-yu-ji/'>胡言乱语集</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/2013/04/ios-interview/" itemprop="url">上级向的十个iOS面试问题</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p><img src="http://img.onevcat.com/2013/welcome-to-xcode.png" alt="Welcome to Xcode" /></p>
+
+<p>不管对于招聘和应聘来说，面试都是很重要的一个环节，特别对于开发者来说，面试中的技术问题环节不仅是企业对应聘者技能和积累的考察，也是一个开发者自我检验的好机会。对于iOS和Mac开发来说，因为本事还算比较新，企业对于这方面的开发者需求也比较大，所以面试时的要求可能并不是很高，一般能知道一些Cocoa和OC的基本知识也就认为可以了。但是对于一个希望拥有技术力基础的企业的iOS或者Mac开发来说，两到三个顶尖的熟练技术人员，带领一些还较为初级的开发者，共同完成项目应该是比较常见的构成。</p>
+
+<p>Cocoa特别是CocoaTouch的开发，上手可以说十分容易，但是背后隐藏的细节和原理却很丰富。一方面对于基础不够熟练和清晰（比如从一个AppDelegate开始用代码构建ViewController，或者清晰地说明栈和堆之类的概念），另一方面对于更进阶的开发知之甚少（比如多线程、网络异步处理或者Core开头的各种框架等等）。这些内容十分重要，但是可能现在一般的iOS开发者或多或少都在这些问题上存在薄弱。在这里我整理了一份面向于较高层级的iOS开发者的面试题目的问题清单，列出了十个应聘Leader级别的高级Cocoa/CocoaTouch开发工程师所应该掌握和理解的技术。这份列表没有提供标准答案，因为这些问题本身就没有标准答案。随每个人对这些内容的认识的不同和理解的差异，可以有不一样的答案。但是最基本地，如果面对的是一名资深的Cocoa开发者，至少期望能得到的答案都是“接触过”，并且能结合自己的经验说个七七八八，达到互相能明白意图和方法的地步。能够在其中两三个领域有不错的见解和具体的阐述的话，那是更好。这种对于知识覆盖面和深度的考察很能真实反映出开发者的技术水平。如果清单里的很大部分内容都是完全没接触过和没听过的话，那可能距离资深Cocoa开发这样一个阶段还尚有距离了。</p>
+
+<p>那么，面试开始。</p>
+
+<ul>
+<li>你使用过Objective-C的运行时编程（Runtime Programming）么？如果使用过，你用它做了什么？你还能记得你所使用的相关的头文件或者某些方法的名称吗？</li>
+<li>你实现过多线程的Core Data么？NSPersistentStoreCoordinator，NSManagedObjectContext和NSManagedObject中的哪些需要在线程中创建或者传递？你是用什么样的策略来实现的？</li>
+<li>Core开头的系列的内容。是否使用过CoreAnimation和CoreGraphics。UI框架和CA，CG框架的联系是什么？分别用CA和CG做过些什么动画或者图像上的内容。（有需要的话还可以涉及Quartz的一些内容）</li>
+<li>是否使用过CoreText或者CoreImage等？如果使用过，请谈谈你使用CoreText或者CoreImage的体验。</li>
+<li>NSNotification和KVO的区别和用法是什么？什么时候应该使用通知，什么时候应该使用KVO，它们的实现上有什么区别吗？如果用protocol和delegate（或者delegate的Array）来实现类似的功能可能吗？如果可能，会有什么潜在的问题？如果不能，为什么？（虽然protocol和delegate这种东西面试已经面烂了&#8230;）</li>
+<li>你用过NSOperationQueue么？如果用过或者了解的话，你为什么要使用NSOperationQueue，实现了什么？请描述它和GCD的区别和类似的地方（提示：可以从两者的实现机制和适用范围来描述）。</li>
+<li>既然提到GCD，那么问一下在使用GCD以及block时要注意些什么？它们两是一回事儿么？block在ARC中和传统的MRC中的行为和用法有没有什么区别，需要注意些什么？</li>
+<li>您是否做过异步的网络处理和通讯方面的工作？如果有，能具体介绍一些实现策略么？</li>
+<li>对于Objective-C，你认为它最大的优点和最大的不足是什么？对于不足之处，现在有没有可用的方法绕过这些不足来实现需求。如果可以的话，你有没有考虑或者实践过重新实现OC的一些功能，如果有，具体会如何做？</li>
+<li>你实现过一个框架或者库以供别人使用么？如果有，请谈一谈构建框架或者库时候的经验；如果没有，请设想和设计框架的public的API，并指出大概需要如何做、需要注意一些什么方面，来使别人容易地使用你的框架。</li>
+</ul>
+
+
+<p>以上10个问题对于初级或者刚接触iOS的开发者来说，肯定是过于难了。想要答出全部问题，可能需要至少两到三年的Cocoa/CocoaTouch开发经验。而如果想要有所见地的回答，可能需要更长的时间和经验。这些问题对于技术的积累会是一个很好的考察，因为如果没有对这些问题中涉及的内容有过实际使用和体会的话，是很难较完整和全面回答这些问题的。同时，因为这些问题并不像ABCD的客观题有标准答案，表现的是应聘者的理解，所以提问者也必须具备必要的材料或者知识，以应对可能的讨论。</p>
+
+<p>在为团队寻求高级别的开发工程师或者Leader类的职位时，这些问题的回答会是对应聘者技术深度和广度的一个有效的考察。同样地，如果你的团队在Cocoa/CocoaTouch上比较偏重，但是技术团队的No.1的工程师却不能很好地回答这些问题的话，可能也会是需要检讨技术层的一个信号。</p>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -574,59 +632,6 @@ if (Time.timeScale == 0 ){
 
 		
 		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-20T00:00:00+09:00" data-updated="true" itemprop="datePublished">Sep 20<span>th</span>, 2012</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/2012/09/autoayout/" itemprop="url">WWDC 2012 Session笔记——202, 228, 232 AutoLayout（自动布局）入门</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/09/QQ20120920-8.png"><img class="aligncenter size-full wp-image-1017" title="QQ20120920-8" src="http://www.onevcat.com/wp-content/uploads/2012/09/QQ20120920-8.png" alt="" width="651" height="262" data-pinit="registered" /></a></p>
-<p style="text-align: justify;">这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
-<p style="text-align: justify;">AutoLayout在去年的WWDC上被引入Cocoa，而在今年的WWDC上，Apple不惜花费了三个Session的前所未见的篇幅来详细地向开发者讲解AutoLayout在iOS上的应用，是由起原因的：iPhone5的屏幕将变为4寸，开发者即将面临为不同尺寸屏幕进行应用适配的工作。Android平台开发中最令人诟病的适配工作的厄运现在似乎也将降临在iOS开发者的头上。基于这样的情况，Apple大力推广使用AutoLayout的方法来进行UI布局，以一举消除适配的烦恼。AutoLayout将是自Interface Builder和StoryBoard之后UI制作上又一次重要的变化，也必然是之后iOS开发的趋势，因此这个专题很值得学习。</p></p>
-
-<p><h2 style="text-align: justify;">AutoLayout是什么？</h2>
-<p style="text-align: justify;">使用一句Apple的官方定义的话</p></p>
-
-<p><blockquote>AutoLayout是一种基于约束的，描述性的布局系统。</blockquote></p>
-
-<p>Auto Layout Is a Constraint-Based, Descriptive Layout System.
-<p style="text-align: justify;">关键词：</p></p>
-
-<p><ul style="text-align: justify;">
-	<li>基于约束 － 和以往定义frame的位置和尺寸不同，AutoLayout的位置确定是以所谓相对位置的约束来定义的，比如<em>x坐标为superView的中心，y坐标为屏幕底部上方10像素</em>等</li>
-	<li>描述性 － 约束的定义和各个view的关系使用接近自然语言或者可视化语言（稍后会提到）的方法来进行描述</li>
-	<li>布局系统 － 即字面意思，用来负责界面的各个元素的位置。</li>
-</ul>
-<div style="text-align: justify;"><!--:--><!--:en-->&nbsp;</div></p>
-
-<p><!--:-->
-		
-		<a href="/2012/09/autoayout/" class="more-link">继续阅读</a>
 	</div>
 
 </article>
