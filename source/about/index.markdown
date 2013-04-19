@@ -26,7 +26,7 @@ footer: true
    [6]: https://twitter.com/#!/onevcat
    [7]: https://github.com/onevcat
 
-关于我主要参与的一些项目，在本站[陈列柜][8]里可以找到；另外，在[代码收集][9]页面中有一些我在github上watch或fork的项目，作为自己的快速查找，如果您有兴趣的话也可以去看一看。
+关于我主要参与的一些项目，在本站[陈列柜][8]里可以找到。如果您有兴趣持续关注本站，可以添加本站的[RSS](http://onevcat.com/atom.xml)，也欢迎您通过[邮件订阅](http://eepurl.com/wNSkj)本站。
 
    [8]: http://www.onevcat.com/showcase/ (陈列柜)
    [9]: http://www.onevcat.com/github/ (GitHub)
