@@ -6,9 +6,40 @@ tags: []
 published: true
 comments: true
 ---
+# [Our Money - 云端协同记账](http://www.onevcat.com/showcase/ourmoney/)
+
+`2013年3月21日`
+
+{% img right http://img.onevcat.com/2013/ourmoney_icon.png %}
+
+Our Money是我在[Kayac](http://www.kayac.com)工作期间，用业余时间开发的一款云端多人协同记账的iOS应用。该app最大的特点是可以很简单地实现多人共享一个账本进行记账，从而免去了汇总和统计的麻烦（想像一下老公每天要记住自己的开销，然后晚上回家向老婆汇报的场景）。简单高效的UI以及完全无感的自动后端同步，可以帮助养成记账的良好习惯，进而追踪自己的日常开销。这是完全由自己独立完成的第二款应用，在之前[Pomodoro Do](http://www.onevcat.com/showcase/pomodoro_do/)的开发中积累的一些经验得到了很好的运用。
+
+## 详细介绍
+
+  * [http://www.onevcat.com/showcase/ourmoney/][11]
+
+   [11]: http://www.onevcat.com/showcase/ourmoney/
+
+## AppStore页面
+
+  * [https://itunes.apple.com/cn/app/our-money/id562520527?ls=1&mt=8][12]
+
+   [12]: https://itunes.apple.com/cn/app/our-money/id562520527?ls=1&mt=8
+
+## 官方网站
+
+  * [http://ourmoney.onevcat.com/][13]
+
+   [13]: http://ourmoney.onevcat.com/
+
+
+
+***
+
+
 # [QuizKingdom][1]
 
-   [1]:  http://www.onevcat.com/quizkingdom/
+   [1]:  http://www.onevcat.com/showcase/quizkingdom/
 
 ### 冒険クイズキングダム
 
@@ -20,9 +51,9 @@ QuizKingdom（冒険クイズキングダム）是我加入Kayac后参与开发�
 
 ## 详细介绍
 
-  * [http://www.onevcat.com/quizkingdom/][4]
+  * [http://www.onevcat.com/showcase/quizkingdom/][4]
 
-   [4]: http://www.onevcat.com/quizkingdom/
+   [4]: http://www.onevcat.com/showcase/quizkingdom/
 
 ## AppStore页面
 
@@ -52,7 +83,7 @@ QuizKingdom（冒険クイズキングダム）是我加入Kayac后参与开发�
 
 {% img right http://pomo.onevcat.com/img/Icon-50.png %}
 
-Pomodoro Do是我利用硕士毕业后，日语培训前的短暂时间完成的iOS上的番茄工作法计时辅助工具，配合番茄工作法，可以更加专注，减少不必要的时间浪费，从而提高效率。这款应用的创意、设计、编码、推广均有我自己独立完成，收获颇丰。
+Pomodoro Do是我利用硕士毕业后，日语培训前的短暂时间完成的iOS上的番茄工作法计时辅助工具，配合番茄工作法，可以更加专注，减少不必要的时间浪费，从而提高效率。这款应用的创意、设计、编码、推广均有我自己独立完成，收获颇丰。这款应用在没有任何推广费用投入的条件下多次进入中国区效率榜前5名，也帮助了很多用户节约时间，提高效率。自己开发的应用能够真的有用，能够帮助别人，这对我来说莫过于最开心的事情了。
 
 ## 详细介绍
 
