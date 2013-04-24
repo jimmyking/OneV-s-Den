@@ -28,10 +28,7 @@ Our Money是我在[Kayac](http://www.kayac.com)工作期间，用业余时间开
 
 ## 官方网站
 
-  * [http://ourmoney.onevcat.com/][13]
-
-   [13]: http://ourmoney.onevcat.com/
-
+  * [http://ourmoney.onevcat.com/](http://ourmoney.onevcat.com/)
 
 
 ***
