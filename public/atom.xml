@@ -4,7 +4,7 @@
   <title><![CDATA[OneV's Den]]></title>
   <link href="http://onevcat.com/atom.xml" rel="self"/>
   <link href="http://onevcat.com/"/>
-  <updated>2013-04-24T13:18:00+09:00</updated>
+  <updated>2013-04-27T22:34:07+08:00</updated>
   <id>http://onevcat.com/</id>
   <author>
     <name><![CDATA[onevcat]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[上级向的十个iOS面试问题]]></title>
     <link href="http://onevcat.com/2013/04/ios-interview/"/>
-    <updated>2013-04-13T01:22:00+09:00</updated>
+    <updated>2013-04-13T01:22:00+08:00</updated>
     <id>http://onevcat.com/2013/04/ios-interview</id>
     <content type="html"><![CDATA[<p><img src="http://img.onevcat.com/2013/welcome-to-xcode.png" alt="Welcome to Xcode" /></p>
 
@@ -52,7 +52,7 @@
   <entry>
     <title type="html"><![CDATA[两个人一起记账吧～ Our Money]]></title>
     <link href="http://onevcat.com/2013/04/our-money-app/"/>
-    <updated>2013-04-06T11:54:00+09:00</updated>
+    <updated>2013-04-06T11:54:00+08:00</updated>
     <id>http://onevcat.com/2013/04/our-money-app</id>
     <content type="html"><![CDATA[<p><a href="https://itunes.apple.com/cn/app/our-money/id562520527?ls=1&amp;mt=8"><img src="http://img.onevcat.com/2013/ourmoney-banner.jpg" alt="image" /></a></p>
 
@@ -121,7 +121,7 @@ Our Money的主界面相当简洁，最上方列出列表名称，收入（预�
   <entry>
     <title type="html"><![CDATA[赴日半年的一些杂感]]></title>
     <link href="http://onevcat.com/2013/04/half-year-in-japan/"/>
-    <updated>2013-04-01T23:47:00+09:00</updated>
+    <updated>2013-04-01T23:47:00+08:00</updated>
     <id>http://onevcat.com/2013/04/half-year-in-japan</id>
     <content type="html"><![CDATA[<p><img src="http://i758.photobucket.com/albums/xx224/onevcat/OneV-s-Den/half-year-in-japan/2013-03-09125056.jpg" alt="樱花之国" /></p>
 
@@ -181,7 +181,7 @@ Our Money的主界面相当简洁，最上方列出列表名称，收入（预�
   <entry>
     <title type="html"><![CDATA[MGTwitterEngine中Twitter API 1.1的使用]]></title>
     <link href="http://onevcat.com/2013/03/mgtwitterengine%E4%B8%ADtwitter-api-1-1%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
-    <updated>2013-03-24T00:00:00+09:00</updated>
+    <updated>2013-03-24T00:00:00+08:00</updated>
     <id>http://onevcat.com/2013/03/mgtwitterengine中twitter-api-1-1的使用</id>
     <content type="html"><![CDATA[<p>在iOS5中使用Twitter framework或者在iOS6中使用Social framework来完成Twitter的集成是非常简单和轻松的，但是如果应用要针对iOS5之前的系统版本，那么就不能使用iOS提供的框架了。一个比较常见也是使用最广泛的选择是<a href="https://github.com/mattgemmell/MGTwitterEngine">MGTwitterEngine</a>，比如<a href="http://www.onevcat.com/showcase/pomodoro_do/">PomodoroDo</a>选择使用的就是该框架。</p>
 
@@ -253,7 +253,7 @@ Our Money的主界面相当简洁，最上方列出列表名称，收入（预�
   <entry>
     <title type="html"><![CDATA[Xcode 4 插件制作入门]]></title>
     <link href="http://onevcat.com/2013/02/xcode-plugin/"/>
-    <updated>2013-02-02T00:00:00+09:00</updated>
+    <updated>2013-02-02T00:00:00+08:00</updated>
     <id>http://onevcat.com/2013/02/xcode-plugin</id>
     <content type="html"><![CDATA[<p><img src="http://www.onevcat.com/wp-content/uploads/2013/02/QQ20130202-15.png"></p>
 
@@ -760,7 +760,7 @@ Our Money的主界面相当简洁，最上方列出列表名称，收入（预�
   <entry>
     <title type="html"><![CDATA[Unity3D中暂停时的动画及粒子效果实现]]></title>
     <link href="http://onevcat.com/2013/01/do_not_pause_me/"/>
-    <updated>2013-01-26T00:00:00+09:00</updated>
+    <updated>2013-01-26T00:00:00+08:00</updated>
     <id>http://onevcat.com/2013/01/do_not_pause_me</id>
     <content type="html"><![CDATA[<p><!--:zh--><h2 style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2013/01/big副本.png"><img class="aligncenter size-full wp-image-1087" title="unpause" src="http://www.onevcat.com/wp-content/uploads/2013/01/big副本.png" alt="" width="500" height="200" data-pinit="registered" /></a></h2>
 <p style="text-align: justify;">暂停是游戏中经常出现的功能，而Unity3D中对于暂停的处理并不是很理想。一般的做法是将Time.timeScale设置为0。Unity的文档中对于这种情况有以下描述；</p></p>
@@ -816,7 +816,7 @@ if (Time.timeScale == 0 ){
   <entry>
     <title type="html"><![CDATA[Unity编译至Xcode工程后自动添加文件和库的方法]]></title>
     <link href="http://onevcat.com/2012/12/xuporter/"/>
-    <updated>2012-12-18T00:00:00+09:00</updated>
+    <updated>2012-12-18T00:00:00+08:00</updated>
     <id>http://onevcat.com/2012/12/xuporter</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/12/1.png"><img class="aligncenter size-full wp-image-1072" title="XUPorter" src="http://www.onevcat.com/wp-content/uploads/2012/12/1.png" alt="" width="763" height="256" data-pinit="registered" /></a></p>
 <p style="text-align: justify;">废话之前</p>
@@ -846,7 +846,7 @@ if (Time.timeScale == 0 ){
   <entry>
     <title type="html"><![CDATA[Unity 3D中的内存管理]]></title>
     <link href="http://onevcat.com/2012/11/memory-in-unity3d/"/>
-    <updated>2012-11-16T00:00:00+09:00</updated>
+    <updated>2012-11-16T00:00:00+08:00</updated>
     <id>http://onevcat.com/2012/11/memory-in-unity3d</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/11/unity-technologies-870x531.jpg"><img class="aligncenter size-full wp-image-1043" title="unity-technologies-870x531" src="http://www.onevcat.com/wp-content/uploads/2012/11/unity-technologies-870x531.jpg" alt="" width="870" height="182" data-pinit="registered" /></a></p>
 <p style="text-align: justify;">本文欢迎转载，但烦请保留此行出处信息：<a href="http://www.onevcat.com/2012/11/memory-in-unity3d/">http://www.onevcat.com/2012/11/memory-in-unity3d/</a></p>
@@ -893,7 +893,7 @@ if (Time.timeScale == 0 ){
   <entry>
     <title type="html"><![CDATA[Perl中JSON的解析和utf-8乱码的解决]]></title>
     <link href="http://onevcat.com/2012/10/perl-json-utf/"/>
-    <updated>2012-10-29T00:00:00+09:00</updated>
+    <updated>2012-10-29T00:00:00+08:00</updated>
     <id>http://onevcat.com/2012/10/perl-json-utf</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;">最近在做一个带有网络通讯和同步功能的app，需要自己写一些后台的东西。因为是半路入门，所以从事开发以来就没有做过后台相关的工作，属于绝对的小白菜鸟。而因为公司在入职前给新员工提过学习Perl的要求，所以还算是稍微看过一些。这次的后台也直接就用Perl来写了。</p></p>
 
@@ -932,7 +932,7 @@ if (Time.timeScale == 0 ){
   <entry>
     <title type="html"><![CDATA[再见，祖国]]></title>
     <link href="http://onevcat.com/2012/09/see-you-my-country/"/>
-    <updated>2012-09-27T00:00:00+09:00</updated>
+    <updated>2012-09-27T00:00:00+08:00</updated>
     <id>http://onevcat.com/2012/09/see-you-my-country</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;">这篇日志发送的时候，我应该已经在离开中国的飞机上了，也有可能已经到达异国他乡了。这是一次不知道归期的旅途，也是一次充满未知的探索，从现在开始，祝自己好运。</p>
 <p style="text-align: justify;">我在中国待了二十六载春秋，对这片土地有着深厚的感情。无论何时何地，无论此去经年，这个经历了太多磨难和挫折并且面临着巨大挑战的国家，始终是我魂牵梦萦的地方。虽然还有各种问题，虽然不足和缺点明显到让人无力吐槽，但是这个国家是我的祖国。对于自己的国家，一个人是没有任何理由和立场去厌恶的。</p>
@@ -949,7 +949,7 @@ if (Time.timeScale == 0 ){
   <entry>
     <title type="html"><![CDATA[WWDC 2012 Session笔记——202, 228, 232 AutoLayout（自动布局）入门]]></title>
     <link href="http://onevcat.com/2012/09/autoayout/"/>
-    <updated>2012-09-20T00:00:00+09:00</updated>
+    <updated>2012-09-20T00:00:00+08:00</updated>
     <id>http://onevcat.com/2012/09/autoayout</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/09/QQ20120920-8.png"><img class="aligncenter size-full wp-image-1017" title="QQ20120920-8" src="http://www.onevcat.com/wp-content/uploads/2012/09/QQ20120920-8.png" alt="" width="651" height="262" data-pinit="registered" /></a></p>
 <p style="text-align: justify;">这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
@@ -1146,7 +1146,7 @@ viewsDictionary = NSDictionaryOfVariableBindings(cancelButton,acceptButton);</pr
   <entry>
     <title type="html"><![CDATA[WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts]]></title>
     <link href="http://onevcat.com/2012/08/advanced-collection-view/"/>
-    <updated>2012-08-28T00:00:00+09:00</updated>
+    <updated>2012-08-28T00:00:00+08:00</updated>
     <id>http://onevcat.com/2012/08/advanced-collection-view</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/08/QQ20120828-3.png"><img class="aligncenter size-full wp-image-984" title="uicollectionview-struct" src="http://www.onevcat.com/wp-content/uploads/2012/08/QQ20120828-3.png" alt="" width="983" height="251" data-pinit="registered" /></a></p>
 <p style="text-align: justify;">这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
@@ -1420,7 +1420,7 @@ viewsDictionary = NSDictionaryOfVariableBindings(cancelButton,acceptButton);</pr
   <entry>
     <title type="html"><![CDATA[学生时代的终焉]]></title>
     <link href="http://onevcat.com/2012/08/not-a-studen/"/>
-    <updated>2012-08-11T00:00:00+09:00</updated>
+    <updated>2012-08-11T00:00:00+08:00</updated>
     <id>http://onevcat.com/2012/08/not-a-studen</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/08/me.jpg"><img class="aligncenter size-full wp-image-973" title="student" src="http://www.onevcat.com/wp-content/uploads/2012/08/me.jpg" alt="" width="838" height="256" data-pinit="registered" /></a></p>
 <p style="text-align: justify;">距离研究生毕业，已经过去一个月了。在毕业季的离愁和从学生身份的转变的怅惘渐渐淡去时，大概是时候对我的整个的大学生涯做一个小结了。很多事情的记忆已经在时间的冲蚀中变得模糊了，但是也有一些事情比其他的琐事更深地印刻在了记忆之中，也许简单的梳理和回忆，无法把这七年刻画的细致入微，但是作为轮廓的勾勒和回顾，却已然绰绰有余了。（写完之后终于发现又被写成标准流水账了，这个从小学开始的写作文的毛病在不写博客两个月之后再次复发了哎…）</p></p>
@@ -1465,7 +1465,7 @@ viewsDictionary = NSDictionaryOfVariableBindings(cancelButton,acceptButton);</pr
   <entry>
     <title type="html"><![CDATA[Pomodoro Do - 拖延症患者的福音]]></title>
     <link href="http://onevcat.com/2012/07/pomodoro-do-%E6%8B%96%E5%BB%B6%E7%97%87%E6%82%A3%E8%80%85%E7%9A%84%E7%A6%8F%E9%9F%B3/"/>
-    <updated>2012-07-25T00:00:00+09:00</updated>
+    <updated>2012-07-25T00:00:00+08:00</updated>
     <id>http://onevcat.com/2012/07/pomodoro-do-拖延症患者的福音</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: center;"><img title="PomodoroDo Logo" src="http://pomo.onevcat.com/img/Icon-50.png" alt="" width="282" height="141" data-pinit="registered" /></p>
 <p style="text-align: justify;"><span style="color: #ff0000;"><em>由于完全是自己完成的应用啦，所以详细介绍就写的偏向广告一点吧～欢迎大家购买使用，并给我提意见哦～我会不断完善这款app的。</em></span></p></p>
@@ -1542,7 +1542,7 @@ AppStore上也有不少番茄工作法的应用。相比起来，Pomodoro Do的�
   <entry>
     <title type="html"><![CDATA[日语学习中...顺便宣传我的新app]]></title>
     <link href="http://onevcat.com/2012/07/japanese-learin/"/>
-    <updated>2012-07-09T00:00:00+09:00</updated>
+    <updated>2012-07-09T00:00:00+08:00</updated>
     <id>http://onevcat.com/2012/07/japanese-learin</id>
     <content type="html"><![CDATA[<p><!--:zh-->如题，被房东赶出来了，现在住到了北语的临时宿舍，网络情况很不乐观&#8230;可能会有一段时间无法更新博客了&#8230;</p>
 
@@ -1560,7 +1560,7 @@ AppStore上也有不少番茄工作法的应用。相比起来，Pomodoro Do的�
   <entry>
     <title type="html"><![CDATA[WWDC 2012 Session笔记——205 Introducing Collection Views]]></title>
     <link href="http://onevcat.com/2012/06/introducing-collection-views/"/>
-    <updated>2012-06-30T00:00:00+09:00</updated>
+    <updated>2012-06-30T00:00:00+08:00</updated>
     <id>http://onevcat.com/2012/06/introducing-collection-views</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-7.png"><img class="aligncenter size-full wp-image-943" title="QQ20120630-7" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-7.png" alt="" width="732" height="113" data-pinit="registered" /></a></p>
 <p style="text-align: justify;">这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
@@ -1733,7 +1733,7 @@ return cell;</pre>
   <entry>
     <title type="html"><![CDATA[WWDC 2012 Session笔记——405 Modern Objective-C]]></title>
     <link href="http://onevcat.com/2012/06/modern-objective-c/"/>
-    <updated>2012-06-24T00:00:00+09:00</updated>
+    <updated>2012-06-24T00:00:00+08:00</updated>
     <id>http://onevcat.com/2012/06/modern-objective-c</id>
     <content type="html"><![CDATA[<p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120624-1.png"><img class="aligncenter size-full wp-image-912" title="QQ20120624-1" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120624-1.png" alt="" width="600" height="112" data-pinit="registered" /></a></p>
 
@@ -1890,7 +1890,7 @@ dict = [NSDictionary dictionaryWithObjects:objects forKeys:keys count:count];</p
   <entry>
     <title type="html"><![CDATA[WWDC 2012 Session笔记——200 What is new in Cocoa Touch]]></title>
     <link href="http://onevcat.com/2012/06/what-is-new-in-cocoa-touch/"/>
-    <updated>2012-06-20T00:00:00+09:00</updated>
+    <updated>2012-06-20T00:00:00+08:00</updated>
     <id>http://onevcat.com/2012/06/what-is-new-in-cocoa-touch</id>
     <content type="html"><![CDATA[<p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120620-1.png"><img class="aligncenter size-full wp-image-892" title="what-is-new-in-cocoa-touch" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120620-1.png" alt="" width="748" height="141" data-pinit="registered" /></a></p>
 
@@ -2046,7 +2046,7 @@ UITableView就不多介绍了，基础中的基础…在iOS5引入StoryBoard之�
   <entry>
     <title type="html"><![CDATA[开发者所需要知道的iOS6 SDK新特性]]></title>
     <link href="http://onevcat.com/2012/06/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%80%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84ios6-sdk%E6%96%B0%E7%89%B9%E6%80%A7/"/>
-    <updated>2012-06-12T00:00:00+09:00</updated>
+    <updated>2012-06-12T00:00:00+08:00</updated>
     <id>http://onevcat.com/2012/06/开发者所需要知道的ios6-sdk新特性</id>
     <content type="html"><![CDATA[<p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/ios6.png"><img class="aligncenter size-full wp-image-859" title="ios6" src="http://www.onevcat.com/wp-content/uploads/2012/06/ios6.png" alt="" width="766" height="238" data-pinit="registered" /></a></p>
 
@@ -2219,7 +2219,7 @@ Apple希望用户关闭app，然后下一次打开时能保持关闭时的界面
   <entry>
     <title type="html"><![CDATA[EURO 2012]]></title>
     <link href="http://onevcat.com/2012/06/euro2012/"/>
-    <updated>2012-06-11T00:00:00+09:00</updated>
+    <updated>2012-06-11T00:00:00+08:00</updated>
     <id>http://onevcat.com/2012/06/euro2012</id>
     <content type="html"><![CDATA[<p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/euro2012.png"><img class="aligncenter size-full wp-image-853" title="euro2012" src="http://www.onevcat.com/wp-content/uploads/2012/06/euro2012.png" alt="" width="1024" height="256" data-pinit="registered" /></a></p>
 

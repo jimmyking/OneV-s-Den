@@ -44,7 +44,7 @@ Our Money是我在[Kayac](http://www.kayac.com)工作期间，用业余时间开
 
 {% img right http://www.onevcat.com/wp-content/uploads/2011/12/mzl.eyzgzwwu.png %}
 
-QuizKingdom（冒険クイズキングダム）是我加入Kayac后参与开发的第一款作品。该游戏是iOS及Android平台的基于问答的含有RPG元素的益智类游戏。QuizKingdom是由Unity3D开发的，游戏内容十分丰富，日本区下载量达到70万左右。
+QuizKingdom（冒険クイズキングダム）是我加入Kayac后参与开发的第一款作品。该游戏是iOS及Android平台的基于问答的含有RPG元素的益智类游戏。QuizKingdom是由Unity3D开发的，游戏内容十分丰富，日本区下载量超过了***100万次***。
 
 ## 详细介绍
 
@@ -74,7 +74,7 @@ QuizKingdom（冒険クイズキングダム）是我加入Kayac后参与开发�
 
 # [Pomodoro Do][8]
 
-   [8]: http://www.onevcat.com/showcase/pomodoro_do/
+   [8]: http://onevcat.com/showcase/pomodoro_do/
 
 `2012年7月25日`
 
@@ -162,7 +162,7 @@ VVBorderTimer是一个可配置的使用边框作为计时条的UIView.
 
 # [小熊推金币（小熊战争-在线竞技）][25]
 
-   [25]: http://www.onevcat.com/coinpush/
+   [25]: http://www.onevcat.com/showcase/coinpush/
 
 `2011年11月12日`
 
@@ -173,9 +173,9 @@ VVBorderTimer是一个可配置的使用边框作为计时条的UIView.
 
 ## 详细介绍
 
-  * [http://www.onevcat.com/coinpush/][27]
+  * [http://www.onevcat.com/showcase/coinpush/][27]
 
-   [27]: http://www.onevcat.com/coinpush/
+   [27]: http://www.onevcat.com/showcase/coinpush/
 
 ## AppStore页面
 
