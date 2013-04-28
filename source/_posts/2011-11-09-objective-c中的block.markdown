@@ -29,7 +29,9 @@ BOOL (^isInputEven)(int) = ^(int input) {
 };
 ```
 
-以上定义了一个block变量，block本身就是一个程序段，因此有返回值有输入参数，这里这个block返回的类型为BOOL。天赋异秉的OC用了同样不走寻常路的"^"符号来表示block定义的开始（就像用减号和加号来定义方法一样），block的名称紧跟在^符号之后，这里是isInputEven（也即以后使用inline方式调用该block时所需要的名称）。这段block接受一个int型的参数，而在等号后面的int input是对这个传入int参数的说明：在该block内，将使用input这个名字来指代传入的int参数。一开始看block的定义和写法时可能会比较痛苦，但是请谨记它只是把我们常见的方法实现换了一种写法而已，请以习惯OC中括号发送消息的速度和决心，尽快习惯block的写法吧！
+以上定义了一个block变量，block本身就是一个程序段，因此有返回值有输入参数，这里这个block返回的类型为BOOL。天赋异秉的OC用了同样不走寻常路的"{% raw %}
+^{% endraw %}"符号来表示block定义的开始（就像用减号和加号来定义方法一样），block的名称紧跟在{% raw %}
+^{% endraw %}符号之后，这里是isInputEven（也即以后使用inline方式调用该block时所需要的名称）。这段block接受一个int型的参数，而在等号后面的int input是对这个传入int参数的说明：在该block内，将使用input这个名字来指代传入的int参数。一开始看block的定义和写法时可能会比较痛苦，但是请谨记它只是把我们常见的方法实现换了一种写法而已，请以习惯OC中括号发送消息的速度和决心，尽快习惯block的写法吧！
 
 调用这个block的方法就非常简单和直观了，类似调用c函数的方式即可：
 
@@ -56,7 +58,8 @@ NSLog(@"Ordering %d units, final price is: $%2.2f", orderQuantity, finalPrice(or
 
 输出为**Ordering 10 units, final price is: $19.90**
 
-相当开心啊，block外的`price`成功地在block内部也能使用了，这意味着内联函数可以使用处于同一scope里的局部变量。但是需要注意的是，你不能在block内部改变本地变量的值，比如在^{}里写`price = 0.99`这样的语句的话，你亲爱的compiler一定是会叫的。而更需要注意的是`price`这样的局部变量的变化是不会体现在block里的！比如接着上面的代码，继续写：
+相当开心啊，block外的`price`成功地在block内部也能使用了，这意味着内联函数可以使用处于同一scope里的局部变量。但是需要注意的是，你不能在block内部改变本地变量的值，比如在{% raw %}
+^{% endraw %}{}里写`price = 0.99`这样的语句的话，你亲爱的compiler一定是会叫的。而更需要注意的是`price`这样的局部变量的变化是不会体现在block里的！比如接着上面的代码，继续写：
 
 ```objc
 price = .99;
