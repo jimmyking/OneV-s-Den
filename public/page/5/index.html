@@ -7,8 +7,9 @@
 	<meta name="author" content="onevcat">
 
 	
-	<meta name="description" content="Jan 17th, 2012 南箕北斗集 TestFlight——完美的iOS App测试方案 转载本文请保留以下原作者信息:
-原作：onevcat [http://www.onevcat.com/2012/01/testflight/][http://www.onevcat.com/2012/ &hellip;">
+	<meta name="description" content="Jan 18th, 2012 能工巧匠集 Google查询地理信息API 向Google Map查询给定经纬度的位置信息，返回为JSON
+[crayon]
++(NSString *)googleReverseStringWithCoordinate:(CLLocationCoordinate2D &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,6 +93,50 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-18T00:00:00+08:00" data-updated="true" itemprop="datePublished">Jan 18<span>th</span>, 2012</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/2012/01/googlelocation/" itemprop="url">Google查询地理信息API</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p><!--:zh-->向Google Map查询给定经纬度的位置信息，返回为JSON<br />
+[crayon]<br />
++(NSString *)googleReverseStringWithCoordinate:(CLLocationCoordinate2D)coordinate{<br />
+return [NSString stringWithFormat:@&#8221;http://maps.google.com/maps/geo?q=%lf,%lf&amp;output=json&amp;sensor=false&amp;accuracy=4&#8221;, coordinate.latitude,coordinate.longitude];<br />
+}
+[/crayon]<!--:--><!--:en-->+(NSString *)googleReverseStringWithCoordinate:(CLLocationCoordinate2D)coordinate{<br />
+return [NSString stringWithFormat:@&#8221;http://maps.google.com/maps/geo?q=%lf,%lf&amp;output=json&amp;sensor=false&amp;accuracy=4&#8221;, coordinate.latitude,coordinate.longitude];<br />
+} <!--:--><!--:ja-->+(NSString *)googleReverseStringWithCoordinate:(CLLocationCoordinate2D)coordinate{<br />
+return [NSString stringWithFormat:@&#8221;http://maps.google.com/maps/geo?q=%lf,%lf&amp;output=json&amp;sensor=false&amp;accuracy=4&#8221;, coordinate.latitude,coordinate.longitude];<br />
+} <!--:--></p>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -867,41 +912,6 @@
 
 		
 		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-11T00:00:00+08:00" data-updated="true" itemprop="datePublished">Dec 11<span>th</span>, 2011</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/category/hu-yan-luan-yu-ji/'>胡言乱语集</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/2011/12/skyrim/" itemprop="url">直到我膝盖中了一箭&#8230;</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2011/12/skyrim.png"><img class="aligncenter size-full wp-image-419" title="skyrim" src="http://www.onevcat.com/wp-content/uploads/2011/12/skyrim.png" alt="" width="700" height="172" /></a>这句话就这么火了。其实通宵等了一夜天际，但是之后却一直没有大块时间，所以至今主线还没有玩完，今年之内估计也是没有机会完结了。在2011年各种组织评选年度游戏之前，我想我得为老滚5写点什么。</p>
-<p style="text-align: justify;">今年是大作频出的年份，传送门2，巫师2，刺客信条：启示录，英雄无敌6，新的COD&#8230;当然，还有让人等了五年的上古卷轴5。一个人的一生并没有多少个五年可以等，而这个世界上也没有多少游戏值得人们等待五年。<!--:-->
-		
-		<a href="/2011/12/skyrim/" class="more-link">继续阅读</a>
 	</div>
 
 </article>

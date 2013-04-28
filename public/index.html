@@ -7,7 +7,7 @@
 	<meta name="author" content="onevcat">
 
 	
-	<meta name="description" content="Apr 13th, 2013 胡言乱语集 上级向的十个iOS面试问题 不管对于招聘和应聘来说，面试都是很重要的一个环节，特别对于开发者来说，面试中的技术问题环节不仅是企业对应聘者技能和积累的考察，也是一个开发者自我检验的好机会。对于iOS和Mac开发来说，因为本事还算比较新， &hellip;">
+	<meta name="description" content="Apr 28th, 2013 南箕北斗集 苹果应用描述中不能使用特殊字符的对应方法 虽然很早Apple就说过从5月1日开始就不再允许UDID以及没有对iPhone5优化的应用上架，但是这次iTunes Connect的对于描述字符的限制还是让很多开发者措手不及。毕竟事先完全没有和大家打过招呼， &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,6 +91,51 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-28T18:01:00+08:00" data-updated="true" itemprop="datePublished">Apr 28<span>th</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/category/nan-ji-bei-dou-ji/'>南箕北斗集</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/2013/04/itc-special-characters/" itemprop="url">苹果应用描述中不能使用特殊字符的对应方法</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p><img src="http://img.onevcat.com/2013/itc-special-character.png" alt="就是不让你用就是不让你用～" /></p>
+
+<p>虽然很早Apple就说过从5月1日开始就不再允许UDID以及没有对iPhone5优化的应用上架，但是这次iTunes Connect的对于描述字符的限制还是让很多开发者措手不及。毕竟事先完全没有和大家打过招呼，Apple想要统一应用市场的风格和体验的心态可以理解，但是在开发者难得还有一点自由发挥的应用描述的地方突然作出这样的限制，确实不太厚道。相关的新闻报道可以参看<a href="http://www.cnbeta.com/articles/234799.htm">这里</a></p>
+
+<p>但是，难道我们真的没法使用更漂亮的描述了么？答案是，有办法！解决办法就一句话，<strong>直接使用<code>字符值引用</code>来写iTC的描述就可以了～</strong></p>
+
+<p>比如，想使用<code>★</code>这个字符，在描述中将<code>★</code>的地方都换成<code>&amp;#9733;</code>就可以了。</p>
+
+<p>一句废话，对于字符转换，当然也有在线将特殊字符转换为字符值引用的服务：<a href="http://yasu.asuka.net/orkut/conv.html">传送门</a></p>
+
+<p>最后，祝大家五一快乐，假期好心情～ :)</p>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -574,49 +619,6 @@ if (Time.timeScale == 0 ){
 <p style="text-align: justify;"><!--:-->
 		
 		<a href="/2012/10/perl-json-utf/" class="more-link">继续阅读</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-27T00:00:00+08:00" data-updated="true" itemprop="datePublished">Sep 27<span>th</span>, 2012</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/category/sui-sui-nian/'>碎碎念</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/2012/09/see-you-my-country/" itemprop="url">再见，祖国</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><!--:zh--><p style="text-align: justify;">这篇日志发送的时候，我应该已经在离开中国的飞机上了，也有可能已经到达异国他乡了。这是一次不知道归期的旅途，也是一次充满未知的探索，从现在开始，祝自己好运。</p>
-<p style="text-align: justify;">我在中国待了二十六载春秋，对这片土地有着深厚的感情。无论何时何地，无论此去经年，这个经历了太多磨难和挫折并且面临着巨大挑战的国家，始终是我魂牵梦萦的地方。虽然还有各种问题，虽然不足和缺点明显到让人无力吐槽，但是这个国家是我的祖国。对于自己的国家，一个人是没有任何理由和立场去厌恶的。</p>
-<p style="text-align: justify;">记得本科入学式的时候，校长有这样一句话：“你们来到这里，是因为祖国选择了你们”。而讽刺的是，在四年或者七年后，我们中有一大批人选择了离开祖国，而且可能永远不会再回来。学校很尴尬的恢复成了最初成立时的“留美预备学校”的性质。确实，在这100年的时间里，似乎很多东西都回到了起点…</p>
-<p style="text-align: justify;">到达之后可能会消失一段时间了，因为网络和通讯以及生活的安定都会需要一段时间。之后的blog风格依然会以iOS开发的技术的入门介绍为主，当然因为在国外一切都很新鲜，也许国外生活的介绍和感想的比例会稍微高一些。也许工作会相当忙，但是我仍然希望能有时间做一些工作之外的自己的事情，因为毕竟工作只是工作，它的目的不是代替生活，而是服务生活的～</p>
-<p style="text-align: justify;">那么，祖国，再见。</p><!--:--><!--:en-->&nbsp;</p>
-
-<p><!--:--><!--:ja-->&nbsp;</p>
-
-<p><!--:--></p>
-
-		
-		
 	</div>
 
 </article>

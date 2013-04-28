@@ -7,7 +7,11 @@
 	<meta name="author" content="onevcat">
 
 	
-	<meta name="description" content="Feb 20th, 2012 胡言乱语集 搬家完成 历经一周的风风雨雨，总算是把原来的免费空间商pia飞了，然后顺便也把域名从国内转了出来。趁机换了主题和风格，不知道会不会被K站～不过总之，相信今后的宕机的情况会少很多了，cheers～ 今后尽量保持更新，浏览本站的最佳方式其实应该是订阅RSS， &hellip;">
+	<meta name="description" content="Feb 26th, 2012 能工巧匠集 符合iOS系统兼容性需求的方法 转载本文请保留以下原作者信息:
+原作：OneV
+http://www.onevcat.com/2012/02/iosversion/
+兼容性，开发者之殇
+兼容性问题是全世界所有开发这面临的最头疼的问题之一， &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,6 +95,56 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-26T00:00:00+08:00" data-updated="true" itemprop="datePublished">Feb 26<span>th</span>, 2012</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/2012/02/iosversion/" itemprop="url">符合iOS系统兼容性需求的方法</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2012/02/ios.jpg"><img class="aligncenter size-full wp-image-673" title="ios" src="http://www.onevcat.com/wp-content/uploads/2012/02/ios.jpg" alt="" width="600" height="211" data-pinit="registered" /></a></p>
+
+<p>转载本文请保留以下原作者信息:<br />
+原作：OneV
+<a href="http://www.onevcat.com/2012/02/iosversion/">http://www.onevcat.com/2012/02/iosversion/</a>
+<h1>兼容性，开发者之殇</h1>
+兼容性问题是全世界所有开发这面临的最头疼的问题之一，这句话不会有开发者会反驳。往昔的Windows Vista的升级死掉一批应用的惨状历历在目，而如今火热的移动互联网平台上类似的问题也层出不穷。Andriod的开源导致产商繁多，不同的设备不仅硬件配置有差异，系统有差异，就连屏幕比例也有差异。想要开发出一款真正全Android平台都完美运行的app简直是不可能的..<br />
+iOS好很多，因为iPhone和iTouch的分辨率完全一致(就算retina也有Apple帮你打理好了)，因此需要关注的往往只有系统版本的差别。<strong>在使用到某些新系统才有的特性，或者被废弃的方法时，都需要对运行环境做出判定。</strong></p>
+
+<p><hr /></p>
+
+<p><h1>何时需要照顾兼容性</h1>
+没有人可以记住所有系统新加入的类或者属性方法，也没有人可以开发出一款能针对全系统的还amazing的应用。</p>
+
+<p><strong>在iOS的话，首先要做的就是为自己所开发的app选择合适的最低版本</strong>，在XCode中的对应app的target属性中，设置iOS Deployment Target属性，这对应着你的app将会运行在的最低的系统版本。如果你设成iOS 4.3的话，那你就不需要考虑代码对4.3之前的系统的兼容性了——因为低于iOS 4.3的设备是无法通过正规渠道安装你的应用的。</p>
+
+<p><!--:-->
+		
+		<a href="/2012/02/iosversion/" class="more-link">继续阅读</a>
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -421,50 +475,6 @@
 		<p><!--:zh-->iBooks 2，iBooks Author，TextBook Store，iTunes U for iPad。Apple确实是伟大的公司，深知从小培养自己的用户和形成生态圈&#8230;不得不佩服。</p>
 
 <p><a href="http://itunes.apple.com/us/app/ibooks-author/id490152466?mt=12" target="_blank">http://itunes.apple.com/us/app/ibooks-author/id490152466?mt=12</a>，发布会还没结束iBooks Author就已经可以下载了&#8230;Cook是个行动派，大赞&#8230;<!--:--></p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-18T00:00:00+08:00" data-updated="true" itemprop="datePublished">Jan 18<span>th</span>, 2012</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/2012/01/googlelocation/" itemprop="url">Google查询地理信息API</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><!--:zh-->向Google Map查询给定经纬度的位置信息，返回为JSON<br />
-[crayon]<br />
-+(NSString *)googleReverseStringWithCoordinate:(CLLocationCoordinate2D)coordinate{<br />
-return [NSString stringWithFormat:@&#8221;http://maps.google.com/maps/geo?q=%lf,%lf&amp;output=json&amp;sensor=false&amp;accuracy=4&#8221;, coordinate.latitude,coordinate.longitude];<br />
-}
-[/crayon]<!--:--><!--:en-->+(NSString *)googleReverseStringWithCoordinate:(CLLocationCoordinate2D)coordinate{<br />
-return [NSString stringWithFormat:@&#8221;http://maps.google.com/maps/geo?q=%lf,%lf&amp;output=json&amp;sensor=false&amp;accuracy=4&#8221;, coordinate.latitude,coordinate.longitude];<br />
-} <!--:--><!--:ja-->+(NSString *)googleReverseStringWithCoordinate:(CLLocationCoordinate2D)coordinate{<br />
-return [NSString stringWithFormat:@&#8221;http://maps.google.com/maps/geo?q=%lf,%lf&amp;output=json&amp;sensor=false&amp;accuracy=4&#8221;, coordinate.latitude,coordinate.longitude];<br />
-} <!--:--></p>
 
 		
 		

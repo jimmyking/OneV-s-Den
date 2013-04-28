@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 南箕北斗集 | OneV's Den]]></title>
   <link href="http://onevcat.com/category/nan-ji-bei-dou-ji/atom.xml" rel="self"/>
   <link href="http://onevcat.com/"/>
-  <updated>2013-04-28T14:45:30+08:00</updated>
+  <updated>2013-04-28T18:25:58+08:00</updated>
   <id>http://onevcat.com/</id>
   <author>
     <name><![CDATA[onevcat]]></name>
@@ -12,6 +12,25 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[苹果应用描述中不能使用特殊字符的对应方法]]></title>
+    <link href="http://onevcat.com/2013/04/itc-special-characters/"/>
+    <updated>2013-04-28T18:01:00+08:00</updated>
+    <id>http://onevcat.com/2013/04/itc-special-characters</id>
+    <content type="html"><![CDATA[<p><img src="http://img.onevcat.com/2013/itc-special-character.png" alt="就是不让你用就是不让你用～" /></p>
+
+<p>虽然很早Apple就说过从5月1日开始就不再允许UDID以及没有对iPhone5优化的应用上架，但是这次iTunes Connect的对于描述字符的限制还是让很多开发者措手不及。毕竟事先完全没有和大家打过招呼，Apple想要统一应用市场的风格和体验的心态可以理解，但是在开发者难得还有一点自由发挥的应用描述的地方突然作出这样的限制，确实不太厚道。相关的新闻报道可以参看<a href="http://www.cnbeta.com/articles/234799.htm">这里</a></p>
+
+<p>但是，难道我们真的没法使用更漂亮的描述了么？答案是，有办法！解决办法就一句话，<strong>直接使用<code>字符值引用</code>来写iTC的描述就可以了～</strong></p>
+
+<p>比如，想使用<code>★</code>这个字符，在描述中将<code>★</code>的地方都换成<code>&amp;#9733;</code>就可以了。</p>
+
+<p>一句废话，对于字符转换，当然也有在线将特殊字符转换为字符值引用的服务：<a href="http://yasu.asuka.net/orkut/conv.html">传送门</a></p>
+
+<p>最后，祝大家五一快乐，假期好心情～ :)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[AppCode，Objective-C IDE的另一选择]]></title>
@@ -339,36 +358,6 @@
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2011/12/6593637_190517116457_2.jpg"><img class="aligncenter size-full wp-image-434" title="6593637_190517116457_2" src="http://www.onevcat.com/wp-content/uploads/2011/12/6593637_190517116457_2-e1324556385859.jpg" alt="" width="1024" height="256" /></a><a href="http://news.csdn.net/a/20111221/309505.html">CSDN的密码事件</a>闹得沸沸扬扬，600万用户数据的泄露应该是中国互联网历史上最严重的帐号信息泄露事件。让人不可思议的是，2009年4月之前的用户密码居然是以明文存储。使用明文存储密码本身就是一件相当扯淡的事情，而当这种事情发生在以程序员为主要客户的大型网站上，真是让人哭笑不得。</p>
 <p style="text-align: justify;"><!--:--><!--more--><!--:zh-->之后又陆续爆出人人、多玩以及各种知名网站的账户信息泄露的消息，虽然还未确知真伪，但也很是让人揪心。而“不能明文保存密码”这一个初级中的初级的错误之所以会在中国这篇神奇的土地上一次又一次的出现，我认为是与中国的网络审查制度和相关法制不全造成的（其实就算法令全了我估计在特权之下也只是一纸空文）。负责网络审查的大大们往往一个电话过来指明要XXX的密码，而在天朝这样的地方如果你拿不出这个密码的话，基本就被扣上了政治不合作和给领导难看的大帽子，很多时候程序员被逼无奈只能明文存储。而像这次CSDN这样的由于系统升级而遗留下的历史问题，可以相信溯其根源也或多或少会与这样的特权有关吧...</p>
 <p style="text-align: justify;">扯远了扯远了...作为有良知的程序员，绝不能用明文存储密码，而作为简单的密码存放验证解决方案，MD5的Challenge-Response验证方法可以满足绝大部分非机密级别的应用了。使用MD5存储密码在验证中是很常见的做法，虽然<a href="http://baike.baidu.com/view/350813.htm#2">王小云</a>教授提出了有效的MD5强无碰撞算法，但是作为民用级别的网站认证，简单的散列MD5的方便快速简单易用的特性还是相当吸引人。为了防止截取MD5伪造身份完成认证，再加入一个Challenge-Response机制，客户端请求验证时，由服务器随机一个串给客户端进行挑战，客户端使用密码的散列值与从服务器取得的串组合得到新的散列值，将此散列值提交给服务器生成的散列值进行应答验证，若两个散列一致则通过，否则失效。如果希望能够得到更加安全的散列算法，可以选择SHA-256，SHA-384或者SHA-512等还未被攻破的散列（仅限民用..我猜政府军事部门不太可能用散列这种悲剧又简单的摘要算法）。对于iPhone SDK来说，常用的散列算法都在&lt;CommonCrypto/CommonDigest.h&gt;头文件中均有说明。而libcommonCrypto.dylib和Security.framework中也都提供了相当多的安全方法，涉及网络应用的app开发的话，不论是作为自身修养的提升还是对自己的代码负责，都应当对安全问题有基本的认识和思索...</p><!--:--></p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[XCode4.2，想说爱你不容易]]></title>
-    <link href="http://onevcat.com/2011/10/xcode4/"/>
-    <updated>2011-10-27T00:00:00+08:00</updated>
-    <id>http://onevcat.com/2011/10/xcode4</id>
-    <content type="html"><![CDATA[<p><a href="http://www.onevcat.com/wp-content/uploads/2011/10/Xcode-1.jpg"><img class="aligncenter size-full wp-image-247" title="Xcode" src="http://www.onevcat.com/wp-content/uploads/2011/10/Xcode-1-e1319647071157.jpg" alt="" width="1096" height="254" /></a>随着iOS5，最终还是在一个项目结束之前就被迫换到XCode4.2了。XCode4初出的时候就有无数先辈惨死在无尽的bug和极度不适中，而我选择了在一段时间的4.1和3.2.6共存的过渡期后再完全转到新版本下继续工作，现在看来是非常明智的。</p>
-
-
-
-
-<p>GCC在4.2彻底再见了，同样标着4.2，但是想在XCode4.2上弄个GCC4.2的编译器还真是费力。还好LLVM还不错，就是可怜了那些写了N多GCC only的stand-alone的苦逼程序员了。LLVM最终还是暴露了了Apple想要脱离GNU的目标，<!--more-->不过新的编译环境给人的感受确实很棒。得益于LLVM，coding的时候实时能看到代码错误，ARC的引入彻底让人可以忘掉繁琐又无聊的GC策略，从而可以专注于内容实现。这在以前的IDE中是难以想象的。</p>
-
-
-
-
-<p>功能的整合与集成也很方便，Interface Builder终于内嵌了，IBOutlet和IBAction前面也加上了小圆圈，这样一来很不容易再出现忘了拉线这样尴尬的失误了。不知道什么时候能把Instrument也整合到XCode里来，那样生活会更美好=。=</p>
-
-
-
-
-<p>当然也有让人不满的地方，或者说是我还不懂的地方。为什么新工程的默认设置是禁用C和Objective-C的异常捕捉呢...拖别人的代码的时候基本都会有try..catch，于是每次都要去手动改..满讨厌，不知道是不是有什么新的异常处理的机制？另外iOS5的SDK还是有些问题，segment的property设置不再调用change方法把我坑了一个下午，ASI的一个消息也会莫名中断...完美的iOS5 SDK和相应的开源库毕竟还需要时间。嗯...还有一点就是我的机子跑XCode4真的好慢！</p>
-
-
-
-
-<p>最后抱怨下...习惯了写release以后现在在ARC的光芒下写release就被打红叉，每次都苦笑..看来习惯它还真的是需要一定时间呢～</p>
 
 ]]></content>
   </entry>
