@@ -7,7 +7,8 @@
 	<meta name="author" content="onevcat">
 
 	
-	<meta name="description" content="Oct 29th, 2012 能工巧匠集 Perl中JSON的解析和utf-8乱码的解决 最近在做一个带有网络通讯和同步功能的app，需要自己写一些后台的东西。因为是半路入门，所以从事开发以来就没有做过后台相关的工作，属于绝对的小白菜鸟。而因为公司在入职前给新员工提过学习Perl的要求， &hellip;">
+	<meta name="description" content="Sep 27th, 2012 碎碎念 再见，祖国 这篇日志发送的时候，我应该已经在离开中国的飞机上了，也有可能已经到达异国他乡了。这是一次不知道归期的旅途，也是一次充满未知的探索，从现在开始，祝自己好运。
+我在中国待了二十六载春秋，对这片土地有着深厚的感情。无论何时何地，无论此去经年， &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,44 +92,6 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-29T00:00:00+08:00" data-updated="true" itemprop="datePublished">Oct 29<span>th</span>, 2012</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/2012/10/perl-json-utf/" itemprop="url">Perl中JSON的解析和utf-8乱码的解决</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><!--:zh--><p style="text-align: justify;">最近在做一个带有网络通讯和同步功能的app，需要自己写一些后台的东西。因为是半路入门，所以从事开发以来就没有做过后台相关的工作，属于绝对的小白菜鸟。而因为公司在入职前给新员工提过学习Perl的要求，所以还算是稍微看过一些。这次的后台也直接就用Perl来写了。</p></p>
-
-<p><h3 style="text-align: justify;">基本使用</h3>
-<p style="text-align: justify;">和app的通讯，很大程度上依赖了JSON，一来是熟悉，二来是iOS现在解析JSON也十分方便。iOS客户端的话JSON的解析和生成都是没什么问题的：iOS5中加入了<a href="http://developer.apple.com/library/ios/#documentation/Foundation/Reference/NSJSONSerialization_Class/Reference/Reference.html">NSJSONSerialization</a>类来提供相关功能，如果希望支持更早的系统版本的话，相关的开源代码也有很多，也简单易用，比如<a href="http://stig.github.com/json-framework/">SBJson</a>或者<a href="https://github.com/johnezang/JSONKit">JSONKit</a>。同样，在Perl里也有不少类似的JSON处理的模块，最有名最早的应该是<a href="http://search.cpan.org/~makamaka/JSON-2.53/lib/JSON.pm">JSON</a>模块了，同时也简单易用，应该可以满足大部分情况下的需求了。</p>
-<p style="text-align: justify;"><!--:-->
-		
-		<a href="/2012/10/perl-json-utf/" class="more-link">继续阅读</a>
-	</div>
-
-</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -535,6 +498,78 @@
 <p><!--:-->
 		
 		<a href="/2012/06/what-is-new-in-cocoa-touch/" class="more-link">继续阅读</a>
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-12T00:00:00+08:00" data-updated="true" itemprop="datePublished">Jun 12<span>th</span>, 2012</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/2012/06/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%80%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84ios6-sdk%E6%96%B0%E7%89%B9%E6%80%A7/" itemprop="url">开发者所需要知道的iOS6 SDK新特性</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/ios6.png"><img class="aligncenter size-full wp-image-859" title="ios6" src="http://www.onevcat.com/wp-content/uploads/2012/06/ios6.png" alt="" width="766" height="238" data-pinit="registered" /></a></p>
+
+<p>欢迎转载本文，但是转载请注明本文出处： <strong><a href="http://2.gy/erSp" target="_blank">http://2.gy/erSp</a></strong></p>
+
+<p>iOS6 beta和相应的SDK已经放出了，WWDC2012要进入session环节了。iOS6无疑是这届WWDC的重点，在keynote上面对消费者展示了很多新鲜的特性，而之后的seesion对于开发者来说应该是更为重要。这里先大概把iOS6里新增的开发者可能用到的特性做个简单的整理。之后我也会挑一些自己感兴趣的session做一些整理和翻译工作，也算是对自己的一种锻炼吧～相关的笔记整理如下：</p>
+
+<p><a href="http://www.onevcat.com/2012/06/what-is-new-in-cocoa-touch/">Session 200 What&#8217;s New in Cocoa Touch</a>  Cocoa Touch新特性一览</p>
+
+<p><a title="WWDC 2012 Session笔记——405 Modern Objective-C" href="http://www.onevcat.com/2012/06/modern-objective-c/">Session 405 Modern Objective-C</a> 先进Objective-C</p>
+
+<p><a title="WWDC 2012 Session笔记——205 Introducing Collection Views" href="http://www.onevcat.com/2012/06/introducing-collection-views/">Session 205 Introducing Collection Views</a> Collection View入门</p>
+
+<p><a title="WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts" href="http://www.onevcat.com/2012/08/advanced-collection-view/">Session 219 Advanced Collection Views and Building Custom Layouts</a> 高级Collection View和自定义布局</p>
+
+<p><a title="WWDC 2012 Session笔记——202, 228, 232 AutoLayout（自动布局）入门" href="http://www.onevcat.com/2012/09/autoayout/">Session 202,228,232 AutoLayout使用</a></p>
+
+<p><hr /></p>
+
+<p><h3>地图</h3>
+iOS6抛弃了一直用的google map，而使用了自家的地图服务。相应地，MapKit框架也自然变成和Apple自家的地图服务绑定了。随之而来的好处是因为都是自家的内容，所以整合和开放会更进一步，第三方app现在有机会和地图应用进行交互了。也就是说，不使用自身搭载地图信息的app现在可以打开地图应用，并且显示一些感兴趣的路线和地点，这对于路线规划和记录类的应用来说这是个好消息～<!--:--><!--:en--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/ios6.png"><img class="aligncenter size-full wp-image-859" title="ios6" src="http://www.onevcat.com/wp-content/uploads/2012/06/ios6.png" alt="" width="766" height="238" data-pinit="registered" /></a></p>
+
+<p>欢迎转载本文，但是转载请注明本文出处： <strong><a href="http://2.gy/erSp" target="_blank">http://2.gy/erSp</a></strong></p>
+
+<p>iOS6 beta和相应的SDK已经放出了，WWDC2012要进入session环节了。iOS6无疑是这届WWDC的重点，在keynote上面对消费者展示了很多新鲜的特性，而之后的seesion对于开发者来说应该是更为重要。这里先大概把iOS6里新增的开发者可能用到的特性做个简单的整理。之后我也会挑一些自己感兴趣的session做一些整理和翻译工作，也算是对自己的一种锻炼吧～相关的笔记整理如下：</p>
+
+<p><a href="http://www.onevcat.com/2012/06/what-is-new-in-cocoa-touch/">Session 200 What&#8217;s New in Cocoa Touch</a>  Cocoa Touch新特性一览</p>
+
+<p><a title="WWDC 2012 Session笔记——405 Modern Objective-C" href="http://www.onevcat.com/2012/06/modern-objective-c/">Session 405 Modern Objective-C</a> 先进Objective-C</p>
+
+<p><a title="WWDC 2012 Session笔记——205 Introducing Collection Views" href="http://www.onevcat.com/2012/06/introducing-collection-views/">Session 205 Introducing Collection Views</a> Collection View入门</p>
+
+<p><a title="WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts" href="http://www.onevcat.com/2012/08/advanced-collection-view/">Session 219 Advanced Collection Views and Building Custom Layouts</a> 高级Collection View和自定义布局</p>
+
+<p><a title="WWDC 2012 Session笔记——202, 228, 232 AutoLayout（自动布局）入门" href="http://www.onevcat.com/2012/09/autoayout/">Session 202,228,232 AutoLayout使用</a></p>
+
+<p><hr /></p>
+
+<p><h3>地图</h3>
+iOS6抛弃了一直用的google map，而使用了自家的地图服务。相应地，MapKit框架也自然变成和Apple自家的地图服务绑定了。随之而来的好处是因为都是自家的内容，所以整合和开放会更进一步，第三方app现在有机会和地图应用进行交互了。也就是说，不使用自身搭载地图信息的app现在可以打开地图应用，并且显示一些感兴趣的路线和地点，这对于路线规划和记录类的应用来说这是个好消息～<!--:-->
+		
+		<a href="/2012/06/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%80%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84ios6-sdk%E6%96%B0%E7%89%B9%E6%80%A7/" class="more-link">继续阅读</a>
 	</div>
 
 </article>

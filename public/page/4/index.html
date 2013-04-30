@@ -7,10 +7,11 @@
 	<meta name="author" content="onevcat">
 
 	
-	<meta name="description" content="Mar 4th, 2012 能工巧匠集 OpenCV在iOS开发环境下的编译和配置 转载本文请保留以下原作者信息:
+	<meta name="description" content="Feb 26th, 2012 能工巧匠集 符合iOS系统兼容性需求的方法 转载本文请保留以下原作者信息:
 原作：OneV
-http://www.onevcat.com/2012/03/opencv-build-and-config/
-最近在写一个自己的app， &hellip;">
+http://www.onevcat.com/2012/02/iosversion/
+兼容性，开发者之殇
+兼容性问题是全世界所有开发这面临的最头疼的问题之一， &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,52 +95,6 @@ http://www.onevcat.com/2012/03/opencv-build-and-config/
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-04T00:00:00+08:00" data-updated="true" itemprop="datePublished">Mar 4<span>th</span>, 2012</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/2012/03/opencv-build-and-config/" itemprop="url">OpenCV在iOS开发环境下的编译和配置</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/03/Untitled.jpg"><img class="aligncenter size-full wp-image-687" title="OpenCV" src="http://www.onevcat.com/wp-content/uploads/2012/03/Untitled.jpg" alt="" width="600" height="424" data-pinit="registered" /></a></p>
-<p style="text-align: justify;">转载本文请保留以下原作者信息:<br />
-原作：OneV
-<a href="http://www.onevcat.com/2012/03/opencv-build-and-config/">http://www.onevcat.com/2012/03/opencv-build-and-config/</a></p>
-<p style="text-align: justify;">最近在写一个自己的app，用到一些图像识别和处理的东西。研究后发现用OpenCV是最为方便省事的，但是为iOS开发环境编译和配置OpenCV的库还是需要费点功夫，网上资料也并不是很全，而且有不少已经过期。在此进行一些总结，算是留底，也希望能对其他人有所帮助。</p>
-<p style="text-align: justify;">OpenCV (Open Source Computer Vision Library) 是跨平台的开源项目，由一系列C函数和少量C++类构成，提供了图像处理和计算机视觉方面很多通用的算法。在开发有关图像识别和处理的app的时候，OpenCV提供了一系列易用轻量的API，而且遵循<a href="http://en.wikipedia.org/wiki/BSD_license">BSD License</a>。</p></p>
-
-<p><hr /></p>
-
-<p><h1 style="text-align: justify;">OpenCV For iOS一键编译</h1>
-<p style="text-align: justify;">OpenCV用在iOS上，一般是以静态库的方式提供服务的，因此需要先将源码进行编译。如果你想省事，<a href="http://download.csdn.net/detail/onevcat/4111058">这里</a>有一个我预先编译好的库，可以直接使用（OpenCV版本为2.3，虽然文件名字有part1，但是只有这一个包，开袋即食），如果需要最新版本的OpenCV，可以选择自行编译。</p>
-<p style="text-align: justify;">先从OpenCV的repository下载最新的OpenCV</p>
-<p style="text-align: justify;"><!--:-->
-		
-		<a href="/2012/03/opencv-build-and-config/" class="more-link">继续阅读</a>
-	</div>
-
-</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -486,6 +441,43 @@ iOS好很多，因为iPhone和iTouch的分辨率完全一致(就算retina也有A
 		<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/01/sousou.jpg"><img class="aligncenter size-full wp-image-596" title="sousou" src="http://www.onevcat.com/wp-content/uploads/2012/01/sousou.jpg" alt="" width="1058" height="286" /></a>最近在看《<a href="http://ja.wikipedia.org/wiki/%E8%92%BC%E5%A4%A9%E8%88%AA%E8%B7%AF">苍天航路</a>》，一部以曹操为主角正剧三国志漫画。我向来是对曹操这个人物有所感慨，并且有所敬畏的，在他六十六载的人生中，有着太多的波澜壮阔和起起伏伏。而在后世，人们对这样一个伟人的人生的争论似乎从未停止。三国演义引导了尊刘贬曹中国基调，而日本更倾向于把曹操解读为苍天的霸者<!--:--><!--:en--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/01/sousou.jpg"><img class="aligncenter size-full wp-image-596" title="sousou" src="http://www.onevcat.com/wp-content/uploads/2012/01/sousou.jpg" alt="" width="1058" height="286" /></a>最近在看《<a href="http://ja.wikipedia.org/wiki/%E8%92%BC%E5%A4%A9%E8%88%AA%E8%B7%AF">苍天航路</a>》，一部以曹操为主角正剧三国志漫画。我向来是对曹操这个人物有所感慨，并且有所敬畏的，在他六十六载的人生中，有着太多的波澜壮阔和起起伏伏。而在后世，人们对这样一个伟人的人生的争论似乎从未停止。三国演义引导了尊刘贬曹中国基调，而日本更倾向于把曹操解读为苍天的霸者<!--:--><!--:ja--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/01/sousou.jpg"><img class="aligncenter size-full wp-image-596" title="sousou" src="http://www.onevcat.com/wp-content/uploads/2012/01/sousou.jpg" alt="" width="1058" height="286" /></a>最近在看《<a href="http://ja.wikipedia.org/wiki/%E8%92%BC%E5%A4%A9%E8%88%AA%E8%B7%AF">苍天航路</a>》，一部以曹操为主角正剧三国志漫画。我向来是对曹操这个人物有所感慨，并且有所敬畏的，在他六十六载的人生中，有着太多的波澜壮阔和起起伏伏。而在后世，人们对这样一个伟人的人生的争论似乎从未停止。三国演义引导了尊刘贬曹中国基调，而日本更倾向于把曹操解读为苍天的霸者<!--:-->
 		
 		<a href="/2012/01/caocao/" class="more-link">继续阅读</a>
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-19T00:00:00+08:00" data-updated="true" itemprop="datePublished">Jan 19<span>th</span>, 2012</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/category/nan-ji-bei-dou-ji/'>南箕北斗集</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/2012/01/apple%E4%B8%8E%E6%95%99%E8%82%B2%E7%95%8C/" itemprop="url">Apple与教育界</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p><!--:zh-->iBooks 2，iBooks Author，TextBook Store，iTunes U for iPad。Apple确实是伟大的公司，深知从小培养自己的用户和形成生态圈&#8230;不得不佩服。</p>
+
+<p><a href="http://itunes.apple.com/us/app/ibooks-author/id490152466?mt=12" target="_blank">http://itunes.apple.com/us/app/ibooks-author/id490152466?mt=12</a>，发布会还没结束iBooks Author就已经可以下载了&#8230;Cook是个行动派，大赞&#8230;<!--:--></p>
+
+		
+		
 	</div>
 
 </article>

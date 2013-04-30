@@ -7,7 +7,7 @@
 	<meta name="author" content="onevcat">
 
 	
-	<meta name="description" content="Jun 12th, 2012 能工巧匠集 开发者所需要知道的iOS6 SDK新特性 欢迎转载本文，但是转载请注明本文出处： http://2.gy/erSp iOS6 beta和相应的SDK已经放出了，WWDC2012要进入session环节了。iOS6无疑是这届WWDC的重点， &hellip;">
+	<meta name="description" content="Jun 11th, 2012 胡言乱语集 EURO 2012 又是一届欧洲杯。 那一年，当各色时装铺满球场，当克林斯曼哭得像个小孩的时候，我4岁。那时的我，懵懂中认识了足球。 那一年，当小劳德鲁普挑起大梁，在绿茵上奔走书写丹麦童话的时候，我6岁。那时的我，刚懂得什么是足球。 那一年， &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,78 +91,6 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-12T00:00:00+08:00" data-updated="true" itemprop="datePublished">Jun 12<span>th</span>, 2012</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/2012/06/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%80%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84ios6-sdk%E6%96%B0%E7%89%B9%E6%80%A7/" itemprop="url">开发者所需要知道的iOS6 SDK新特性</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><!--:zh--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/ios6.png"><img class="aligncenter size-full wp-image-859" title="ios6" src="http://www.onevcat.com/wp-content/uploads/2012/06/ios6.png" alt="" width="766" height="238" data-pinit="registered" /></a></p>
-
-<p>欢迎转载本文，但是转载请注明本文出处： <strong><a href="http://2.gy/erSp" target="_blank">http://2.gy/erSp</a></strong></p>
-
-<p>iOS6 beta和相应的SDK已经放出了，WWDC2012要进入session环节了。iOS6无疑是这届WWDC的重点，在keynote上面对消费者展示了很多新鲜的特性，而之后的seesion对于开发者来说应该是更为重要。这里先大概把iOS6里新增的开发者可能用到的特性做个简单的整理。之后我也会挑一些自己感兴趣的session做一些整理和翻译工作，也算是对自己的一种锻炼吧～相关的笔记整理如下：</p>
-
-<p><a href="http://www.onevcat.com/2012/06/what-is-new-in-cocoa-touch/">Session 200 What&#8217;s New in Cocoa Touch</a>  Cocoa Touch新特性一览</p>
-
-<p><a title="WWDC 2012 Session笔记——405 Modern Objective-C" href="http://www.onevcat.com/2012/06/modern-objective-c/">Session 405 Modern Objective-C</a> 先进Objective-C</p>
-
-<p><a title="WWDC 2012 Session笔记——205 Introducing Collection Views" href="http://www.onevcat.com/2012/06/introducing-collection-views/">Session 205 Introducing Collection Views</a> Collection View入门</p>
-
-<p><a title="WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts" href="http://www.onevcat.com/2012/08/advanced-collection-view/">Session 219 Advanced Collection Views and Building Custom Layouts</a> 高级Collection View和自定义布局</p>
-
-<p><a title="WWDC 2012 Session笔记——202, 228, 232 AutoLayout（自动布局）入门" href="http://www.onevcat.com/2012/09/autoayout/">Session 202,228,232 AutoLayout使用</a></p>
-
-<p><hr /></p>
-
-<p><h3>地图</h3>
-iOS6抛弃了一直用的google map，而使用了自家的地图服务。相应地，MapKit框架也自然变成和Apple自家的地图服务绑定了。随之而来的好处是因为都是自家的内容，所以整合和开放会更进一步，第三方app现在有机会和地图应用进行交互了。也就是说，不使用自身搭载地图信息的app现在可以打开地图应用，并且显示一些感兴趣的路线和地点，这对于路线规划和记录类的应用来说这是个好消息～<!--:--><!--:en--><a href="http://www.onevcat.com/wp-content/uploads/2012/06/ios6.png"><img class="aligncenter size-full wp-image-859" title="ios6" src="http://www.onevcat.com/wp-content/uploads/2012/06/ios6.png" alt="" width="766" height="238" data-pinit="registered" /></a></p>
-
-<p>欢迎转载本文，但是转载请注明本文出处： <strong><a href="http://2.gy/erSp" target="_blank">http://2.gy/erSp</a></strong></p>
-
-<p>iOS6 beta和相应的SDK已经放出了，WWDC2012要进入session环节了。iOS6无疑是这届WWDC的重点，在keynote上面对消费者展示了很多新鲜的特性，而之后的seesion对于开发者来说应该是更为重要。这里先大概把iOS6里新增的开发者可能用到的特性做个简单的整理。之后我也会挑一些自己感兴趣的session做一些整理和翻译工作，也算是对自己的一种锻炼吧～相关的笔记整理如下：</p>
-
-<p><a href="http://www.onevcat.com/2012/06/what-is-new-in-cocoa-touch/">Session 200 What&#8217;s New in Cocoa Touch</a>  Cocoa Touch新特性一览</p>
-
-<p><a title="WWDC 2012 Session笔记——405 Modern Objective-C" href="http://www.onevcat.com/2012/06/modern-objective-c/">Session 405 Modern Objective-C</a> 先进Objective-C</p>
-
-<p><a title="WWDC 2012 Session笔记——205 Introducing Collection Views" href="http://www.onevcat.com/2012/06/introducing-collection-views/">Session 205 Introducing Collection Views</a> Collection View入门</p>
-
-<p><a title="WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts" href="http://www.onevcat.com/2012/08/advanced-collection-view/">Session 219 Advanced Collection Views and Building Custom Layouts</a> 高级Collection View和自定义布局</p>
-
-<p><a title="WWDC 2012 Session笔记——202, 228, 232 AutoLayout（自动布局）入门" href="http://www.onevcat.com/2012/09/autoayout/">Session 202,228,232 AutoLayout使用</a></p>
-
-<p><hr /></p>
-
-<p><h3>地图</h3>
-iOS6抛弃了一直用的google map，而使用了自家的地图服务。相应地，MapKit框架也自然变成和Apple自家的地图服务绑定了。随之而来的好处是因为都是自家的内容，所以整合和开放会更进一步，第三方app现在有机会和地图应用进行交互了。也就是说，不使用自身搭载地图信息的app现在可以打开地图应用，并且显示一些感兴趣的路线和地点，这对于路线规划和记录类的应用来说这是个好消息～<!--:-->
-		
-		<a href="/2012/06/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%80%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84ios6-sdk%E6%96%B0%E7%89%B9%E6%80%A7/" class="more-link">继续阅读</a>
-	</div>
-
-</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -1006,6 +934,52 @@ Asprova株式会社成立于1994年，是日本最早研发生产计划软件（
 
 		
 		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-04T00:00:00+08:00" data-updated="true" itemprop="datePublished">Mar 4<span>th</span>, 2012</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/2012/03/opencv-build-and-config/" itemprop="url">OpenCV在iOS开发环境下的编译和配置</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/03/Untitled.jpg"><img class="aligncenter size-full wp-image-687" title="OpenCV" src="http://www.onevcat.com/wp-content/uploads/2012/03/Untitled.jpg" alt="" width="600" height="424" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">转载本文请保留以下原作者信息:<br />
+原作：OneV
+<a href="http://www.onevcat.com/2012/03/opencv-build-and-config/">http://www.onevcat.com/2012/03/opencv-build-and-config/</a></p>
+<p style="text-align: justify;">最近在写一个自己的app，用到一些图像识别和处理的东西。研究后发现用OpenCV是最为方便省事的，但是为iOS开发环境编译和配置OpenCV的库还是需要费点功夫，网上资料也并不是很全，而且有不少已经过期。在此进行一些总结，算是留底，也希望能对其他人有所帮助。</p>
+<p style="text-align: justify;">OpenCV (Open Source Computer Vision Library) 是跨平台的开源项目，由一系列C函数和少量C++类构成，提供了图像处理和计算机视觉方面很多通用的算法。在开发有关图像识别和处理的app的时候，OpenCV提供了一系列易用轻量的API，而且遵循<a href="http://en.wikipedia.org/wiki/BSD_license">BSD License</a>。</p></p>
+
+<p><hr /></p>
+
+<p><h1 style="text-align: justify;">OpenCV For iOS一键编译</h1>
+<p style="text-align: justify;">OpenCV用在iOS上，一般是以静态库的方式提供服务的，因此需要先将源码进行编译。如果你想省事，<a href="http://download.csdn.net/detail/onevcat/4111058">这里</a>有一个我预先编译好的库，可以直接使用（OpenCV版本为2.3，虽然文件名字有part1，但是只有这一个包，开袋即食），如果需要最新版本的OpenCV，可以选择自行编译。</p>
+<p style="text-align: justify;">先从OpenCV的repository下载最新的OpenCV</p>
+<p style="text-align: justify;"><!--:-->
+		
+		<a href="/2012/03/opencv-build-and-config/" class="more-link">继续阅读</a>
 	</div>
 
 </article>
