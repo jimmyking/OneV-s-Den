@@ -392,6 +392,7 @@ return [self swizzledAcceptCurrentCompletion];
   * [davekeck / Xcode-4-Fixins][32] Plugins for fixing Xcode 4 bugs and shortcomings
   * [0xced / CLITool-InfoPlist][33] Xcode plugin to process Info.plist file for CLI Tool targets
   * [questbeat / Lin][34] Xcode4 plugin shows completion for NSLocalizedString
+  * [stefanceriu / SCXcodeMiniMap][35] Xcode MiniMap plugin (Think about Sublime2's minimap)
 
    [27]: https://github.com/omz/ColorSense-for-Xcode
    [28]: https://github.com/omz/Dash-Plugin-for-Xcode
@@ -401,6 +402,7 @@ return [self swizzledAcceptCurrentCompletion];
    [32]: https://github.com/davekeck/Xcode-4-Fixins
    [33]: https://github.com/0xced/CLITool-InfoPlist
    [34]: https://github.com/questbeat/Lin
+   [35]: https://github.com/stefanceriu/SCXcodeMiniMap
 
 好了，就到这里吧。VVPlugInDemo的工程文件我放到了github上，有需要的话您可以从[这里下载][35]并作为参考和起始来使用。谢谢您看完这么长的文。正如一开始所说的，我自己水平十分有限，因此错误和不当之处还恳请大家轻喷多原谅，并帮助我改正，再次谢谢～
 
