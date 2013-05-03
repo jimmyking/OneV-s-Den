@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 能工巧匠集 | OneV's Den]]></title>
   <link href="http://onevcat.com/category/neng-gong-qiao-jiang-ji/atom.xml" rel="self"/>
   <link href="http://onevcat.com/"/>
-  <updated>2013-04-30T20:26:42+08:00</updated>
+  <updated>2013-05-03T09:55:40+08:00</updated>
   <id>http://onevcat.com/</id>
   <author>
     <name><![CDATA[onevcat]]></name>
@@ -43,7 +43,7 @@
 </ol>
 
 
-<p>最麻烦的部分可能就是保持alpha通道了。<a href="http://">UIImage的文档</a>中提供了使用blend绘图的方法<code>drawInRect:blendMode:alpha:</code>，<code>rect</code>和<code>alpha</code>都没什么问题，但是<code>blendMode</code>是个啥玩意儿啊…继续看文档，关于<a href="http://"><code>CGBlendMode</code>的文档</a>，里面有一大堆看不懂的枚举值，比如这样：</p>
+<p>最麻烦的部分可能就是保持alpha通道了。<a href="https://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIImage_Class/Reference/Reference.html">UIImage的文档</a>中提供了使用blend绘图的方法<code>drawInRect:blendMode:alpha:</code>，<code>rect</code>和<code>alpha</code>都没什么问题，但是<code>blendMode</code>是个啥玩意儿啊…继续看文档，关于<a href="https://developer.apple.com/library/ios/#documentation/GraphicsImaging/Reference/CGContext/Reference/reference.html#//apple_ref/doc/c_ref/CGBlendMode"><code>CGBlendMode</code>的文档</a>，里面有一大堆看不懂的枚举值，比如这样：</p>
 
 <p><code>
 kCGBlendModeDestinationOver

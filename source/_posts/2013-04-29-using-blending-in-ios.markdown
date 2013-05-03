@@ -28,7 +28,7 @@ categories: 能工巧匠集
 3. 将原图片画在创建的上下文中，并用新的填充色着色（注意保持alpha通道）
 4. 从当前上下文中取得图片并返回
 
-最麻烦的部分可能就是保持alpha通道了。[UIImage的文档](http://)中提供了使用blend绘图的方法`drawInRect:blendMode:alpha:`，`rect`和`alpha`都没什么问题，但是`blendMode`是个啥玩意儿啊…继续看文档，关于[`CGBlendMode`的文档](http://)，里面有一大堆看不懂的枚举值，比如这样：
+最麻烦的部分可能就是保持alpha通道了。[UIImage的文档](https://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIImage_Class/Reference/Reference.html)中提供了使用blend绘图的方法`drawInRect:blendMode:alpha:`，`rect`和`alpha`都没什么问题，但是`blendMode`是个啥玩意儿啊…继续看文档，关于[`CGBlendMode`的文档](https://developer.apple.com/library/ios/#documentation/GraphicsImaging/Reference/CGContext/Reference/reference.html#//apple_ref/doc/c_ref/CGBlendMode)，里面有一大堆看不懂的枚举值，比如这样：
 
 ```
 kCGBlendModeDestinationOver
