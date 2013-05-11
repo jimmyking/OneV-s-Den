@@ -6,7 +6,28 @@ tags: []
 published: true
 comments: true
 ---
-# [Our Money - 云端协同记账](http://www.onevcat.com/showcase/ourmoney/)
+# [XUPorter - Unity3D编译XCode工程的依赖管理](http://onevcat.com/2012/12/xuporter/)
+
+`2013年5月11日`
+
+{% img right http://img.onevcat.com/2013/unity-xuporter-logo.jpg %}
+
+XUPorter是一个能够在Unity3D生成Xcode工程文件后，根据配置文件自动添加依赖库和引用文件的工具。它使用[PostProcessBuild](http://docs.unity3d.com/Documentation/ScriptReference/PostProcessBuildAttribute.html)标签，在编译后寻找配置文件并修改XCode工程文件，完全运行于Unity3D编辑器中，而不需要涉及PostprocessBuildPlayer的脚本编写和调试，十分方便。
+
+这个项目起源于darktable的[Mod PBXProj](https://bitbucket.org/darktable/mod-pbxproj/overview)，适用版本为Unity3.5及以上，以及Xcode 4.x。
+
+## 详细介绍
+
+* [http://onevcat.com/2012/12/xuporter/](http://onevcat.com/2012/12/xuporter/)
+
+## Github页面
+
+* [https://github.com/onevcat/XUPorter](https://github.com/onevcat/XUPorter)
+
+***
+
+
+# [Our Money - 云端协同记账](http://onevcat.com/2013/04/our-money-app/)
 
 `2013年3月21日`
 
@@ -16,9 +37,9 @@ Our Money是我在[Kayac](http://www.kayac.com)工作期间，用业余时间开
 
 ## 详细介绍
 
-  * [http://www.onevcat.com/showcase/ourmoney/][11]
+  * [http://onevcat.com/2013/04/our-money-app/][11]
 
-   [11]: http://www.onevcat.com/showcase/ourmoney/
+   [11]: http://onevcat.com/2013/04/our-money-app/
 
 ## AppStore页面
 
@@ -152,7 +173,7 @@ VVBorderTimer是一个可配置的使用边框作为计时条的UIView.
 
    [23]: http://www.onevcat.com/showcase/vvbordertimer/
 
-## GitHub Page
+## GitHub页面
 
   * [https://github.com/onevcat/VVBorderTimer][24]
 
