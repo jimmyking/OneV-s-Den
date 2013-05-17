@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 南箕北斗集 | OneV's Den]]></title>
   <link href="http://onevcat.com/category/nan-ji-bei-dou-ji/atom.xml" rel="self"/>
   <link href="http://onevcat.com/"/>
-  <updated>2013-05-11T08:24:11+08:00</updated>
+  <updated>2013-05-18T00:48:22+09:00</updated>
   <id>http://onevcat.com/</id>
   <author>
     <name><![CDATA[onevcat]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[苹果应用描述中不能使用特殊字符的对应方法]]></title>
     <link href="http://onevcat.com/2013/04/itc-special-characters/"/>
-    <updated>2013-04-28T18:01:00+08:00</updated>
+    <updated>2013-04-28T18:01:00+09:00</updated>
     <id>http://onevcat.com/2013/04/itc-special-characters</id>
     <content type="html"><![CDATA[<p><img src="http://img.onevcat.com/2013/itc-special-character.png" alt="就是不让你用就是不让你用～" /></p>
 
@@ -35,7 +35,7 @@
   <entry>
     <title type="html"><![CDATA[AppCode，Objective-C IDE的另一选择]]></title>
     <link href="http://onevcat.com/2012/03/appcode/"/>
-    <updated>2012-03-24T00:00:00+08:00</updated>
+    <updated>2012-03-24T00:00:00+09:00</updated>
     <id>http://onevcat.com/2012/03/appcode</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/03/logo_appcode.gif"><img class="aligncenter size-full wp-image-710" title="logo_appcode" src="http://www.onevcat.com/wp-content/uploads/2012/03/logo_appcode.gif" alt="" width="720" height="167" data-pinit="registered" /></a></p></p>
 
@@ -110,7 +110,7 @@
   <entry>
     <title type="html"><![CDATA[Apple与教育界]]></title>
     <link href="http://onevcat.com/2012/01/apple%E4%B8%8E%E6%95%99%E8%82%B2%E7%95%8C/"/>
-    <updated>2012-01-19T00:00:00+08:00</updated>
+    <updated>2012-01-19T00:00:00+09:00</updated>
     <id>http://onevcat.com/2012/01/apple与教育界</id>
     <content type="html"><![CDATA[<p><!--:zh-->iBooks 2，iBooks Author，TextBook Store，iTunes U for iPad。Apple确实是伟大的公司，深知从小培养自己的用户和形成生态圈...不得不佩服。</p>
 
@@ -125,7 +125,7 @@
   <entry>
     <title type="html"><![CDATA[TestFlight——完美的iOS app测试方案]]></title>
     <link href="http://onevcat.com/2012/01/testflight/"/>
-    <updated>2012-01-17T00:00:00+08:00</updated>
+    <updated>2012-01-17T00:00:00+09:00</updated>
     <id>http://onevcat.com/2012/01/testflight</id>
     <content type="html"><![CDATA[<p><img src="http://www.onevcat.com/wp-content/uploads/2012/01/TestFlightLOGO.chickenhawk324.png" alt="TestFlight Logo" /></p>
 
@@ -353,7 +353,7 @@
   <entry>
     <title type="html"><![CDATA[凑热闹，谈密码，Challenge-Response密码验证]]></title>
     <link href="http://onevcat.com/2011/12/password/"/>
-    <updated>2011-12-22T00:00:00+08:00</updated>
+    <updated>2011-12-22T00:00:00+09:00</updated>
     <id>http://onevcat.com/2011/12/password</id>
     <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2011/12/6593637_190517116457_2.jpg"><img class="aligncenter size-full wp-image-434" title="6593637_190517116457_2" src="http://www.onevcat.com/wp-content/uploads/2011/12/6593637_190517116457_2-e1324556385859.jpg" alt="" width="1024" height="256" /></a><a href="http://news.csdn.net/a/20111221/309505.html">CSDN的密码事件</a>闹得沸沸扬扬，600万用户数据的泄露应该是中国互联网历史上最严重的帐号信息泄露事件。让人不可思议的是，2009年4月之前的用户密码居然是以明文存储。使用明文存储密码本身就是一件相当扯淡的事情，而当这种事情发生在以程序员为主要客户的大型网站上，真是让人哭笑不得。</p>
 <p style="text-align: justify;"><!--:--><!--more--><!--:zh-->之后又陆续爆出人人、多玩以及各种知名网站的账户信息泄露的消息，虽然还未确知真伪，但也很是让人揪心。而“不能明文保存密码”这一个初级中的初级的错误之所以会在中国这篇神奇的土地上一次又一次的出现，我认为是与中国的网络审查制度和相关法制不全造成的（其实就算法令全了我估计在特权之下也只是一纸空文）。负责网络审查的大大们往往一个电话过来指明要XXX的密码，而在天朝这样的地方如果你拿不出这个密码的话，基本就被扣上了政治不合作和给领导难看的大帽子，很多时候程序员被逼无奈只能明文存储。而像这次CSDN这样的由于系统升级而遗留下的历史问题，可以相信溯其根源也或多或少会与这样的特权有关吧...</p>

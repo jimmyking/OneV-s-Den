@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 能工巧匠集 | OneV's Den]]></title>
   <link href="http://onevcat.com/category/neng-gong-qiao-jiang-ji/atom.xml" rel="self"/>
   <link href="http://onevcat.com/"/>
-  <updated>2013-05-11T08:24:11+08:00</updated>
+  <updated>2013-05-18T00:48:22+09:00</updated>
   <id>http://onevcat.com/</id>
   <author>
     <name><![CDATA[onevcat]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[iOS中使用blend改变图片颜色]]></title>
     <link href="http://onevcat.com/2013/04/using-blending-in-ios/"/>
-    <updated>2013-04-29T16:30:00+08:00</updated>
+    <updated>2013-04-29T16:30:00+09:00</updated>
     <id>http://onevcat.com/2013/04/using-blending-in-ios</id>
     <content type="html"><![CDATA[<p><img src="http://img.onevcat.com/2013/blend_title.png" alt="使用Blend处理图片颜色" /></p>
 
@@ -256,7 +256,7 @@ Declared in CGContext.h.
   <entry>
     <title type="html"><![CDATA[两个人一起记账吧～ Our Money]]></title>
     <link href="http://onevcat.com/2013/04/our-money-app/"/>
-    <updated>2013-04-06T11:54:00+08:00</updated>
+    <updated>2013-04-06T11:54:00+09:00</updated>
     <id>http://onevcat.com/2013/04/our-money-app</id>
     <content type="html"><![CDATA[<p><a href="https://itunes.apple.com/cn/app/our-money/id562520527?ls=1&amp;mt=8"><img src="http://img.onevcat.com/2013/ourmoney-banner.jpg" alt="image" /></a></p>
 
@@ -325,7 +325,7 @@ Our Money的主界面相当简洁，最上方列出列表名称，收入（预�
   <entry>
     <title type="html"><![CDATA[MGTwitterEngine中Twitter API 1.1的使用]]></title>
     <link href="http://onevcat.com/2013/03/mgtwitterengine%E4%B8%ADtwitter-api-1-1%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
-    <updated>2013-03-24T00:00:00+08:00</updated>
+    <updated>2013-03-24T00:00:00+09:00</updated>
     <id>http://onevcat.com/2013/03/mgtwitterengine中twitter-api-1-1的使用</id>
     <content type="html"><![CDATA[<p>在iOS5中使用Twitter framework或者在iOS6中使用Social framework来完成Twitter的集成是非常简单和轻松的，但是如果应用要针对iOS5之前的系统版本，那么就不能使用iOS提供的框架了。一个比较常见也是使用最广泛的选择是<a href="https://github.com/mattgemmell/MGTwitterEngine">MGTwitterEngine</a>，比如<a href="http://www.onevcat.com/showcase/pomodoro_do/">PomodoroDo</a>选择使用的就是该框架。</p>
 
@@ -399,9 +399,9 @@ Our Money的主界面相当简洁，最上方列出列表名称，收入（预�
   <entry>
     <title type="html"><![CDATA[Xcode 4 插件制作入门]]></title>
     <link href="http://onevcat.com/2013/02/xcode-plugin/"/>
-    <updated>2013-02-02T00:00:00+08:00</updated>
+    <updated>2013-02-02T00:00:00+09:00</updated>
     <id>http://onevcat.com/2013/02/xcode-plugin</id>
-    <content type="html"><![CDATA[<p><img src="http://www.onevcat.com/wp-content/uploads/2013/02/QQ20130202-15.png"></p>
+    <content type="html"><![CDATA[<p>{% img http://www.onevcat.com/wp-content/uploads/2013/02/QQ20130202-15.png %}</p>
 
 <p>本文欢迎转载，但烦请保留此行出处信息：<a href="http://www.onevcat.com/2013/02/xcode-plugin/">http://www.onevcat.com/2013/02/xcode-plugin/</a></p>
 
@@ -825,7 +825,7 @@ if ([[self subviews] count] &gt; 0) {
   <entry>
     <title type="html"><![CDATA[Unity3D中暂停时的动画及粒子效果实现]]></title>
     <link href="http://onevcat.com/2013/01/do_not_pause_me/"/>
-    <updated>2013-01-26T00:00:00+08:00</updated>
+    <updated>2013-01-26T00:00:00+09:00</updated>
     <id>http://onevcat.com/2013/01/do_not_pause_me</id>
     <content type="html"><![CDATA[<p><!--:zh--><h2 style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2013/01/big副本.png"><img class="aligncenter size-full wp-image-1087" title="unpause" src="http://www.onevcat.com/wp-content/uploads/2013/01/big副本.png" alt="" width="500" height="200" data-pinit="registered" /></a></h2>
 <p style="text-align: justify;">暂停是游戏中经常出现的功能，而Unity3D中对于暂停的处理并不是很理想。一般的做法是将Time.timeScale设置为0。Unity的文档中对于这种情况有以下描述；</p></p>
