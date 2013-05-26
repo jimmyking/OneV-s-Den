@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 能工巧匠集 | OneV's Den]]></title>
   <link href="http://onevcat.com/category/neng-gong-qiao-jiang-ji/atom.xml" rel="self"/>
   <link href="http://onevcat.com/"/>
-  <updated>2013-05-18T00:48:22+09:00</updated>
+  <updated>2013-05-26T12:19:50+09:00</updated>
   <id>http://onevcat.com/</id>
   <author>
     <name><![CDATA[onevcat]]></name>
@@ -401,7 +401,7 @@ Our Money的主界面相当简洁，最上方列出列表名称，收入（预�
     <link href="http://onevcat.com/2013/02/xcode-plugin/"/>
     <updated>2013-02-02T00:00:00+09:00</updated>
     <id>http://onevcat.com/2013/02/xcode-plugin</id>
-    <content type="html"><![CDATA[<p>{% img http://www.onevcat.com/wp-content/uploads/2013/02/QQ20130202-15.png %}</p>
+    <content type="html"><![CDATA[<p><img src="http://www.onevcat.com/wp-content/uploads/2013/02/QQ20130202-15.png"></p>
 
 <p>本文欢迎转载，但烦请保留此行出处信息：<a href="http://www.onevcat.com/2013/02/xcode-plugin/">http://www.onevcat.com/2013/02/xcode-plugin/</a></p>
 
