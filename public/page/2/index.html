@@ -7,7 +7,7 @@
 	<meta name="author" content="onevcat">
 
 	
-	<meta name="description" content="Jan 26th, 2013 能工巧匠集 Unity3D中暂停时的动画及粒子效果实现 暂停是游戏中经常出现的功能，而Unity3D中对于暂停的处理并不是很理想。一般的做法是将Time.timeScale设置为0。Unity的文档中对于这种情况有以下描述； The scale at which &hellip;">
+	<meta name="description" content="Feb 2nd, 2013 能工巧匠集 Xcode 4 插件制作入门 本文欢迎转载，但烦请保留此行出处信息：http://www.onevcat.com/2013/02/xcode-plugin/ 本文将介绍创建一个Xcode4插件所需要的基本步骤以及一些常用的方法。 &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,6 +91,54 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-02T00:00:00+09:00" data-updated="true" itemprop="datePublished">Feb 2<span>nd</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/2013/02/xcode-plugin/" itemprop="url">Xcode 4 插件制作入门</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p><img src="http://www.onevcat.com/wp-content/uploads/2013/02/QQ20130202-15.png"></p>
+
+<p>本文欢迎转载，但烦请保留此行出处信息：<a href="http://www.onevcat.com/2013/02/xcode-plugin/">http://www.onevcat.com/2013/02/xcode-plugin/</a></p>
+
+<p>本文将介绍创建一个Xcode4插件所需要的基本步骤以及一些常用的方法。请注意为Xcode创建插件并没有任何的官方支持，因此本文所描述的方法和提供的信息可能会随Apple在Xcode上做的变化而失效。另外，由于创建插件会使用到私有API，因此Xcode插件也不可能被提交到Mac App Store上进行出售。</p>
+
+<p>本文内容是基于Xcode 4.6（4H127）完成的，但是应该可以适用于任意的Xcode 4.X版本。VVPlugInDemo的工程文件我放到了github上，有需要的话您可以从<a href="https://github.com/onevcat/VVPluginDemo">这里下载</a>并作为参考和起始来使用。</p>
+
+<h2>综述</h2>
+
+<p>Xcode本身作为一个IDE来说已经可以算上优秀，但是依然会有很多缺失的功能，另外在开发中针对自己的开发需求，创建一些便利的IDE插件，必定将大为加快开发速度。由于苹果官方并不对Xcode插件提供任何技术和文档支持，因此对于大部分开发者来说可能难于上手。虽然没有官方支持，但是在Xcode中开发并使用插件是可能的，并且也是被默许的。在Xcode启动的时候，Xcode将会寻找位于~/Library/Application Support/Developer/Shared/Xcode/Plug-ins文件夹中的后缀名为.xcplugin的bundle作为插件进行加载（运行其中的可执行文件），这就可以令我们光明正大合法合理地将我们的代码注入（虽然这个词有点不好听）Xcode，并得到运行。因此，想要创建Xcode插件，<strong>我们需要创建Bundle工程并将编译的bundle放到上面所说的插件目录中去</strong>，这就是Xcode插件的原理。</p>
+
+<p>需要特别说明的是，因为Xcode会在启动时加载你的插件，这样就相当于你的代码有机会注入Xcode。只要你的插件加载成功，那么它将和Xcode共用一个进程，也就是说当你的代码crash的时候，Xcode也会随之crash。同样的情况也可能在Xcode版本更新的时候，由于兼容性问题而出现（因为插件可能使用私有API，Apple没有义务去维护这些API的可用性）。在出现这种情况的时候，可以直接删除插件目录下的导致问题的xcplugin文件即可。</p>
+
+
+		
+		<a href="/2013/02/xcode-plugin/" class="more-link">继续阅读</a>
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -586,50 +634,6 @@ if (Time.timeScale == 0 ){
 <p style="text-align: justify;"><!--:-->
 		
 		<a href="/2012/07/pomodoro-do-%E6%8B%96%E5%BB%B6%E7%97%87%E6%82%A3%E8%80%85%E7%9A%84%E7%A6%8F%E9%9F%B3/" class="more-link">继续阅读</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-09T00:00:00+09:00" data-updated="true" itemprop="datePublished">Jul 9<span>th</span>, 2012</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/category/hu-yan-luan-yu-ji/'>胡言乱语集</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/2012/07/japanese-learin/" itemprop="url">日语学习中&#8230;顺便宣传我的新app</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><!--:zh-->如题，被房东赶出来了，现在住到了北语的临时宿舍，网络情况很不乐观&#8230;可能会有一段时间无法更新博客了&#8230;</p>
-
-<p>不过还好在之前完成了Pomodoro Do的所有开发和上传工作，接下来不出大的意外的话审核什么的应该不会有太大问题，再之后就可以上架了&#8230;还是可以期待一下的，毕竟是自己完全独立制作和拥有的第一个app。虽然可能很简陋功能也比较简单，但是还是比较用心了的&#8230;</p>
-
-<p>有兴趣的童鞋可以到<a href="http://pomo.onevcat.com">pomo.onevcat.com</a>看看，这是一款番茄工作法的辅助app，可以帮助您规划时间，提高工作效率。</p>
-
-<p>如果想了解一些如何提高效率的小tip以及这个app的最新情况，可以在新浪微博上关注<a href="http://weibo.com/pomodorodo">@PomodoroDo</a>，我会抽空进行一些更新的。</p>
-
-<p>谢谢支持～8月22号日语培训结束，到时候再进行大规模更新了～</p>
-
-
-		
-		
 	</div>
 
 </article>

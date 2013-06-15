@@ -4,6 +4,7 @@ title: "WWDC2013笔记 Xcode5和ObjC新特性"
 date: 2013-06-13 10:05
 comments: true
 categories: 能工巧匠集
+published: false
 ---
 
 ![Welcome to Xcode 5](http://img.onevcat.com/2013/xcode5-title.png)
