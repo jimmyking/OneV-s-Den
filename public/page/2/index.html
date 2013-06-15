@@ -7,7 +7,7 @@
 	<meta name="author" content="onevcat">
 
 	
-	<meta name="description" content="Feb 2nd, 2013 能工巧匠集 Xcode 4 插件制作入门 本文欢迎转载，但烦请保留此行出处信息：http://www.onevcat.com/2013/02/xcode-plugin/ 本文将介绍创建一个Xcode4插件所需要的基本步骤以及一些常用的方法。 &hellip;">
+	<meta name="description" content="Dec 18th, 2012 能工巧匠集 Unity编译至Xcode工程后自动添加文件和库的方法 废话之前 XUPorter项目Github链接 为什么想要自动添加 由于Unity是全平台的游戏开发环境，在开发中针对特定平台的特定功能时，很难避免根据对象平台的不同而引入不同的依赖。包括源码， &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,136 +91,6 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-02T00:00:00+09:00" data-updated="true" itemprop="datePublished">Feb 2<span>nd</span>, 2013</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/2013/02/xcode-plugin/" itemprop="url">Xcode 4 插件制作入门</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><img src="http://www.onevcat.com/wp-content/uploads/2013/02/QQ20130202-15.png"></p>
-
-<p>本文欢迎转载，但烦请保留此行出处信息：<a href="http://www.onevcat.com/2013/02/xcode-plugin/">http://www.onevcat.com/2013/02/xcode-plugin/</a></p>
-
-<p>本文将介绍创建一个Xcode4插件所需要的基本步骤以及一些常用的方法。请注意为Xcode创建插件并没有任何的官方支持，因此本文所描述的方法和提供的信息可能会随Apple在Xcode上做的变化而失效。另外，由于创建插件会使用到私有API，因此Xcode插件也不可能被提交到Mac App Store上进行出售。</p>
-
-<p>本文内容是基于Xcode 4.6（4H127）完成的，但是应该可以适用于任意的Xcode 4.X版本。VVPlugInDemo的工程文件我放到了github上，有需要的话您可以从<a href="https://github.com/onevcat/VVPluginDemo">这里下载</a>并作为参考和起始来使用。</p>
-
-<h2>综述</h2>
-
-<p>Xcode本身作为一个IDE来说已经可以算上优秀，但是依然会有很多缺失的功能，另外在开发中针对自己的开发需求，创建一些便利的IDE插件，必定将大为加快开发速度。由于苹果官方并不对Xcode插件提供任何技术和文档支持，因此对于大部分开发者来说可能难于上手。虽然没有官方支持，但是在Xcode中开发并使用插件是可能的，并且也是被默许的。在Xcode启动的时候，Xcode将会寻找位于~/Library/Application Support/Developer/Shared/Xcode/Plug-ins文件夹中的后缀名为.xcplugin的bundle作为插件进行加载（运行其中的可执行文件），这就可以令我们光明正大合法合理地将我们的代码注入（虽然这个词有点不好听）Xcode，并得到运行。因此，想要创建Xcode插件，<strong>我们需要创建Bundle工程并将编译的bundle放到上面所说的插件目录中去</strong>，这就是Xcode插件的原理。</p>
-
-<p>需要特别说明的是，因为Xcode会在启动时加载你的插件，这样就相当于你的代码有机会注入Xcode。只要你的插件加载成功，那么它将和Xcode共用一个进程，也就是说当你的代码crash的时候，Xcode也会随之crash。同样的情况也可能在Xcode版本更新的时候，由于兼容性问题而出现（因为插件可能使用私有API，Apple没有义务去维护这些API的可用性）。在出现这种情况的时候，可以直接删除插件目录下的导致问题的xcplugin文件即可。</p>
-
-
-		
-		<a href="/2013/02/xcode-plugin/" class="more-link">继续阅读</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-26T00:00:00+09:00" data-updated="true" itemprop="datePublished">Jan 26<span>th</span>, 2013</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/2013/01/do_not_pause_me/" itemprop="url">Unity3D中暂停时的动画及粒子效果实现</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><!--:zh--><h2 style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2013/01/big副本.png"><img class="aligncenter size-full wp-image-1087" title="unpause" src="http://www.onevcat.com/wp-content/uploads/2013/01/big副本.png" alt="" width="500" height="200" data-pinit="registered" /></a></h2>
-<p style="text-align: justify;">暂停是游戏中经常出现的功能，而Unity3D中对于暂停的处理并不是很理想。一般的做法是将Time.timeScale设置为0。Unity的文档中对于这种情况有以下描述；</p></p>
-
-<p><blockquote>The scale at which the time is passing. This can be used for slow motion effects….When timeScale is set to zero the game is basically paused …</blockquote>
-<p style="text-align: justify;">timeScale表示游戏中时间流逝快慢的尺度。文档中明确表示，这个参数是用来做慢动作效果的。对于将timeScale设置为0的情况，仅只有一个补充说明。在实际使用中，通过设置timeScale来实现慢动作特效，是一种相当简洁且不带任何毒副作用的方法，但是当将timeScale设置为0来实现暂停时，<strong>由于时间不再流逝，所有和时间有关的功能痘将停止</strong>，有些时候这正是我们想要的，因为毕竟是暂停。但是副作用也随之而来，在暂停时各种动画和粒子效果都将无法播放（因为是时间相关的），FixedUpdate也将不再被调用。</p>
-<p style="text-align: justify;"><strong>换句话说，最大的影响是，在timeScale＝0的暂停情况下，你将无法实现暂停菜单的动画以及各种漂亮的点击效果。</strong></p>
-<p style="text-align: justify;">但是并非真的没办法，关于timeScale的文档下就有提示：</p></p>
-
-<p><blockquote>Except for realtimeSinceStartup, timeScale affects all the time and delta time measuring variables of the Time class.</blockquote>
-<p style="text-align: justify;">因为realtimeSinceStartup和timeScale无关，因此也就成了解决在暂停下的动画和粒子效果的救命稻草。对于Unity动画，在每一帧，根据实际时间寻找相应帧并采样显示的方法来模拟动画：</p></p>
-
-<p><pre class="lang:c# mark:19-21 decode:true" title="暂停时采样的核心代码">AnimationState _currState = animation[clipName];
-bool isPlaying = true;</pre></p>
-
-<p>float _progressTime = 0F;<br />
-float _timeAtLastFrame = 0F;<br />
-float _timeAtCurrentFrame = 0F;<br />
-bool _inReversePlaying = false;</p>
-
-<p>float _deltaTime = 0F;<br />
-animation.Play(clipName);<br />
-_timeAtLastFrame = Time.realtimeSinceStartup;</p>
-
-<p>while (isPlaying) {<br />
-    _timeAtCurrentFrame = Time.realtimeSinceStartup;<br />
-    _deltaTime = _timeAtCurrentFrame - _timeAtLastFrame;<br />
-    _timeAtLastFrame = _timeAtCurrentFrame; </p>
-
-<p>    _progressTime += _deltaTime;</p>
-
-<p>    _currState.normalizedTime = _inReversePlaying ? 1.0f - (_progressTime / _currState.length) : _progressTime / _currState.length; <br />
-    animation.Sample();</p>
-
-<p>    //&#8230;repeat or over by wrap mode <br />
-}
-<p style="text-align: justify;">对于粒子效果，同样进行计时，并通过粒子系统的Simulate方法来模拟对应时间的粒子状态来完成效果，比如对于Legacy粒子，使Emitter在timeScale＝0暂停时继续有效发射并显示效果：</p></p>
-
-<p><pre class="lang:c# mark:4-5 decode:true">_deltaTime = Time.realtimeSinceStartup - _timeAtLastFrame;
-_timeAtLastFrame = Time.realtimeSinceStartup;
-if (Time.timeScale == 0 ){
-	_emitter.Simulate(_deltaTime);
-	_emitter.emit = true;
-}</pre>
-<p style="text-align: justify;">核心的代码基本都在上面了，可以根据这个思路完成实现。<a href="https://github.com/onevcat/UnpauseMe">完整的代码和示例工程</a>我放到了github上，有需要的朋友可以去查看，也欢迎大家指正。</p><!--:--><!--:en-->&nbsp;</p>
-
-<p><!--:--><!--:ja-->&nbsp;</p>
-
-<p><!--:--></p>
-
-		
-		
-	</div>
-
-</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -634,6 +504,91 @@ if (Time.timeScale == 0 ){
 <p style="text-align: justify;"><!--:-->
 		
 		<a href="/2012/07/pomodoro-do-%E6%8B%96%E5%BB%B6%E7%97%87%E6%82%A3%E8%80%85%E7%9A%84%E7%A6%8F%E9%9F%B3/" class="more-link">继续阅读</a>
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-09T00:00:00+09:00" data-updated="true" itemprop="datePublished">Jul 9<span>th</span>, 2012</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/category/hu-yan-luan-yu-ji/'>胡言乱语集</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/2012/07/japanese-learin/" itemprop="url">日语学习中&#8230;顺便宣传我的新app</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p><!--:zh-->如题，被房东赶出来了，现在住到了北语的临时宿舍，网络情况很不乐观&#8230;可能会有一段时间无法更新博客了&#8230;</p>
+
+<p>不过还好在之前完成了Pomodoro Do的所有开发和上传工作，接下来不出大的意外的话审核什么的应该不会有太大问题，再之后就可以上架了&#8230;还是可以期待一下的，毕竟是自己完全独立制作和拥有的第一个app。虽然可能很简陋功能也比较简单，但是还是比较用心了的&#8230;</p>
+
+<p>有兴趣的童鞋可以到<a href="http://pomo.onevcat.com">pomo.onevcat.com</a>看看，这是一款番茄工作法的辅助app，可以帮助您规划时间，提高工作效率。</p>
+
+<p>如果想了解一些如何提高效率的小tip以及这个app的最新情况，可以在新浪微博上关注<a href="http://weibo.com/pomodorodo">@PomodoroDo</a>，我会抽空进行一些更新的。</p>
+
+<p>谢谢支持～8月22号日语培训结束，到时候再进行大规模更新了～</p>
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-30T00:00:00+09:00" data-updated="true" itemprop="datePublished">Jun 30<span>th</span>, 2012</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/category/neng-gong-qiao-jiang-ji/'>能工巧匠集</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/2012/06/introducing-collection-views/" itemprop="url">WWDC 2012 Session笔记——205 Introducing Collection Views</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-7.png"><img class="aligncenter size-full wp-image-943" title="QQ20120630-7" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-7.png" alt="" width="732" height="113" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
+<p style="text-align: justify;">在之前的<a href="http://www.onevcat.com/2012/06/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%80%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84ios6-sdk%E6%96%B0%E7%89%B9%E6%80%A7/">iOS6 SDK新特性前瞻</a>中我曾经提到过UICollectionView，当时只把CollectionView当作是一个现在已有的开源GridView，仔细研究了下WWDC2012相关的Session后发现并不是那么简单。Apple这次真的给广大开发者带来了一个非常powerful的view，其强大程度可以说远超UITableView。接下来的这篇笔记将对应Session 205，作为使用UICollectionView的入门，之后还将完成一篇关于深入使用UICollectionView以及相应的Layout的笔记。</p>
+<p style="text-align: justify;">废话到此，正式开始。</p></p>
+
+<p><h3 style="text-align: justify;">什么是UICollectionView</h3>
+<p style="text-align: justify;">UICollectionView是一种新的数据展示方式，简单来说可以把他理解成多列的UITableView(请一定注意这是UICollectionView的最最简单的形式)。如果你用过iBooks的话，可能你还对书架布局有一定印象：一个虚拟书架上放着你下载和购买的各类图书，整齐排列。其实这就是一个UICollectionView的表现形式，或者iPad的iOS6中的原生时钟应用中的各个时钟，也是UICollectionView的最简单的一个布局，如图：</p>
+<p style="text-align: justify;"><!--:-->
+		
+		<a href="/2012/06/introducing-collection-views/" class="more-link">继续阅读</a>
 	</div>
 
 </article>

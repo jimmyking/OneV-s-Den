@@ -4,7 +4,7 @@
   <title><![CDATA[OneV's Den]]></title>
   <link href="http://onevcat.com/atom.xml" rel="self"/>
   <link href="http://onevcat.com/"/>
-  <updated>2013-06-15T15:34:48+09:00</updated>
+  <updated>2013-06-15T15:37:15+09:00</updated>
   <id>http://onevcat.com/</id>
   <author>
     <name><![CDATA[onevcat]]></name>
@@ -12,195 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[uikit-dynamics-started]]></title>
-    <link href="http://onevcat.com/2013/06/uikit-dynamics-started/"/>
-    <updated>2013-06-15T15:11:00+09:00</updated>
-    <id>http://onevcat.com/2013/06/uikit-dynamics-started</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[WWDC2013笔记 Xcode5和ObjC新特性]]></title>
-    <link href="http://onevcat.com/2013/06/new-in-xcode5-and-objc/"/>
-    <updated>2013-06-13T10:05:00+09:00</updated>
-    <id>http://onevcat.com/2013/06/new-in-xcode5-and-objc</id>
-    <content type="html"><![CDATA[<p><img src="http://img.onevcat.com/2013/xcode5-title.png" alt="Welcome to Xcode 5" /></p>
-
-<p>这是我的WWDC2013系列笔记中的一篇，完整的笔记列表请参看<a href="http://onevcat.com/2013/06/developer-should-know-about-ios7/">这篇总览</a>。本文欢迎转载，但烦请保留原文链接出处（http://onevcat.com/2013/06/new-in-xcode5-and-objc/），不胜感激。</p>
-
-<p>本文涉及到的WWDC2013 Session有</p>
-
-<ul>
-<li>Session 400 What&#8217;s New in Xcode 5</li>
-<li>Session 401 Xcode Core Concepts</li>
-<li>Session 407 Debugging with Xcode</li>
-<li>Session 404 Advances in Objective-C</li>
-</ul>
-
-
-<p>等Tools模块下的内容</p>
-
-<p>随着iOS7 SDK的beta放出，以及Xcode 5 DP版本的到来，很多为iOS7开发应用的方式已经逐渐浮现。可以豪不夸张地讲，由于iOS7的UI发生了重大变革，此次的升级不同于以往，我们将会迎来iOS开发诞生以来最剧烈的变动，如何拥抱变化，快速适应新的世界和平台，值得每个Cocoa和CocoaTouch开发者研究。工欲善其事，必先利其器。想做iOS7的开发，就必须切换到Xcode5和新的ObjC体系（包括新引入的语法和编译器），在这里我简要地对新添加或重大变化的功能做一个小结。</p>
-
-<h2>说说新的Xcode</h2>
-
-<p>Xcode4刚出的时候存在茫茫多似乎无穷无尽的bug（如果是一路走来的同仁可能对此还记忆犹新），好消息是这次Xcode5 DP版本似乎相当稳定，如果你遇到了开启新Xcode就报错强退的话，多半原因是因为你在使用为Xcode4制作的插件，不同版本的Xcode是共用同一个文件夹下的插件的，请将<code>~/Library/Application Support/Developer/Shared/Xcode/Plug-ins</code>目录下的内容清理一下，应该就能顺利进入Xcode5了。</p>
-
-<!-- more -->
-
-
-<p>Xcode 5现在使用了ARC，取代了原来的垃圾回收（Garbage collection）机制，因此不论从启动速度和使用速度上来说都比之前快了不少。现在大部分的AppStore提交应用也都使用了ARC，新SDK中加入的系统框架也全都是ARC的了。另外，在Xcode5中新建工程也不再提供是否使用ARC的选项（虽然也还是可以在Build Setting中关掉）。如果你还在使用手动内存管理的话，现在是时候抛弃release什么的了，如果你还在迷茫应该应该怎么使用ARC，可以参看一下去年这个时候我发的一篇<a href="http://onevcat.com/2012/06/arc-hand-by-hand/">ARC的教程文章</a>。</p>
-
-<h3>界面变化</h3>
-
-<p><img src="http://img.onevcat.com/2013/xcode5-header.png" alt="Xcode5减小了顶栏宽度" /></p>
-
-<p>首先值得称赞的是顶部工具栏的变化，新版中贯彻了精简的原则，将顶栏砍掉了30%左右的宽度，对于小屏幕来说绝对是福音。另外，在外观上界面也向平面和简洁的方向迈进了一大步，可算是对iOS7的遥相呼应吧。</p>
-
-<h3>更易用的版本管理</h3>
-
-<p><img src="http://img.onevcat.com/2013/xcode5-sourcecontrol.png" alt="image" /></p>
-
-<p>虽然在Xcode 4里就集成了版本管理的内容，但是一直被藏的很深，很多时候开发者不得不打开Organizer才能找到对应操作的地方。与之相比，Xcode5为版本管理留出了专门的一个<code>Source Control</code>菜单，从此以后妈妈再也不用担心我找不到git放哪儿了。集成的版本管理可以方便地完成大部分初级功能，包括Check Out，Pull，Commit，Push，Merge等，特别是在建立仓库和检出仓库时十分方便。但是在遇到稍微复杂的git操作时还是感到力不从心（比如rebase或摘樱桃的时候），这点上毕竟Xcode并不是一个版本管理app，而最基本的几个操作在日常工作中也算能快速地应付绝大部分情况（在不将工程文件添加到版本管理的情况下）。</p>
-
-<p>值得称赞的是在编辑代码的时候，可以直接对某一行进行blame了，在该行点击右键选Show Blame for Line，就能看到最后改动的人的信息。另外，Version Editor（View->Version Editor）也除了之前就有的版本对比之外，还新加了Blame和Log两种视图。在对代码历史追溯这块，Xcode5现在已经做的足够好了.</p>
-
-<p>结论是，虽然有所进步，但是Xcode的内置版本管理仍然不堪大任，命令行或者一个专业的git管理工具还是必要的。</p>
-
-<h3>方便的工程配置</h3>
-
-<p>与版本管理的强化相比较，工程配置方面也进行了很多加强，简化了之前开发者的需要做的一些配置工作。首先是在Build Setting的General里，加入了Team的设置，只要填写对应的Apple ID和应用Bundle ID，Xcode就将自动去寻找对应的Provisioning Profile，并使用合适的Provisioning来进行应用打包。因为有了自动配置和将集成的版本管理放到了菜单栏中，Organizer的地位被大大削弱了。至少我现在在Organizer中没有找到本机的证书管理和Provisioning Profile管理的地方，唯一开Organizer的理由大概就是应用打包发布时了。想想从远古时代的Application Loader一步一步走到现在，Xcode可以说在简化流程，帮助开发者快速发布应用方面做了很大努力。</p>
-
-<p>另一个重要改进是在Build选项中加入了<code>Capabilities</code>标签，如下图</p>
-
-<p><img src="http://img.onevcat.com/2013/xcode5-capabilities.png" alt="Xcode5的Capabilities" /></p>
-
-<p>想想看以前为app配置iCloud要花的步骤吧：到Apple Developer里找到应用的ID，打开对应的app的iCloud功能，生成对应的Provisioning文件，回到Xcode创建一个Entitlements文件，定义Key-Value Store，Ubiquity Containers和Keychain Groups，然后你才能开始为应用创建UIDocument并且继续开发。哦天啊…作为学习来说做一次还能接受，但是如果每次开发应用都要来一遍这个过程，只能用枯燥乏味四个字来形容了。于是，正如你所看到的，现在你需要做的是，点一下iCloud的开关，然后…开始编程吧～轻松惬意。同样的方法也适用于Apple提供的其他服务，包括打开和配置GameCenter，Passbook，IAP，Maps，Keychain，后台模式和Data Protection，当然还有iOS7新加入的Inter-app Audio。这些小开关做的事情都很简单，但确实十分贴心。</p>
-
-<h3>资源管理，Asset Catalog和Image Slicing</h3>
-
-<p>资源目录(Asset Catalog)和图像切片(Image Slicing)是Xcode5新加入的功能。资源目录可以方便开发者管理工程中使用的图片素材，利用开发中的命名规则（比如高清图的@2x，图标的Icon，Splash的Default等），来筛选和分类图片。建立一个资源目录十分简单，如果是老版本导入的工程，在工程设置中图标或者splash图的设置中点击<code>Use Asset Catalog</code>，Xcode将建立新的资源目录；如果是直接使用Xcode 5建立的工程的话，那么资源目录应该已经默认躺在工程中了。</p>
-
-<p><img src="http://img.onevcat.com/2013/xcode5-asset-catalog.png" alt="添加一个Asset Catalog" /></p>
-
-<p>添加资源目录后，在工程中会新加一个.xcassets后缀的目录用以整理和存放图片，该文件夹中存放了图片和对应的json文件来保存图片信息。为了能够使用资源目录的特性，以及更好的前向兼容性，建议将所有的图片资源都加入资源目录中：在工程中选择.xcassets文件，然后在资源目录中点击加号即可添加图片。另外，直接从工程外的Finder中将图片拖动到Xcode的资源目录界面中，也将把拖进来的图片拷贝并添加到资源目录中。对的，不再会有讨厌的弹窗出来，问你要拷贝还是要引用了。</p>
-
-<p><img src="http://img.onevcat.com/2013/xcode5-add-ac.png" alt="在Asset Catalog中添加图片" /></p>
-
-<p>Asset Catalog的意义在于为工程中的图片提供了一个存储信息的地方，不仅可以描述资源对应的设备，资源的版本和更新信息等，更重要的在于可以为Image Slicing服务。所谓Image Slicing，相当于一个可视化的<code>resizableImageWithCapInsets:resizingMode:</code>，可以用于指定在图片缩放时用来填充的像素。在资源目录中选择要slicing的图片，点击图片界面右下方的Show Slicing按钮，在想要设定切片的图片上点击<code>Start Slicing</code>，将出现左中右（或者上中下）三条可以拖动的指示线，通过拖动它们来设定实际的缩放范围。</p>
-
-<p><img src="http://img.onevcat.com/2013/xcode5-slicing.png" alt="设定Image Slicing" /></p>
-
-<p>在左侧线（或者上方线）和中间线之间的像素将在缩放时被填充，在中间线和右侧线（或者下方线）之间的像素将被隐藏。比如上面的例子，实际运行中如果对这张图片进行拉伸的话，会是下面的样子：</p>
-
-<p><img src="http://img.onevcat.com/2013/xcode5-slicing-image.png" alt="拉升Image Slicing后的图片" /></p>
-
-<p>Image Slicing可以帮助开发者用可视化的方式完成resizable image，之后通过拖拖线就可以完成sliced image，而不必再写代码，也不用再一次次尝试输入的insets合不合适了。slicing可缩放的图片大量用于UI中可以节省打包的占用空间，而在Xcode 5中引入和加强图片资源管理的目的，很大一部分是为了配合SpriteKit将游戏引擎加入到SDK中，并将Xcode逐渐打造为一个全面的IDE工具。</p>
-
-<h3>新的调试和辅助功能</h3>
-
-<p>这应该是Xcode5最值得称赞的改进了，在调试中现在在编辑框内鼠标悬浮在变量名上，Xcode将会根据类型进行猜测，并输出最合适的结果以帮助观察。就像这样：</p>
-
-<p><img src="http://img.onevcat.com/2013/xcode5-debug-mouseover.png" alt="鼠标悬浮就可以出现变量结果" /></p>
-
-<p>以前版本的Xcode虽然也有鼠标悬浮提示，但是想从中找到想要的value确实还是比较麻烦的事情，很多时候我们不得不参考下面Variables View的值或者直接p或者po它们，现在如果只是需要知道变量情况的话，在断到代码后一路用鼠标跟着代码走一遍，就差不多了然于胸了。如果你认为鼠标悬停只能打打字符串或者数字的话你就错了，数组，字典什么的也不在话下，更过分的是设计图像的也能很好地显示，只需要点击预览按钮，就像这样：</p>
-
-<p><img src="http://img.onevcat.com/2013/xcode5-debug-image.png" alt="直接悬停显示图片" /></p>
-
-<p>Xcode5集成了一个Debug面板，用来实现一个简单的Profiler，可以在调试时直接看到应用的CPU消耗，内存使用等情况（其他的还有iCloud情况，功耗和图形性能等）。在Debug运行时Cmd+6即可切换到该Debug界面。监测的内容简单明了，CPU使用用来检查是否有高占用或者尖峰（特别是主线程中），内存检测用来检查内存使用和释放的情况是否符合预期。</p>
-
-<p><img src="http://img.onevcat.com/2013/xcode5-debug-profiler.png" alt="Debug的Profiler面板" /></p>
-
-<p>如果养成开发过程的调试中就一直打开这个Profiler面板的话（至少我从之后会坚持这个做法了），相信是有助于在开发过程中就迅速的监测到潜在的问题，并迅速解决的。当然，对于明显的问题可以在Debug面板中发现后立即寻找对应代码解决，但是如果比较复杂的问题，想要知道详细情况的话，还是要使用Instruments，在Debug面板中提供了一个“Profile In Instruments”按钮，可以快速跳转到Instruments。</p>
-
-<p>最后，Xcode在注释式文档方面也有进步，现在如下格式的注释将在Xcode中直接被检测到并集成进代码提示中了：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cm">/**</span>
-</span><span class='line'><span class="cm"> * Setup a recorder for a specified file path. After setting it, you can use the other control method to control the shared recorder.</span>
-</span><span class='line'><span class="cm"> *</span>
-</span><span class='line'><span class="cm"> * @param talkingPath An NSString indicates in which path the recording should be created</span>
-</span><span class='line'><span class="cm"> * @returns YES if recorder setup correctly, NO if there is an error</span>
-</span><span class='line'><span class="cm"> */</span>
-</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">recordWithFilePath:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">talkingPath</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>得到的结果是这样的</p>
-
-<p><img src="http://img.onevcat.com/2013/xcode5-comment-doc.png" alt="Xcode对代码注释的解析" /></p>
-
-<p>以及Quick Help中会有详细信息</p>
-
-<p><img src="http://img.onevcat.com/2013/xcode5-quickhelp.png" alt="在Quick Help中显示详细文档" /></p>
-
-<p>Xcode现在可以识别Javadoc格式（类似于上面例子）的注释文档，可用的标识符除了上面的<code>@param</code>和<code>@return</code>外，还有例如<code>@see</code>，<code>@discussion</code>等，关于Javadoc的更多格式规则，可以参考<a href="http://en.wikipedia.org/wiki/Javadoc">Wiki</a>。</p>
-
-<h2>关于Objective-C，Modules和Autolinking</h2>
-
-<p>OC自从Apple接手后，一直在不断改进。随着移动开发带来的OC开发者井喷式增加，客观上也要求Apple需要提供各种良好特性来支持这样一个庞大的开发者社区。iOS4时代的GCD，iOS5时代的ARC，iOS6时代的各种简化，每年我们都能看到OC在成为一种先进语言上的努力。基于SmallTalk和runtime，本身是C的超集，如此“根正苗红”的一门语言，在今年也迎来的新的变化。</p>
-
-<p>今年OC的最大变化就是加入了Modules和Autolinking。</p>
-
-<h3>什么是Modules呢</h3>
-
-<p>在了解Modules之前我们需要先了解一下OC的import机制。<code>#import &lt;FrameworkFoo/HeaderBar.h&gt;</code>，我相信每个开发者都写过这样的代码，用来引用其他的头文件。熟悉C或者C++的童鞋可能会知道，在C和C++里是没有#import的，只有#include（虽然GCC现在为C和C++做了特殊处理使得imoprt可以被编译），用来包含头文件。#include做的事情其实就是简单的复制粘贴，将目标.h文件中的内容一字不落地拷贝到当前文件中，并替换掉这句include，而#import实质上做的事情和#include是一样的，只不过OC为了避免重复引用可能带来的编译错误（这种情况在引用关系复杂的时候很可能发生，比如B和C都引用了A，D又同时引用了B和C，这样A中定义的东西就在D中被定义了两次，重复了），而加入了#import，从而保证每个头文件只会被引用一次。</p>
-
-<blockquote><p>如果想深究，import的实现是通过#ifndef一个标志进行判断，然后在引入后#define这个标志，来避免重复引用的</p></blockquote>
-
-<p>实质上import也还是拷贝粘贴，这样就带来一个问题：当引用关系很复杂，或者一个头文件被非常多的实现文件引用时，编译时引用所占的代码量就会大幅上升（因为被引用的头文件在各个地方都被copy了一遍）。为了解决这个问题，C系语言引入了预编译头文件（PreCompiled Header），将公用的头文件放入预编译头文件中预先进行编译，然后在真正编译工程时再将预先编译好的产物加入到所有待编译的Source中去，来加快编译速度。比如iOS开发中Supporting Files组内的.pch文件就是一个预编译头文件，默认情况下，它引用了UIKit和Foundation两个头文件&#8211;这是在iOS开发中基本每个实现文件都会用到的东西。</p>
-
-<p>于是理论上说，想要提高编译速度，可以把所有头文件引用都放到pch中。但是这样面临的问题是在工程中随处可用本来不应该能访问的东西，而编译器也无法准确给出错误或者警告，无形中增加了出错的可能性。</p>
-
-<p>于是Modules诞生了。Modules相当于将框架进行了封装，然后加入在实际编译之时加入了一个用来存放已编译添加过的Modules列表。如果在编译的文件中引用到某个Modules的话，将首先在这个列表内查找，找到的话说明已经被加载过则直接使用已有的，如果没有找到，则把引用的头文件编译后加入到这个表中。这样被引用到的Modules只会被编译一次，但是在开发时又不会被意外使用到，从而同时解决了编译时间和引用泛滥两方面的问题。</p>
-
-<p>稍微追根问底，Modules是什么？其实无非是对框架进行了如下封装，拿UIKit为例：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">framework</span> <span class="n">module</span> <span class="n">UIKit</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">umbrella</span> <span class="n">header</span> <span class="s">&quot;UIKit.h&quot;</span>
-</span><span class='line'>  <span class="n">module</span> <span class="o">*</span> <span class="p">{</span><span class="n">export</span> <span class="o">*</span><span class="p">}</span>
-</span><span class='line'>  <span class="n">link</span> <span class="n">framework</span> <span class="s">&quot;UIKit&quot;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这个Module定义了首要头文件（UIKit.h），需要导出的子modules（所有），以及需要link的框架名称（UIKit）。需要指出的是，现在Module还不支持第三方的框架，所以只有SDK内置的框架能够从这个特性中受益。另外，在C++的源代码中，Modules也是被禁用的。</p>
-
-<h3>好了，说了那么多，这玩意儿怎么用呢</h3>
-
-<p>关于普通开发者使用的这个新特性的方法，Apple在LLVM5.0（也就是Xcode5带的最新的编译器前端中）引入了一个新的编译符号<code>@import</code>，使用@符号将告诉编译器去使用Modules的引用形式，从而获取好处，比如想引用MessageUI，可以写成</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="err">@</span><span class="n">import</span> <span class="n">MessageUI</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在使用上，这将等价于以前的<code>#import &lt;MessageUI/MessageUI.h&gt;</code>，但是将使用Modules的特性。如果只想使用某个特性的.h文件，比如<code>#import &lt;MessageUI/MFMailComposeViewController.h&gt;</code>，对应写作</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="err">@</span><span class="n">import</span> <span class="n">MessageUI</span><span class="p">.</span><span class="n">MFMailComposeViewController</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>当然，如果对于以前的工程，想要使用新的Modules特性，如果要把所有头文件都这样一个一个改成<code>@import</code>的话，会是很大的一个工作量。Apple自然也考虑到了这一点，于是对于原来的代码，只要使用的是iOS7或者MacOS10.9的SDK，在Build Settings中将Enable Modules(C and Objective-C)打开，然后保持原来的<code>#import</code>写法就行了。是的，不需要任何代码上的改变，编译器会在编译的时候自动地把可能的地方换成Modules的写法去编译的。</p>
-
-<p>Autolinking是Modules的附赠小惊喜，因为在module定义的时候指定来link framework，所以在编译module时LLVM会将所涉及到的框架自动帮你写到link里去，不再需要到编译设置里去添加了。</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[开发者所需要知道的iOS7 SDK新特性]]></title>
@@ -2358,6 +2169,197 @@ AppStore上也有不少番茄工作法的应用。相比起来，Pomodoro Do的�
 </ul><!--:--><!--:en-->&nbsp;</p>
 
 <p><!--:--><!--:ja-->&nbsp;</p>
+
+<p><!--:--></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[日语学习中...顺便宣传我的新app]]></title>
+    <link href="http://onevcat.com/2012/07/japanese-learin/"/>
+    <updated>2012-07-09T00:00:00+09:00</updated>
+    <id>http://onevcat.com/2012/07/japanese-learin</id>
+    <content type="html"><![CDATA[<p><!--:zh-->如题，被房东赶出来了，现在住到了北语的临时宿舍，网络情况很不乐观&#8230;可能会有一段时间无法更新博客了&#8230;</p>
+
+<p>不过还好在之前完成了Pomodoro Do的所有开发和上传工作，接下来不出大的意外的话审核什么的应该不会有太大问题，再之后就可以上架了&#8230;还是可以期待一下的，毕竟是自己完全独立制作和拥有的第一个app。虽然可能很简陋功能也比较简单，但是还是比较用心了的&#8230;</p>
+
+<p>有兴趣的童鞋可以到<a href="http://pomo.onevcat.com">pomo.onevcat.com</a>看看，这是一款番茄工作法的辅助app，可以帮助您规划时间，提高工作效率。</p>
+
+<p>如果想了解一些如何提高效率的小tip以及这个app的最新情况，可以在新浪微博上关注<a href="http://weibo.com/pomodorodo">@PomodoroDo</a>，我会抽空进行一些更新的。</p>
+
+<p>谢谢支持～8月22号日语培训结束，到时候再进行大规模更新了～</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[WWDC 2012 Session笔记——205 Introducing Collection Views]]></title>
+    <link href="http://onevcat.com/2012/06/introducing-collection-views/"/>
+    <updated>2012-06-30T00:00:00+09:00</updated>
+    <id>http://onevcat.com/2012/06/introducing-collection-views</id>
+    <content type="html"><![CDATA[<p><!--:zh--><p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-7.png"><img class="aligncenter size-full wp-image-943" title="QQ20120630-7" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-7.png" alt="" width="732" height="113" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">这是博主的WWDC2012笔记系列中的一篇，完整的笔记列表可以参看<a href="http://www.onevcat.com/tag/wwdc/">这里</a>。如果您是首次来到本站，也许您会有兴趣通过<a href="http://www.onevcat.com/feed">RSS</a>，或者通过页面下方的邮件订阅的方式订阅本站。</p>
+<p style="text-align: justify;">在之前的<a href="http://www.onevcat.com/2012/06/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%80%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84ios6-sdk%E6%96%B0%E7%89%B9%E6%80%A7/">iOS6 SDK新特性前瞻</a>中我曾经提到过UICollectionView，当时只把CollectionView当作是一个现在已有的开源GridView，仔细研究了下WWDC2012相关的Session后发现并不是那么简单。Apple这次真的给广大开发者带来了一个非常powerful的view，其强大程度可以说远超UITableView。接下来的这篇笔记将对应Session 205，作为使用UICollectionView的入门，之后还将完成一篇关于深入使用UICollectionView以及相应的Layout的笔记。</p>
+<p style="text-align: justify;">废话到此，正式开始。</p></p>
+
+<p><h3 style="text-align: justify;">什么是UICollectionView</h3>
+<p style="text-align: justify;">UICollectionView是一种新的数据展示方式，简单来说可以把他理解成多列的UITableView(请一定注意这是UICollectionView的最最简单的形式)。如果你用过iBooks的话，可能你还对书架布局有一定印象：一个虚拟书架上放着你下载和购买的各类图书，整齐排列。其实这就是一个UICollectionView的表现形式，或者iPad的iOS6中的原生时钟应用中的各个时钟，也是UICollectionView的最简单的一个布局，如图：</p>
+<p style="text-align: justify;"><!--:--><!--more--><!--:zh--></p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-1.png"><img class="aligncenter size-full wp-image-937" title="QQ20120630-1" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-1.png" alt="" width="513" height="499" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">最简单的UICollectionView就是一个GridView，可以以多列的方式将数据进行展示。标准的UICollectionView包含三个部分，它们都是UIView的子类：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>Cells 用于展示内容的主体，对于不同的cell可以指定不同尺寸和不同的内容，这个稍后再说</li>
+	<li>Supplementary Views 追加视图 如果你对UITableView比较熟悉的话，可以理解为每个Section的Header或者Footer，用来标记每个section的view</li>
+	<li>Decoration Views 装饰视图 这是每个section的背景，比如iBooks中的书架就是这个</li>
+</ul>
+<div style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-2.png"><img class="aligncenter size-full wp-image-938" title="QQ20120630-2" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-2.png" alt="" width="657" height="515" data-pinit="registered" /></a></div>
+<div style="text-align: justify;"></div>
+<div style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-3.png"><img class="aligncenter size-full wp-image-939" title="QQ20120630-3" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-3.png" alt="" width="860" height="521" data-pinit="registered" /></a></div>
+<p style="text-align: justify;">不管一个UICollectionView的布局如何变化，这三个部件都是存在的。再次说明，复杂的UICollectionView绝不止上面的几幅图，关于较复杂的布局和相应的特性，我会在本文稍后和<a title="WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts" href="http://www.onevcat.com/2012/08/advanced-collection-view/">下一篇笔记</a>中进行一些深入。</p></p>
+
+<p><hr /></p>
+
+<p><h3 style="text-align: justify;">实现一个简单的UICollectionView</h3>
+<p style="text-align: justify;">先从最简单的开始，UITableView是iOS开发中的非常非常非常重要的一个类，相信如果你是开发者的话应该是对这个类非常熟悉了。实现一个UICollectionView和实现一个UITableView基本没有什么大区别，它们都同样是datasource和delegate设计模式的：datasource为view提供数据源，告诉view要显示些什么东西以及如何显示它们，delegate提供一些样式的小细节以及用户交互的相应。因此在本节里会大量对比collection view和table view来进行说明，如果您还不太熟悉table view的话，也是个对照着复习的好机会。</p></p>
+
+<p><h4 style="text-align: justify;">￼￼￼￼UICollectionViewDataSource</h4>
+<ul style="text-align: justify;">
+	<li>section的数量 ￼-numberOfSectionsInCollection:</li>
+	<li>某个section里有多少个item ￼-collectionView:numberOfItemsInSection:</li>
+	<li>对于某个位置应该显示什么样的cell ￼-collectionView:cellForItemAtIndexPath:</li>
+</ul>
+<p style="text-align: justify;">实现以上三个委托方法，基本上就可以保证CollectionView工作正常了。当然，还有提供Supplementary View的方法</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>collectionView:viewForSupplementaryElementOfKind:atIndexPath:</li>
+</ul>
+<p style="text-align: justify;">对于Decoration Views，提供方法并不在UICollectionViewDataSource中，而是直接在UICollectionViewLayout类中的(因为它仅仅是视图相关，而与数据无关)，放到稍后再说。</p></p>
+
+<p><h4 style="text-align: justify;">关于重用</h4>
+<p style="text-align: justify;">为了得到高效的View，对于cell的重用是必须的，避免了不断生成和销毁对象的操作，这与在UITableView中的情况是一致的。但值得注意的时，在UICollectionView中，不仅cell可以重用，Supplementary View和Decoration View也是可以并且应当被重用的。在iOS5中，Apple对UITableView的重用做了简化，以往要写类似这样的代码：</p></p>
+
+<p><pre>UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MY_CELL_ID"]; 
+if (!cell) //如果没有可重用的cell，那么生成一个 { 
+    cell = [[UITableViewCell alloc] init]; 
+} 
+//配置cell，blablabla 
+return cell;</pre>
+<p style="text-align: justify;">而如果我们在TableView向数据源请求数据之前使用-registerNib:forCellReuseIdentifier:方法为@“MY_CELL_ID&#8221;注册过nib的话，就可以省下每次判断并初始化cell的代码，要是在重用队列里没有可用的cell的话，runtime将自动帮我们生成并初始化一个可用的cell。</p>
+<p style="text-align: justify;">这个特性很受欢迎，因此在UICollectionView中Apple继承使用了这个特性，并且把其进行了一些扩展。使用以下方法进行注册：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>-registerClass:forCellWithReuseIdentifier:</li>
+	<li>-registerClass:forSupplementaryViewOfKind:withReuseIdentifier:</li>
+	<li>-registerNib:forCellWithReuseIdentifier:</li>
+	<li>-registerNib:forSupplementaryViewOfKind:withReuseIdentifier:</li>
+</ul>
+<p style="text-align: justify;">相比UITableView有两个主要变化：一是加入了对某个Class的注册，这样即使不用提供nib而是用代码生成的view也可以被接受为cell了；二是不仅只是cell，Supplementary View也可以用注册的方法绑定初始化了。在对collection view的重用ID注册后，就可以像UITableView那样简单的写cell配置了：</p></p>
+
+<p><pre>- (UICollectionView*)collectionView:(UICollectionView*)cv cellForItemAtIndexPath:(NSIndexPath*)indexPath { 
+    MyCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@”MY_CELL_ID”]; 
+    // Configure the cell's content 
+    cell.imageView.image = ... 
+    return cell; 
+}</pre>
+<p style="text-align: justify;">需要吐槽的是，对collection view，取重用队列的方法的名字和UITableView里面不一样了，在Identifier前面多加了Reuse五个字母，语义上要比以前清晰，命名规则也比以前严谨了..不知道Apple会不会为了追求完美而把UITableView中的命名不那么好的方法deprecate掉。</p></p>
+
+<p><h4 style="text-align: justify;">UICollectionViewDelegate</h4>
+<p style="text-align: justify;">数据无关的view的外形啊，用户交互啊什么的，由UICollectionViewDelegate来负责：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>cell的高亮</li>
+	<li>cell的选中状态</li>
+	<li>可以支持长按后的菜单</li>
+</ul>
+<p style="text-align: justify;">关于用户交互，UICollectionView也做了改进。每个cell现在有独立的高亮事件和选中事件的delegate，用户点击cell的时候，现在会按照以下流程向delegate进行询问：</p></p>
+
+<p><ol style="text-align: justify;">
+	<li>-￼collectionView:shouldHighlightItemAtIndexPath: 是否应该高亮？</li>
+	<li>-￼collectionView:didHighlightItemAtIndexPath: 如果1回答为是，那么高亮</li>
+	<li>-￼collectionView:shouldSelectItemAtIndexPath: 无论1结果如何，都询问是否可以被选中？</li>
+	<li>-collectionView:didUnhighlightItemAtIndexPath: 如果1回答为是，那么现在取消高亮</li>
+	<li>-collectionView:didSelectItemAtIndexPath: 如果3回答为是，那么选中cell</li>
+</ol>
+<p style="text-align: justify;">状态控制要比以前灵活一些，对应的高亮和选中状态分别由highlighted和selected两个属性表示。</p></p>
+
+<p><h4 style="text-align: justify;">关于Cell</h4>
+<p style="text-align: justify;">相对于UITableViewCell来说，UICollectionViewCell没有这么多花头。首先UICollectionViewCell不存在各式各样的默认的style，这主要是由于展示对象的性质决定的，因为UICollectionView所用来展示的对象相比UITableView来说要来得灵活，大部分情况下更偏向于图像而非文字，因此需求将会千奇百怪。因此SDK提供给我们的默认的UICollectionViewCell结构上相对比较简单，由下至上：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>首先是cell本身作为容器view</li>
+	<li>然后是一个大小自动适应整个cell的backgroundView，用作cell平时的背景</li>
+	<li>再其上是selectedBackgroundView，是cell被选中时的背景</li>
+	<li>最后是一个contentView，自定义内容应被加在这个view上</li>
+</ul>
+<p style="text-align: justify;">这次Apple给我们带来的好康是被选中cell的自动变化，所有的cell中的子view，也包括contentView中的子view，在当cell被选中时，会自动去查找view是否有被选中状态下的改变。比如在contentView里加了一个normal和selected指定了不同图片的imageView，那么选中这个cell的同时这张图片也会从normal变成selected，而不需要额外的任何代码。</p></p>
+
+<p><h4 style="text-align: justify;">￼UICollectionViewLayout</h4>
+<p style="text-align: justify;">终于到UICollectionView的精髓了…这也是UICollectionView和UITableView最大的不同。UICollectionViewLayout可以说是UICollectionView的大脑和中枢，它负责了将各个cell、Supplementary View和Decoration Views进行组织，为它们设定各自的属性，包括但不限于：</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>位置</li>
+	<li>尺寸</li>
+	<li>透明度</li>
+	<li>层级关系</li>
+	<li>形状</li>
+	<li>等等等等…</li>
+</ul>
+<p style="text-align: justify;">Layout决定了UICollectionView是如何显示在界面上的。在展示之前，一般需要生成合适的UICollectionViewLayout子类对象，并将其赋予CollectionView的collectionViewLayout属性。关于详细的自定义UICollectionViewLayout和一些细节，我将写在之后一篇笔记中。</p>
+<p style="text-align: justify;">Apple为我们提供了一个最简单可能也是最常用的默认layout对象，￼￼￼UICollectionViewFlowLayout。Flow Layout简单说是一个直线对齐的layout，最常见的Grid View形式即为一种Flow Layout配置。上面的照片架界面就是一个典型的Flow Layout。</p></p>
+
+<p><ul style="text-align: justify;">
+	<li>首先一个重要的属性是itemSize，它定义了每一个item的大小。通过设定itemSize可以全局地改变所有cell的尺寸，如果想要对某个cell制定尺寸，可以使用-collectionView:layout:sizeForItemAtIndexPath:方法。</li>
+	<li>间隔 可以指定item之间的间隔和每一行之间的间隔，和size类似，有全局属性，也可以对每一个item和每一个section做出设定：
+<ul>
+	<li>@property (CGSize) minimumInteritemSpacing</li>
+	<li>@property (CGSize) minimumLineSpacing</li>
+	<li>-collectionView:layout:minimumInteritemSpacingForSectionAtIndex:</li>
+	<li>-collectionView:layout:minimumLineSpacingForSectionAtIndex:</li>
+</ul>
+</li>
+	<li>滚动方向 由属性scrollDirection确定scroll view的方向，将影响Flow Layout的基本方向和由header及footer确定的section之间的宽度
+<ul>
+	<li>UICollectionViewScrollDirectionVertical</li>
+	<li>UICollectionViewScrollDirectionHorizontal</li>
+</ul>
+</li>
+	<li>Header和Footer尺寸 同样地分为全局和部分。需要注意根据滚动方向不同，header和footer的高和宽中只有一个会起作用。垂直滚动时section间宽度为该尺寸的高，而水平滚动时为宽度起作用，如图。
+<ul>
+	<li>@property (CGSize) headerReferenceSize</li>
+	<li>@property (CGSize) footerReferenceSize</li>
+	<li>-collectionView:layout:referenceSizeForHeaderInSection:</li>
+	<li>-collectionView:layout:referenceSizeForFooterInSection:</li>
+</ul>
+</li>
+	<li>缩进
+<ul>
+	<li>@property UIEdgeInsets sectionInset;</li>
+	<li>-collectionView:layout:insetForSectionAtIndex:</li>
+</ul>
+</li>
+</ul>
+<h4 style="text-align: justify;">总结</h4>
+<p style="text-align: justify;">一个UICollectionView的实现包括两个必要部分：UICollectionViewDataSource和UICollectionViewLayout，和一个交互部分：UICollectionViewDelegate。而Apple给出的UICollectionViewFlowLayout已经是一个很强力的layout方案了。</p></p>
+
+<p><hr /></p>
+
+<p><h3 style="text-align: justify;">几个自定义的Layout</h3>
+<p style="text-align: justify;">但是光是UICollectionViewFlowLayout的话，显然是不够用的，而且如果单单是这样的话，就和现有的开源各类Grid View没有区别了…UICollectionView的强大之处，就在于各种layout的自定义实现，以及它们之间的切换。先看几个相当exiciting的例子吧～</p>
+<p style="text-align: justify;">比如，堆叠布局：</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-4.png"><img class="aligncenter size-full wp-image-940" title="QQ20120630-4" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-4.png" alt="" width="620" height="169" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">圆形布局：</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-5.png"><img class="aligncenter size-medium wp-image-946" title="QQ20120630-5" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-5-300x290.png" alt="" width="300" height="290" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">和Cover Flow布局：</p>
+<p style="text-align: justify;"><a href="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-6.png"><img class="aligncenter size-full wp-image-942" title="QQ20120630-6" src="http://www.onevcat.com/wp-content/uploads/2012/06/QQ20120630-6.png" alt="" width="719" height="228" data-pinit="registered" /></a></p>
+<p style="text-align: justify;">所有这些布局都采用了同样的数据源和委托方法，因此完全实现了model和view的解耦。但是如果仅这样，那开源社区也已经有很多相应的解决方案了。Apple的强大和开源社区不能比拟的地方在于对SDK的全局掌控，CollectionView提供了非常简单的API可以令开发者只需要一次简单调用，就可以使用CoreAnimation在不同的layout之间进行动画切换，这种切换必定将大幅增加用户体验，代价只是几十行代码就能完成的布局实现，以及简单的一句API调用，不得不说现在所有的开源代码与之相比，都是相形见拙了…不得不佩服和感谢UIKit团队的努力。</p>
+<p style="text-align: justify;">关于上面几种自定义Layout和实现细节，和其他高级CollectionView应用，将在<a title="WWDC 2012 Session笔记——219 Advanced Collection Views and Building Custom Layouts" href="http://www.onevcat.com/2012/08/advanced-collection-view/">下一篇笔记</a>中进行详细说明～</p><!--:--><!--:en-->&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><!--:--><!--:ja-->&nbsp;</p>
+
+<p>&nbsp;</p>
 
 <p><!--:--></p>
 ]]></content>
