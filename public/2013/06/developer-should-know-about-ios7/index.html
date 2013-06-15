@@ -97,7 +97,11 @@
 
 <p>相关笔记整理如下：</p>
 
-<p>总览 <a href="http://onevcat.com/2013/06/developer-should-know-about-ios7/">开发者所需要知道的iOS7 SDK新特性</a></p>
+<ul>
+<li>总览 <a href="http://onevcat.com/2013/06/developer-should-know-about-ios7/">开发者所需要知道的iOS7 SDK新特性</a></li>
+<li>工具 <a href="http://onevcat.com/2013/06/new-in-xcode5-and-objc/">WWDC2013笔记 Xcode5和ObjC新特性</a></li>
+</ul>
+
 
 <hr />
 
@@ -130,20 +134,20 @@
 
 <p>这次UI大改可以说是一次对敏捷开发的检验，原来的应用（特别是拟物化用得比较重的应用）虽然也能运行，但是很多UI自定义的地方需要更改不说，还容易让用户产生一种“来到了另一个世界”的感觉，同时可以看到也有部分应用无法运行。而对于苹果的封闭系统和只升不降的特性，开发者以及其应用必须要尽快适应这个新系统，这对于迭代快速，还在继续维护的应用来说会是一个机会。相信谁先能适应新的UI，谁就将在iOS7上占到先机。</p>
 
-<h4>动态UIKit</h4>
+<h4>UIKit的力学模型（UIKit Dynamics）</h4>
 
-<p>新增了<code>UIDynamicItem</code>委托，用来为UIView制定动态行为，当然其他任何对象都能通过实现这组接口来定义动态行为，只不过在UIKit中可能应用最多。所谓动态行为，是指将现实世界的行为或者特性引入到UI中，比如重力等。通过实现UIDynamicItem，UIKit现在支持如下行为：</p>
+<p>新增了<code>UIDynamicItem</code>委托，用来为UIView制定力学模型行为，当然其他任何对象都能通过实现这组接口来定义动力学行为，只不过在UIKit中可能应用最多。所谓动力学行为，是指将现实世界的我们常见的力学行为或者特性引入到UI中，比如重力等。通过实现UIDynamicItem，UIKit现在支持如下行为：</p>
 
 <ul>
-<li>UIAttachmentBehavior 连接两个实现了UIDynamicItem的物体（以下简称动态物体），一个物体移动时，另一个跟随移动</li>
-<li>UICollisionBehavior 指定边界，使两个动态物体可以进行碰撞</li>
-<li>UIGravityBehavior 顾名思义，为动态物体增加重力模拟</li>
-<li>UIPushBehavior 为动态物体施加持续的力</li>
-<li>UISnapBehavior 为动态物体指定一个附着点，想象一下类似挂一幅画在图钉上的感觉</li>
+<li>UIAttachmentBehavior 连接两个实现了UIDynamicItem的物体（以下简称动力物体），一个物体移动时，另一个跟随移动</li>
+<li>UICollisionBehavior 指定边界，使两个动力物体可以进行碰撞</li>
+<li>UIGravityBehavior 顾名思义，为动力物体增加重力模拟</li>
+<li>UIPushBehavior 为动力物体施加持续的力</li>
+<li>UISnapBehavior 为动力物体指定一个附着点，想象一下类似挂一幅画在图钉上的感觉</li>
 </ul>
 
 
-<p>如果有开发游戏的童鞋可能会觉得这些很多都是做游戏时候的需求，一种box2d之类的2D物理引擎的既视感跃然而出。没错的亲，动态UI，加上之后要介绍的Sprite Kit，极大的扩展了使用UIKit进行游戏开发的可能性。另外要注意UIDynamicItem不仅适用于UIKit，任何对象都可以实现接口来获得动态物体的一些特性，所以说用来做一些3D的事情也不是没有可能。如果觉得Cocos2D+box2d这样的组合使用起来不方便的话，现在动态UIKit+SpriteKit给出了新的选择。</p>
+<p>如果有开发游戏的童鞋可能会觉得这些很多都是做游戏时候的需求，一种box2d之类的2D物理引擎的既视感跃然而出。没错的亲，动态UI，加上之后要介绍的Sprite Kit，极大的扩展了使用UIKit进行游戏开发的可能性。另外要注意UIDynamicItem不仅适用于UIKit，任何对象都可以实现接口来获得动态物体的一些特性，所以说用来做一些3D的或者其他奇怪有趣的事情也不是没有可能。如果觉得Cocos2D+box2d这样的组合使用起来不方便的话，现在动态UIKit+SpriteKit给出了新的选择。</p>
 
 <h3>游戏方面</h3>
 
