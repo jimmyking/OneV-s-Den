@@ -13,8 +13,8 @@ categories: 能工巧匠集
 相关笔记整理如下：（为了避免不必要的麻烦，所有笔记暂时就不在blog上公开全文发布了，先作为自己的笔记进行记录备份。只给出链接，之后NDA解除后再一并公开发吧..不过本站从源代码开始都是架在github上的..所以..嗯不多说了..）
 
 * 总览 [开发者所需要知道的iOS7 SDK新特性](http://onevcat.com/2013/06/developer-should-know-about-ios7/)
-* 工具 [WWDC2013笔记 Xcode5和ObjC新特性](http://onevcat.com/2013/06/new-in-xcode5-and-objc/)
-* UIKit动力学 [WWDC2013笔记 UIKit力学模型入门](http:/onevcat.com/2013/06/uikit-dynamics-started/)
+* 工具 [WWDC2013笔记 Xcode5和ObjC新特性] (http://onevcat.com/) http://onevcat.com/2013/06/new-in-xcode5-and-objc/
+* UIKit动力学 [WWDC2013笔记 UIKit力学模型入门](http://onevcat.com/) http://onevcat.com/2013/06/uikit-dynamics-started/
 
 
 <!--
