@@ -14,6 +14,8 @@ categories: 能工巧匠集
 
 * 总览 [开发者所需要知道的iOS7 SDK新特性](http://onevcat.com/2013/06/developer-should-know-about-ios7/)
 * 工具 [WWDC2013笔记 Xcode5和ObjC新特性](http://onevcat.com/2013/06/new-in-xcode5-and-objc/)
+* UIKit动力学 [WWDC2013笔记 UIKit力学模型入门](http:/onevcat.com/2013/06/uikit-dynamics-started/)
+
 
 <!--
 ---
