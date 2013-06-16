@@ -7,7 +7,7 @@ categories: 能工巧匠集
 published: false
 ---
 
-这是我的WWDC2013系列笔记中的一篇，完整的笔记列表请参看[这篇总览](http://onevcat.com/2013/06/developer-should-know-about-ios7/)。本文欢迎转载，但烦请保留原文链接出处（http://onevcat.com/2013/06/uikit-dynamics-started/），不胜感激。
+这是我的WWDC2013系列笔记中的一篇，完整的笔记列表请参看[这篇总览](http://onevcat.com/2013/06/developer-should-know-about-ios7/)。本文仅作为个人记录使用，不公开发布，请不要转载和随意发布，谢谢您的理解合作。
 
 本文涉及到的WWDC2013 Session有
 
