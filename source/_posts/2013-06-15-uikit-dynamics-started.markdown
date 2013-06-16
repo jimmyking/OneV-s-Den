@@ -48,16 +48,16 @@ published: false
     self.animator = animator;
 }
 ```
-运行结果，view开始受重力影响了：
-
-![重力作用下的UIview](http://img.onevcat.com/2013/uikit-dynamics-gravity.gif)
-
 代码很简单，
 
 1. 以现在ViewController的view为参照系（ReferenceView），来初始化一个UIDynamicAnimator。
 2. 然后分配并初始化一个动力行为，这里是UIGravityBehavior，将需要进行物理模拟的UIDynamicItem传入。`UIGravityBehavior`的`initWithItems:`接受的参数为包含id<UIDynamicItem>的数组，另外`UIGravityBehavior`实例还有一个`addItem:`方法接受单个的id<UIDynamicItem>。就是说，实现了UIDynamicItem委托的对象，都可以看作是被力学特性影响的，进而参与到计算中。UIDynamicItem委托需要我们实现`bounds`，`center`和`transform`三个属性，在UIKit Dynamics计算新的位置时，需要向Behavior内的item询问这些参数，以进行正确计算。iOS7中，UIView和UICollectionViewLayoutAttributes已经默认实现了这个接口，所以这里我们直接把需要模拟重力的UIView添加到UIGravityBehavior里就行了。
 3. 把配置好的UIGravityBehavior添加到animator中。
 4. strong持有一下animator，避免当前scope结束被ARC释放掉（后果当然就是UIView在哪儿傻站着不掉）
+
+运行结果，view开始受重力影响了：
+
+![重力作用下的UIview](http://img.onevcat.com/2013/uikit-dynamics-gravity.gif)
 
 #### 碰撞，我要碰撞
 
